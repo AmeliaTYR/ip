@@ -1,15 +1,31 @@
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class Duke {
-    // prints Duke logo
-    public static void printDukeLogo(){
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.print("Hello from\n" + logo);
+    // prints Tootie logo (text art randomized)
+    public static void printTootieLogo(){
+        String[] logos = new String[3];
+        logos[0] = " _____           _   _      \n" +
+                "|_   _|         | | (_)     \n" +
+                "  | | ___   ___ | |_ _  ___ \n" +
+                "  | |/ _ \\ / _ \\| __| |/ _ \\\n" +
+                "  | | (_) | (_) | |_| |  __/\n" +
+                "  \\_/\\___/ \\___/ \\__|_|\\___|\n";
+        logos[1] = "████████╗ ██████╗  ██████╗ ████████╗██╗███████╗\n" +
+                "╚══██╔══╝██╔═══██╗██╔═══██╗╚══██╔══╝██║██╔════╝\n" +
+                "   ██║   ██║   ██║██║   ██║   ██║   ██║█████╗  \n" +
+                "   ██║   ██║   ██║██║   ██║   ██║   ██║██╔══╝  \n" +
+                "   ██║   ╚██████╔╝╚██████╔╝   ██║   ██║███████╗\n" +
+                "   ╚═╝    ╚═════╝  ╚═════╝    ╚═╝   ╚═╝╚══════╝\n";
+        logos[2] = "  _____                    _        _            \n" +
+                " |_   _|   ___     ___    | |_     (_)     ___   \n" +
+                "   | |    / _ \\   / _ \\   |  _|    | |    / -_)  \n" +
+                "  _|_|_   \\___/   \\___/   _\\__|   _|_|_   \\___|  \n" +
+                "_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| \n" +
+                "\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-' \n";
+        Random rand = new Random(System.currentTimeMillis());
+        System.out.print("Hello from\n" + logos[rand.nextInt()%3]);
     }
 
     // print the line divider
@@ -19,7 +35,7 @@ public class Duke {
 
     // prints the hello when starting
     public static void printHelloMessage(){
-        String helloGreeting = " Hello! I'm Duke\n" +
+        String helloGreeting = " Hello! I'm Tootie\n" +
                 " What can I do for you?\n";
         printDivider();
         System.out.print(helloGreeting);
@@ -37,7 +53,7 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
 
-        printDukeLogo();
+        printTootieLogo();
         printHelloMessage();
 
         line = in.nextLine();
