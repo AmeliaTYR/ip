@@ -32,12 +32,13 @@ public class Duke {
                 "    888  Y88..88P Y88..88P Y88b.  888 Y8b.     \n" +
                 "    888   \"Y88P\"   \"Y88P\"   \"Y888 888  \"Y8888  \n";
         Random rand = new Random(System.currentTimeMillis());
-        System.out.print("Hello from\n" + logos[Math.abs(rand.nextInt()%4)]);
+        System.out.println("Hello from\n" + logos[Math.abs(rand.nextInt()%4)]);
+
     }
 
     // print the line divider
     public static void printDivider(){
-        System.out.println("───────✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────");
+        System.out.println("─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────");
     }
 
     // prints the hello when starting
@@ -51,9 +52,39 @@ public class Duke {
 
     // print farewell message
     public static void printFarewellMessage(){
-        String farewellGreeting = " Bye! Hope to see you again soon! ♥\n";
+        String farewellGreeting = " Bye! Hope to see you again soon! (◠‿◠✿)\n";
         System.out.print(farewellGreeting);
         printDivider();
+    }
+
+    // print all list items with index and check
+    public static void printListItems(int numListItems, Task[] taskList){
+        for (int i = 0; i < numListItems; i++) {
+            System.out.print((i + 1) + ". ");
+            if (taskList[i].getIsComplete()){
+                System.out.print("[✓]");
+            } else {
+                System.out.print("[✗]");
+            }
+            System.out.println(taskList[i].getTaskName());
+        }
+
+        //TODO: add all done ʕ•ᴥ•ʔ if all tasks done
+    }
+
+    public static int updateTaskStatus(Task[] taskList, String line, int numListItems) {
+        int taskNum;
+        try {
+            taskNum = Integer.parseInt(line.replaceAll("[\\D]", ""));
+            if (taskNum > numListItems){
+                return -1;
+            } else {
+                taskList[taskNum - 1].setIsComplete(true);
+                return taskNum;
+            }
+        } catch (NumberFormatException exception) {
+            return -1;
+        }
     }
 
     public static void main(String[] args) {
@@ -61,6 +92,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         Task[] taskList = new Task[100];
         int numListItems = 0;
+        int taskNum;
 
         printTootieLogo();
         printHelloMessage();
@@ -68,14 +100,25 @@ public class Duke {
         line = in.nextLine();
         while (!line.equals("bye")){
             if (line.equals("list")){
-                // print items from the list
+                // print items from the list if any
                 if (numListItems == 0){
                     printDivider();
-                    System.out.println("Nothing to do! （´・ω・ `）");
+                    System.out.println("No tasks found! （´・ω・ `）");
                 } else {
-                    for (int i = 0; i < numListItems; i++) {
-                        System.out.println((i + 1) + ". " + taskList[i].getTaskName());
-                    }
+                    printDivider();
+                    printListItems(numListItems, taskList);
+                }
+            } else if (line.startsWith("done")) {
+                // update isComplete status of that tast
+                taskNum = updateTaskStatus(taskList, line, numListItems);
+                if (taskNum == -1){
+                    printDivider();
+                    System.out.println("No such task? (・∧‐)ゞ");
+                } else {
+                    printDivider();
+                    System.out.println("Nice! I've marked this task as done: ");
+                    System.out.println("    [✓] " + taskList[taskNum - 1].getTaskName());
+                    System.out.println("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧");
                 }
             } else {
                 // add new task to list
@@ -87,8 +130,10 @@ public class Duke {
             printDivider();
             line = in.nextLine();
         }
+
         printDivider();
         printFarewellMessage();
-
     }
+
+
 }
