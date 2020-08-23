@@ -13,11 +13,11 @@ public class Task {
         setIsComplete(isComplete);
     }
 
-    private void setTaskName(String taskName) {
+    public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
-    private void setIsComplete(boolean isComplete) {
+    public void setIsComplete(boolean isComplete) {
         this.isComplete = isComplete;
     }
 
