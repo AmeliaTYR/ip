@@ -1,8 +1,8 @@
 public class Task {
     private String taskName;
     private boolean isComplete;
-    //TODO: implement typing for future levels
-    //private String taskType;
+    // TODO: implement typing for future levels
+//    private String taskType;
 
     public Task(){
         this("no name", false);
@@ -10,14 +10,14 @@ public class Task {
 
     public Task(String taskName, boolean isComplete) {
         setTaskName(taskName);
-        setIsComplete(isComplete);
+        setComplete(isComplete);
     }
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
-    public void setIsComplete(boolean isComplete) {
+    public void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
     }
 
@@ -28,12 +28,13 @@ public class Task {
     public boolean getIsComplete(){
         return isComplete;
     }
-
-
-
 }
 
-//TODO: implement Deadline
+// TODO: in the setting up of the T,D,E variable need to add a value check
+//  in the setter to ensure either T, D or E is set
+
+
+// TODO: implement Deadline
 //public class Deadline extends Task {
 //
 //    protected String by;

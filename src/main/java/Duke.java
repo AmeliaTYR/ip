@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public class Duke {
     // prints Tootie logo (text art randomized each run)
@@ -21,7 +22,8 @@ public class Duke {
                 " |_   _|   ___     ___    | |_     (_)     ___   \n" +
                 "   | |    / _ \\   / _ \\   |  _|    | |    / -_)  \n" +
                 "  _|_|_   \\___/   \\___/   _\\__|   _|_|_   \\___|  \n" +
-                "_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| \n" +
+                "_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_" +
+                "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| \n" +
                 "\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-' \n";
         logos[3] = "88888888888                888    d8b          \n" +
                 "    888                    888    Y8P          \n" +
@@ -36,50 +38,56 @@ public class Duke {
 
     }
 
-    // print the line divider
+    // prints the line divider
     public static void printDivider(){
         System.out.println("─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────");
     }
 
     // prints the hello when starting
     public static void printHelloMessage(){
-        String helloGreeting = " Hello! I'm Tootie!\n" +
-                " What can I do for you?\n";
+        String helloGreeting = "Hello! I'm Tootie!\n" +
+                "What can I do for you?\n";
         printDivider();
         System.out.print(helloGreeting);
         printDivider();
     }
 
-    // print farewell message
+    // prints farewell message
     public static void printFarewellMessage(){
-        String farewellGreeting = " Bye! Hope to see you again soon! (◠‿◠✿)\n";
+        String farewellGreeting = "Bye! Hope to see you again soon! (◠‿◠✿)\n";
         System.out.print(farewellGreeting);
         printDivider();
     }
 
-    // print all list items with index and check
-    public static void printListItems(int numListItems, Task[] taskList){
+    // prints all list items with index and check
+    public static void printListItems(int numListItems, LinkedList<Task> taskList){
         for (int i = 0; i < numListItems; i++) {
             System.out.print((i + 1) + ". ");
-            if (taskList[i].getIsComplete()){
+            if (taskList.get(i).getIsComplete()){
                 System.out.print("[✓]");
             } else {
                 System.out.print("[✗]");
             }
-            System.out.println(taskList[i].getTaskName());
+            System.out.println(taskList.get(i).getTaskName());
         }
 
-        //TODO: add all done ʕ•ᴥ•ʔ if all tasks done
+        // TODO: add "all done ʕ•ᴥ•ʔ" if all tasks done for now
     }
 
-    public static int updateTaskStatus(Task[] taskList, String line, int numListItems) {
+    // TODO: add a help option to print list of commands
+    public static void help(){
+
+    }
+
+    // updates tasks isComplete to true, returns -1 if userInput invalid
+    public static int updateTaskStatus(LinkedList<Task> taskList, String userInput, int numListItems) {
         int taskNum;
         try {
-            taskNum = Integer.parseInt(line.replaceAll("[\\D]", ""));
+            taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
             if (taskNum > numListItems){
                 return -1;
             } else {
-                taskList[taskNum - 1].setIsComplete(true);
+                taskList.get(taskNum - 1).setComplete(true);
                 return taskNum;
             }
         } catch (NumberFormatException exception) {
@@ -88,47 +96,48 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String line;
+        String userInput;
         Scanner in = new Scanner(System.in);
-        Task[] taskList = new Task[100];
+        LinkedList<Task> taskList = new LinkedList<Task>();
         int numListItems = 0;
         int taskNum;
 
         printTootieLogo();
         printHelloMessage();
 
-        line = in.nextLine();
-        while (!line.equals("bye")){
-            if (line.equals("list")){
+        userInput = in.nextLine();
+
+        // process all user inputs
+        while (!userInput.equals("bye")){
+            if (userInput.equals("list")){
                 // print items from the list if any
+                printDivider();
                 if (numListItems == 0){
-                    printDivider();
                     System.out.println("No tasks found! （´・ω・ `）");
                 } else {
-                    printDivider();
                     printListItems(numListItems, taskList);
                 }
-            } else if (line.startsWith("done")) {
-                // update isComplete status of that tast
-                taskNum = updateTaskStatus(taskList, line, numListItems);
+            } else if (userInput.startsWith("done")) {
+                // update isComplete status of that task
+                taskNum = updateTaskStatus(taskList, userInput, numListItems);
                 if (taskNum == -1){
                     printDivider();
                     System.out.println("No such task? (・∧‐)ゞ");
                 } else {
                     printDivider();
                     System.out.println("Nice! I've marked this task as done: ");
-                    System.out.println("    [✓] " + taskList[taskNum - 1].getTaskName());
+                    System.out.println("    [✓]" + taskList.get(taskNum - 1).getTaskName());
                     System.out.println("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧");
                 }
             } else {
                 // add new task to list
-                taskList[numListItems] = new Task(line, false);
+                taskList.addLast(new Task(userInput, false));
                 numListItems++;
                 printDivider();
-                System.out.println("added: " + line);
+                System.out.println("added: " + userInput);
             }
             printDivider();
-            line = in.nextLine();
+            userInput = in.nextLine();
         }
 
         printDivider();
