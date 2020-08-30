@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-
 public class Duke {
 
     /**
@@ -25,9 +24,9 @@ public class Duke {
                     "d/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  " +
                     "Example:  deadline t/submit report d/30-10-2020" + NEWLINE;
     public static final String EVENT_COMMAND_DESCRIPTION =
-            "event: add a scheduled event task to the list" + NEWLINE + "  Parameters:  todo t/TASKNAME s/START_TIME " +
-                    "e/END_TIME" + NEWLINE + "  Example:  todo t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45"
-                    + NEWLINE + "  Example:  todo t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE;
+            "event: add a scheduled event task to the list" + NEWLINE + "  Parameters:  event t/TASKNAME s/START_TIME " +
+                    "e/END_TIME" + NEWLINE + "  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45"
+                    + NEWLINE + "  Example:  event t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE;
     public static final String LIST_COMMAND_DESCRIPTION =
             "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
     public static final String BYE_COMMAND_DESCRIPTION =
@@ -36,8 +35,7 @@ public class Duke {
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
                     + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE
-                    + "NOTE: datetime entries can be of the format \"dd-MMM-yyyy HH:mm\" " + NEWLINE
-                    + "    OR \"dd-MMM-yyyy\"";
+                    + "NOTE: datetime entries can be strings";
 
     // Tootie logos
     public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
@@ -106,8 +104,6 @@ public class Duke {
     public static void main(String[] args) {
         String userInput;
         CommandType commandType = CommandType.START;
-        int taskNum;
-        boolean hasSaidBye = false;
 
         printTootieLogo();
         printHelloMessage();
@@ -160,9 +156,9 @@ public class Duke {
                 System.out.print((i + 1) + ". ");
                 taskList.get(i).printTaskType();
                 if (taskList.get(i).isComplete()) {
-                    System.out.print(TICK_SYMBOL);
+                    System.out.print(TICK_SYMBOL + " ");
                 } else {
-                    System.out.print(CROSS_SYMBOL);
+                    System.out.print(CROSS_SYMBOL + " ");
                 }
                 taskList.get(i).printTaskDescription();
             }
@@ -184,19 +180,19 @@ public class Duke {
 
     // figure out the command type from userInput
     private static CommandType extractCommandType(String userInput) {
-        if (userInput.startsWith("help")){
+        if (userInput.trim().startsWith("help")){
             return CommandType.HELP;
-        } else if (userInput.startsWith("todo")){
+        } else if (userInput.trim().startsWith("todo")){
             return CommandType.ADD_TODO;
-        } else if (userInput.startsWith("deadline")){
+        } else if (userInput.trim().startsWith("deadline")){
             return CommandType.ADD_DEADLINE;
-        } else if (userInput.startsWith("event")){
+        } else if (userInput.trim().startsWith("event")){
             return CommandType.ADD_EVENT;
-        } else if (userInput.startsWith("list")){
+        } else if (userInput.trim().startsWith("list")){
             return CommandType.LIST;
-        } else if (userInput.startsWith("done")){
+        } else if (userInput.trim().startsWith("done")){
             return CommandType.DONE;
-        } else if (userInput.startsWith("bye")){
+        } else if (userInput.trim().startsWith("bye")){
                 return CommandType.BYE;
         } else {
             return CommandType.UNRECOGNISED;
@@ -234,9 +230,11 @@ public class Duke {
 
     // add an event task to the allTasks list
     private static void addEvent(String userInput) {
-        // split by format
         boolean placementCorrect = true;
-        boolean dateFormatCorrect = true;
+
+        String taskName = "";
+        String startTimeUnformatted = "";
+        String endTimeUnformatted = "";
 
         // identify placements
         int taskNamePosition = userInput.indexOf("t/");
@@ -248,35 +246,61 @@ public class Duke {
             placementCorrect = false;
         } else {
             try {
-                String taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
-                String startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition);
-                String endTimeUnformatted = userInput.substring(endTimePosition + 2);
+                taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
+                startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition).trim();
+                endTimeUnformatted = userInput.substring(endTimePosition + 2).trim();
             } catch (StringIndexOutOfBoundsException exception) {
                 placementCorrect = false;
             }
         }
 
-
-        // check if date formats are correct
-        // check for version with hours and minutes
-        // check for version with no hours or minutes
-        // if neither version present then set dateFormatCorrect = false;
-
+        // checks if date is correctly formatted and valid
+        if (!placementCorrect) {
+            System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+            return;
+        }
 
         // add event to list
-//        allTasks.add(new Event(taskName, startTime, endTime));
+        allTasks.add(new Event(taskName.trim(), startTimeUnformatted, endTimeUnformatted));
+        System.out.println("added: ");
+        allTasks.get(numTasks).printTaskDescription();
         numTasks++;
-        System.out.println("added: " + userInput);
     }
 
     // adds a deadline task to the allTasks list
     private static void addDeadLine(String userInput) {
+        boolean placementCorrect = true;
 
+        String taskName = "";
+        String dueDateUnformatted = "";
 
-        // add deadline to list
-//        allTasks.add(new Deadline(taskName, by));
-//        numTasks++;
-//        System.out.println("added: " + userInput);
+        // identify placements
+        int taskNamePosition = userInput.indexOf("t/");
+        int dueDatePosition = userInput.indexOf("d/");
+
+        // check if placement is correct
+        if (taskNamePosition == -1 || dueDatePosition == -1) {
+            placementCorrect = false;
+        } else {
+            try {
+                taskName = userInput.substring(taskNamePosition + 2, dueDatePosition);
+                dueDateUnformatted = userInput.substring(dueDatePosition + 2).trim();
+            } catch (StringIndexOutOfBoundsException exception) {
+                placementCorrect = false;
+            }
+        }
+
+        // checks if date is correctly formatted and valid
+        if (!placementCorrect) {
+            System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
+            return;
+        }
+
+        // add event to list
+        allTasks.add(new Deadline(taskName.trim(), dueDateUnformatted));
+        System.out.println("added: ");
+        allTasks.get(numTasks).printTaskDescription();
+        numTasks++;
     }
 
     // adds a toto task to the allTasks list

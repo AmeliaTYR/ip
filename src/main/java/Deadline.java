@@ -1,14 +1,16 @@
+import java.util.Date;
+
 public class Deadline extends Task {
 
-    protected String by;
+    protected String dueDate;
 
-    public Deadline(String taskName, String by) {
+    public Deadline(String taskName, String dueDate) {
         super(taskName, false);
-        setBy(by);
+        setBy(dueDate);
     }
 
-    public void setBy(String by) {
-        this.by = by;
+    public void setBy(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override
@@ -18,6 +20,6 @@ public class Deadline extends Task {
 
     @Override
     public void printTaskDescription() {
-        System.out.println(super.getTaskName() + "(by: " + by + ")");
+        System.out.println(super.getTaskName() + " (by: " + dueDate + ")");
     }
 }
