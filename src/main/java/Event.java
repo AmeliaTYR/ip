@@ -1,28 +1,28 @@
 import java.util.Date;
 
 public class Event extends Task {
-    protected String startTime;
-    protected String endTime;
+    protected Date startTime;
+    protected Date endTime;
 
-    public Event(String taskName, String startTime, String endTime) {
+    public Event(String taskName, Date startTime, Date endTime) {
         super(taskName, false);
         setStartTime(startTime);
         setEndTime(endTime);
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

@@ -2,14 +2,14 @@ import java.util.Date;
 
 public class Deadline extends Task {
 
-    protected String dueDate;
+    protected Date dueDate;
 
-    public Deadline(String taskName, String dueDate) {
+    public Deadline(String taskName, Date dueDate) {
         super(taskName, false);
         setBy(dueDate);
     }
 
-    public void setBy(String dueDate) {
+    public void setBy(Date dueDate) {
         this.dueDate = dueDate;
     }
 

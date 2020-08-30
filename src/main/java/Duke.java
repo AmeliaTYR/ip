@@ -1,6 +1,10 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Calendar;
 
 public class Duke {
 
@@ -35,7 +39,8 @@ public class Duke {
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
                     + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE
-                    + "NOTE: datetime entries can be strings";
+                    + "NOTE: datetime entries can be of the format \"dd-MM-yyyy HH:mm\" " + NEWLINE
+                    + "    OR \"dd-MM-yyyy\"";
 
     // Tootie logos
     public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
@@ -232,9 +237,15 @@ public class Duke {
     private static void addEvent(String userInput) {
         boolean placementCorrect = true;
 
+        Date startTime = null;
+        Date endTime;
+
         String taskName = "";
         String startTimeUnformatted = "";
         String endTimeUnformatted = "";
+
+        SimpleDateFormat dateWithTime = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat dateWithoutTime = new SimpleDateFormat("dd-MM-yyyy");
 
         // identify placements
         int taskNamePosition = userInput.indexOf("t/");
@@ -255,13 +266,85 @@ public class Duke {
         }
 
         // checks if date is correctly formatted and valid
-        if (!placementCorrect) {
+        if (placementCorrect) {
+            // for start time
+            boolean isStartDateWithTime =
+                    startTimeUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4}) ([0-9]{2}):([0-9]{2})");
+            boolean isStartDateWithoutTime = startTimeUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4})");
+            // for end time
+            boolean isEndDateWithTime =
+                    endTimeUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4}) ([0-9]{2}):([0-9]{2})");
+            boolean isEndDateWithoutTime = endTimeUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4})");
+
+            if (isStartDateWithTime) {
+                try {
+                    startTime = dateWithTime.parse(startTimeUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else if(isStartDateWithoutTime){
+                try {
+                    startTime = dateWithoutTime.parse(startTimeUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+                return;
+            }
+
+            if (isEndDateWithTime) {
+                try {
+                    endTime = dateWithTime.parse(endTimeUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            } else if(isEndDateWithoutTime){
+                try {
+                    endTime = dateWithoutTime.parse(endTimeUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            } else {
+                System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+                return;
+            }
+
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(startTime);
+            try {
+                cal.getTime();
+            }
+            catch (Exception e) {
+                System.out.println("Invalid start date");
+                return;
+            }
+
+            cal.setLenient(false);
+            cal.setTime(endTime);
+            try {
+                cal.getTime();
+            }
+            catch (Exception e) {
+                System.out.println("Invalid end date");
+                return;
+            }
+
+            if(startTime.after(endTime)){
+                System.out.println("Error! End time cannot be before start time!");
+                return;
+            }
+
+        } else {
             System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
             return;
         }
 
         // add event to list
-        allTasks.add(new Event(taskName.trim(), startTimeUnformatted, endTimeUnformatted));
+        allTasks.add(new Event(taskName.trim(), startTime, endTime));
         System.out.println("added: ");
         allTasks.get(numTasks).printTaskDescription();
         numTasks++;
@@ -271,8 +354,13 @@ public class Duke {
     private static void addDeadLine(String userInput) {
         boolean placementCorrect = true;
 
+        Date dueDate = null;
+
         String taskName = "";
         String dueDateUnformatted = "";
+
+        SimpleDateFormat dateWithTime = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat dateWithoutTime = new SimpleDateFormat("dd-MM-yyyy");
 
         // identify placements
         int taskNamePosition = userInput.indexOf("t/");
@@ -291,13 +379,47 @@ public class Duke {
         }
 
         // checks if date is correctly formatted and valid
-        if (!placementCorrect) {
+        if (placementCorrect) {
+            // for due date
+            boolean isDueDateWithTime =
+                    dueDateUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4}) ([0-9]{2}):([0-9]{2})");
+            boolean isDueDateWithoutTime = dueDateUnformatted.matches("([0-9]{2})-([0-9]{2})-([0-9]{4})");
+
+            if (isDueDateWithTime) {
+                try {
+                    dueDate = dateWithTime.parse(dueDateUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else if(isDueDateWithoutTime){
+                try {
+                    dueDate = dateWithoutTime.parse(dueDateUnformatted);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
+                return;
+            }
+
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(dueDate);
+            try {
+                cal.getTime();
+            }
+            catch (Exception e) {
+                System.out.println("Invalid due date");
+                return;
+            }
+
+        } else {
             System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
             return;
         }
 
         // add event to list
-        allTasks.add(new Deadline(taskName.trim(), dueDateUnformatted));
+        allTasks.add(new Deadline(taskName.trim(), dueDate));
         System.out.println("added: ");
         allTasks.get(numTasks).printTaskDescription();
         numTasks++;
