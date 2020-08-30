@@ -2,8 +2,8 @@ public class Deadline extends Task {
 
     protected String by;
 
-    public Deadline(String description, String by) {
-        super(description, false);
+    public Deadline(String taskName, String by) {
+        super(taskName, false);
         setBy(by);
     }
 
@@ -12,7 +12,12 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+    public void printTaskType() {
+        System.out.print("[D]");
+    }
+
+    @Override
+    public void printTaskDescription() {
+        System.out.println(super.getTaskName() + "(by: " + by + ")");
     }
 }

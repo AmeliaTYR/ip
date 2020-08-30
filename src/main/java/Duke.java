@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.LinkedList;
+
 
 public class Duke {
 
@@ -13,6 +14,20 @@ public class Duke {
     private static final char INPUT_COMMENT_MARKER = '#';
 
     public static final String NEWLINE = System.lineSeparator();
+    public static final String HELP_COMMAND_TEXT = "help: displays a list of commands tootie understands" + NEWLINE
+            + "  Example:  help" + NEWLINE + NEWLINE + "todo: add a todo task to the list" + NEWLINE
+            + "  Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room " + NEWLINE + NEWLINE
+            + "deadline: add a task with a deadline to the list" + NEWLINE
+            + "  Parameters:  deadline t/TASKNAME d/DUE_DATE" + NEWLINE
+            + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE
+            + "  Example:  deadline t/submit report d/30-10-2020" + NEWLINE + NEWLINE
+            + "event: add a scheduled event task to the list" + NEWLINE
+            + "  Parameters:  todo t/TASKNAME s/START_TIME e/END_TIME" + NEWLINE
+            + "  Example:  todo t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45" + NEWLINE
+            + "  Example:  todo t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE + NEWLINE
+            + "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE + NEWLINE
+            + "bye: closes the program" + NEWLINE + "  Example:  bye" + NEWLINE + NEWLINE + "-----" + NEWLINE
+            + "NOTE: datetime entries can be of the format \"dd-MMM-yyyy HH:mm\" " + NEWLINE + "    OR \"dd-MMM-yyyy\"";
 
     // Tootie logos
     public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
@@ -52,6 +67,7 @@ public class Duke {
             " ___ | |_ _  ___ " + NEWLINE + "  | |/ _ \\ / _ \\| __| |/ _ \\" + NEWLINE + "  | | (_) | (_) | |_| " +
             "|  __/" + NEWLINE + "  \\_/\\___/ \\___/ \\__|_|\\___|" + NEWLINE;
 
+    // is complete indicator symbols
     public static final String TICK_SYMBOL = "[\u2713]";
     public static final String CROSS_SYMBOL = "[\u2717]";
 
@@ -67,16 +83,40 @@ public class Duke {
             + "\u2730\u002a\u002e\u003a\uff61\u2727" + "\u002a\u002e\uff61\u003a\uff61\u002a\u002e\uff61\u2731"
             + " " + "\u2500\u2500\u2500\u2500\u2500" + "\u2500\u2500";
 
+    public static final int MAX_TASKS = 100;
     /**
      * List of all tasks.
      */
-    private static LinkedList<Task> allTasks = new LinkedList<Task>();
+    private static ArrayList<Task> allTasks = new ArrayList<>(MAX_TASKS);
 
     /**
      * Total number of tasks in the list
      */
-    private static int numListItems = 0;
+    private static int numTasks = 0;
 
+    public static void main(String[] args) {
+        // TODO: make get user input its own function
+        String userInput;
+        CommandType commandType = CommandType.START;
+        int taskNum;
+        boolean hasSaidBye = false;
+
+        printTootieLogo();
+        printHelloMessage();
+
+        while(commandType != CommandType.BYE){
+            // get the input
+            userInput = SCANNER.nextLine();
+            // print the divider
+            printDivider();
+            // find out the command type
+            commandType = extractCommandType(userInput);
+            // process the command
+            executeCommand(commandType, userInput, allTasks);
+            // print the divider
+            printDivider();
+        }
+    }
 
     // prints Tootie logo (text art randomized each run)
     public static void printTootieLogo() {
@@ -107,98 +147,167 @@ public class Duke {
     public static void printFarewellMessage() {
         String farewellGreeting = "Bye! Hope to see you again soon! " + FLOWER_SMILE_EMOTICON + NEWLINE;
         System.out.print(farewellGreeting);
-        printDivider();
     }
 
     // prints all list items with index and check
-    public static void printListItems(int numListItems, LinkedList<Task> taskList) {
-        for (int i = 0; i < numListItems; i++) {
-            System.out.print((i + 1) + ". ");
-            if (taskList.get(i).isComplete()) {
-                System.out.print(TICK_SYMBOL);
-            } else {
-                System.out.print(CROSS_SYMBOL);
+    public static void printAllTasks(ArrayList<Task> taskList) {
+        if (numTasks == 0) {
+            System.out.println("No tasks found! " + HAPPY_EMOTICON);
+        } else {
+            for (int i = 0; i < numTasks; i++) {
+                System.out.print((i + 1) + ". ");
+                taskList.get(i).printTaskType();
+                if (taskList.get(i).isComplete()) {
+                    System.out.print(TICK_SYMBOL);
+                } else {
+                    System.out.print(CROSS_SYMBOL);
+                }
+                taskList.get(i).printTaskDescription();
             }
-            System.out.println(taskList.get(i).getTaskName());
         }
 
         // TODO: add "all done ʕ•ᴥ•ʔ" if all tasks done for now
     }
 
-    // TODO: add a help option to print list of commands
-    public static void help() {
-        String helpCommand = "";
-        System.out.println("Here is the list of commands I understand!" + NEWLINE);
+    private static void printConfusedMessage() {
+        System.out.println("Command not found? " + CONFUSED_EMOTICON);
+        System.out.println("Type \"help\" for a list of commands!");
     }
 
-    // updates tasks isComplete to true, returns -1 if userInput invalid
-    public static int updateTaskStatus(LinkedList<Task> taskList, String userInput, int numListItems) {
+    // TODO: complete help info
+    private static void printHelpInfo() {
+        System.out.println("Here is the list of commands I understand:" + NEWLINE + NEWLINE + HELP_COMMAND_TEXT);
+    }
+
+    // figure out the command type
+    private static CommandType extractCommandType(String userInput) {
+        if (userInput.startsWith("help")){
+            return CommandType.HELP;
+        } else if (userInput.startsWith("todo")){
+            return CommandType.ADD_TODO;
+        } else if (userInput.startsWith("deadline")){
+            return CommandType.ADD_DEADLINE;
+        } else if (userInput.startsWith("event")){
+            return CommandType.ADD_EVENT;
+        } else if (userInput.startsWith("list")){
+            return CommandType.LIST;
+        } else if (userInput.startsWith("done")){
+            return CommandType.DONE;
+        } else if (userInput.startsWith("bye")){
+                return CommandType.BYE;
+        } else {
+            return CommandType.UNRECOGNISED;
+        }
+    }
+
+    // execute the command as required
+    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) {
+        switch (commandType) {
+        case HELP:
+            printHelpInfo();
+            break;
+        case ADD_TODO:
+            addToDo(userInput);
+            break;
+        case ADD_DEADLINE:
+            addDeadLine(userInput);
+            break;
+        case ADD_EVENT:
+            addEvent(userInput);
+            break;
+        case LIST:
+            printAllTasks(allTasks);
+            break;
+        case DONE:
+            markTaskComplete(userInput, allTasks);
+            break;
+        case BYE:
+            printFarewellMessage();
+            break;
+        default:
+            printConfusedMessage();
+        }
+    }
+
+    private static void addEvent(String userInput) {
+        // split by format
+        boolean placementCorrect = true;
+        boolean dateFormatCorrect = true;
+
+        // identify placements
+        int taskNamePosition = userInput.indexOf("t/");
+        int startTimePosition = userInput.indexOf("s/");
+        int endTimePosition = userInput.indexOf("e/");
+
+        // check if placement is correct
+        if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1){
+            placementCorrect = false;
+        }
+
+        String taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
+        String startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition);
+        String endTimeUnformatted = userInput.substring(endTimePosition + 2);
+
+        // check if date formats are correct
+        // check for version with hours and minutes
+        // check for version with no hours or minutes
+        // if neither version present then set dateFormatCorrect = false;
+
+
+        // add event to list
+//        allTasks.add(new Event(taskName, startTime, endTime));
+        numTasks++;
+        System.out.println("added: " + userInput);
+    }
+
+    private static void addDeadLine(String userInput) {
+
+
+        // add deadline to list
+//        allTasks.add(new Deadline(taskName, by));
+//        numTasks++;
+//        System.out.println("added: " + userInput);
+    }
+
+    private static void addToDo(String userInput) {
+        // identify placements
+        int taskNamePosition = userInput.indexOf("t/");
+        if (taskNamePosition == -1){
+            System.out.println("todo wrong format :(");
+            return;
+        }
+        String taskName = userInput.substring(taskNamePosition + 2);
+
+        // add task to list
+        allTasks.add(new ToDo(taskName));
+        numTasks++;
+        System.out.println("added: " + taskName);
+    }
+
+
+    private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) {
         int taskNum;
+        // mark task in allTasks as complete
         try {
             taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
-            if (taskNum > numListItems || taskNum < 1) {
-                return -1;
+            if (taskNum > numTasks || taskNum < 1) {
+                taskNum = -1;
             } else {
-                taskList.get(taskNum - 1).setComplete(true);
-                return taskNum;
+                allTasks.get(taskNum - 1).setComplete(true);
             }
         } catch (NumberFormatException exception) {
-            return -1;
-        }
-    }
-
-    public static void main(String[] args) {
-        // TODO: make get user input its own function
-        String userInput;
-
-        int taskNum;
-
-        printTootieLogo();
-        printHelloMessage();
-
-        userInput = SCANNER.nextLine();
-
-        // TODO: only add things to list when add command is used, otherwise ignore
-        // process all user inputs
-        while (!userInput.equals("bye")) {
-            if (userInput.equals("list")) {
-                // print items from the list if any
-                printDivider();
-                if (numListItems == 0) {
-                    System.out.println("No tasks found! " + HAPPY_EMOTICON);
-                } else {
-                    printListItems(numListItems, allTasks);
-                }
-            } else if (userInput.startsWith("done")) {
-                // update isComplete status of that task
-                taskNum = updateTaskStatus(allTasks, userInput, numListItems);
-                // TODO: move the printing into the function updateTaskStatus
-                if (taskNum == -1) {
-                    printDivider();
-                    System.out.println("No such task? " + CONFUSED_EMOTICON);
-                } else {
-                    printDivider();
-                    System.out.println("Nice! I've marked this task as done: ");
-                    System.out.println("    " + TICK_SYMBOL + allTasks.get(taskNum - 1).getTaskName());
-                    System.out.println(SPARKLY_EMOTICON);
-                }
-            } else if (userInput.startsWith("done")){
-                // add new task to list
-                allTasks.addLast(new Task(userInput, false));
-                numListItems++;
-                printDivider();
-                System.out.println("added: " + userInput);
-            } else {
-                System.out.println("Command not found? " + CONFUSED_EMOTICON);
-            }
-            printDivider();
-            userInput = SCANNER.nextLine();
+            taskNum = -1;
         }
 
-        printDivider();
-        printFarewellMessage();
+        // print response
+        if (taskNum == -1) {
+            System.out.println("No such task? " + CONFUSED_EMOTICON);
+        } else {
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println("    " + TICK_SYMBOL + allTasks.get(taskNum - 1).getTaskName());
+            System.out.println(SPARKLY_EMOTICON);
+        }
     }
-
 }
 
 

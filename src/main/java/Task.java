@@ -26,4 +26,12 @@ public class Task {
     public boolean isComplete(){
         return isComplete;
     }
+
+    public void printTaskType(){
+        System.out.println("[?]");
+    }
+
+    public void printTaskDescription(){
+        System.out.println(taskName);
+    }
 }

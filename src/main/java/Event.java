@@ -1,26 +1,38 @@
-public class Event extends Task {
-    protected String startTime;
-    protected String endTime;
+import java.util.Date;
 
-    public Event(String taskName, boolean isComplete, String startTime, String endTime) {
-        super(taskName, isComplete);
+public class Event extends Task {
+    protected Date startTime;
+    protected Date endTime;
+
+    public Event(String taskName, Date startTime, Date endTime) {
+        super(taskName, false);
         setStartTime(startTime);
         setEndTime(endTime);
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public void printTaskType() {
+        System.out.println("[E]");
+    }
+
+    @Override
+    public void printTaskDescription() {
+        System.out.println(super.getTaskName() + "(from: " + startTime + " to " + endTime + ")");
     }
 }
