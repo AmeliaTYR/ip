@@ -8,26 +8,36 @@ public class Duke {
     /**
      * Version info of the program.
      */
-    private static final String VERSION = "Tootie - Version 1.1";
+    private static final String VERSION = "Tootie - Version 1.2";
 
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final char INPUT_COMMENT_MARKER = '#';
 
     public static final String NEWLINE = System.lineSeparator();
-    public static final String HELP_COMMAND_TEXT = "help: displays a list of commands tootie understands" + NEWLINE
-            + "  Example:  help" + NEWLINE + NEWLINE + "todo: add a todo task to the list" + NEWLINE
-            + "  Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room " + NEWLINE + NEWLINE
-            + "deadline: add a task with a deadline to the list" + NEWLINE
-            + "  Parameters:  deadline t/TASKNAME d/DUE_DATE" + NEWLINE
-            + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE
-            + "  Example:  deadline t/submit report d/30-10-2020" + NEWLINE + NEWLINE
-            + "event: add a scheduled event task to the list" + NEWLINE
-            + "  Parameters:  todo t/TASKNAME s/START_TIME e/END_TIME" + NEWLINE
-            + "  Example:  todo t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45" + NEWLINE
-            + "  Example:  todo t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE + NEWLINE
-            + "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE + NEWLINE
-            + "bye: closes the program" + NEWLINE + "  Example:  bye" + NEWLINE + NEWLINE + "-----" + NEWLINE
-            + "NOTE: datetime entries can be of the format \"dd-MMM-yyyy HH:mm\" " + NEWLINE + "    OR \"dd-MMM-yyyy\"";
+
+    // Help command descriptions
+    public static final String HELP_COMMAND_DESCRIPTION =
+            "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
+    public static final String TODO_COMMAND_DESCRIPTION = "todo: add a todo task to the" + " list" + NEWLINE + "  " +
+            "Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room " + NEWLINE;
+    public static final String DEADLINE_COMMAND_DESCRIPTION =
+            "deadline: add a task with a deadline to the list" + NEWLINE + "  Parameters:  deadline t/TASKNAME " +
+                    "d/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  " +
+                    "Example:  deadline t/submit report d/30-10-2020" + NEWLINE;
+    public static final String EVENT_COMMAND_DESCRIPTION =
+            "event: add a scheduled event task to the list" + NEWLINE + "  Parameters:  todo t/TASKNAME s/START_TIME " +
+                    "e/END_TIME" + NEWLINE + "  Example:  todo t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45"
+                    + NEWLINE + "  Example:  todo t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE;
+    public static final String LIST_COMMAND_DESCRIPTION =
+            "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
+    public static final String BYE_COMMAND_DESCRIPTION =
+            "bye: closes the program" + NEWLINE + "  Example:  bye" + NEWLINE;
+    public static final String HELP_COMMAND_TEXT =
+            HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
+                    + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
+                    + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE
+                    + "NOTE: datetime entries can be of the format \"dd-MMM-yyyy HH:mm\" " + NEWLINE
+                    + "    OR \"dd-MMM-yyyy\"";
 
     // Tootie logos
     public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
@@ -43,7 +53,6 @@ public class Duke {
             " -_)  " + NEWLINE + "  _|_|_   \\___/   \\___/   _\\__|   _|_|_   \\___|  " + NEWLINE + "_" +
             "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_" + "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| " + NEWLINE +
             "\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-' " + NEWLINE;
-
     public static final String BLOCKY_TOOTIE_LOGO = "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557 "
             + "\u2588\u2588\u2588\u2588\u2588\u2588" + "\u2557" + "  \u2588\u2588\u2588\u2588\u2588\u2588\u2557 "
             + "\u2588\u2588\u2588\u2588\u2588" + "\u2588"
@@ -95,7 +104,6 @@ public class Duke {
     private static int numTasks = 0;
 
     public static void main(String[] args) {
-        // TODO: make get user input its own function
         String userInput;
         CommandType commandType = CommandType.START;
         int taskNum;
@@ -105,15 +113,10 @@ public class Duke {
         printHelloMessage();
 
         while(commandType != CommandType.BYE){
-            // get the input
             userInput = SCANNER.nextLine();
-            // print the divider
             printDivider();
-            // find out the command type
             commandType = extractCommandType(userInput);
-            // process the command
             executeCommand(commandType, userInput, allTasks);
-            // print the divider
             printDivider();
         }
     }
@@ -127,7 +130,6 @@ public class Duke {
         logos[3] = THICK_TOOTIE_LOGO;
         Random rand = new Random(System.currentTimeMillis());
         System.out.println("Hello from" + NEWLINE + logos[Math.abs(rand.nextInt() % 4)] + NEWLINE + VERSION);
-
     }
 
     // prints the line divider
@@ -169,17 +171,18 @@ public class Duke {
         // TODO: add "all done ʕ•ᴥ•ʔ" if all tasks done for now
     }
 
+    // print the message when command is not understood
     private static void printConfusedMessage() {
         System.out.println("Command not found? " + CONFUSED_EMOTICON);
         System.out.println("Type \"help\" for a list of commands!");
     }
 
-    // TODO: complete help info
+    // print list of commands and example usage
     private static void printHelpInfo() {
         System.out.println("Here is the list of commands I understand:" + NEWLINE + NEWLINE + HELP_COMMAND_TEXT);
     }
 
-    // figure out the command type
+    // figure out the command type from userInput
     private static CommandType extractCommandType(String userInput) {
         if (userInput.startsWith("help")){
             return CommandType.HELP;
@@ -229,6 +232,7 @@ public class Duke {
         }
     }
 
+    // add an event task to the allTasks list
     private static void addEvent(String userInput) {
         // split by format
         boolean placementCorrect = true;
@@ -240,13 +244,18 @@ public class Duke {
         int endTimePosition = userInput.indexOf("e/");
 
         // check if placement is correct
-        if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1){
+        if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1) {
             placementCorrect = false;
+        } else {
+            try {
+                String taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
+                String startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition);
+                String endTimeUnformatted = userInput.substring(endTimePosition + 2);
+            } catch (StringIndexOutOfBoundsException exception) {
+                placementCorrect = false;
+            }
         }
 
-        String taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
-        String startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition);
-        String endTimeUnformatted = userInput.substring(endTimePosition + 2);
 
         // check if date formats are correct
         // check for version with hours and minutes
@@ -260,6 +269,7 @@ public class Duke {
         System.out.println("added: " + userInput);
     }
 
+    // adds a deadline task to the allTasks list
     private static void addDeadLine(String userInput) {
 
 
@@ -269,22 +279,24 @@ public class Duke {
 //        System.out.println("added: " + userInput);
     }
 
+    // adds a toto task to the allTasks list
     private static void addToDo(String userInput) {
         // identify placements
         int taskNamePosition = userInput.indexOf("t/");
         if (taskNamePosition == -1){
-            System.out.println("todo wrong format :(");
+            System.out.println("todo wrong format :(" + NEWLINE + NEWLINE + TODO_COMMAND_DESCRIPTION);
             return;
         }
         String taskName = userInput.substring(taskNamePosition + 2);
 
         // add task to list
-        allTasks.add(new ToDo(taskName));
+        allTasks.add(new ToDo(taskName.trim()));
         numTasks++;
-        System.out.println("added: " + taskName);
+        System.out.println("added: " + taskName.trim());
     }
 
 
+    // process the user input and mark the
     private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) {
         int taskNum;
         // mark task in allTasks as complete
