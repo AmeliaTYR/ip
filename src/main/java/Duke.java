@@ -11,7 +11,7 @@ public class Duke {
     private static final String VERSION = "Tootie - Version 1.3";
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final char INPUT_COMMENT_MARKER = '#';
+    private static final String INPUT_COMMENT_MARKER = "#";
 
     public static final String NEWLINE = System.lineSeparator();
 
@@ -19,7 +19,7 @@ public class Duke {
     public static final String HELP_COMMAND_DESCRIPTION =
             "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
     public static final String TODO_COMMAND_DESCRIPTION = "todo: add a todo task to the" + " list" + NEWLINE + "  " +
-            "Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room " + NEWLINE;
+            "Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room" + NEWLINE;
     public static final String DEADLINE_COMMAND_DESCRIPTION =
             "deadline: add a task with a deadline to the list" + NEWLINE + "  Parameters:  deadline t/TASKNAME " +
                     "d/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  " +
@@ -32,12 +32,12 @@ public class Duke {
             "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
     public static final String BYE_COMMAND_DESCRIPTION =
             "bye: closes the program" + NEWLINE + "  Example:  bye" + NEWLINE;
+    public static final String DATE_FORMAT_MESSAGE = "NOTE: datetime entries can be of the format \"dd-MM-yyyy" +
+            "HH:mm\" " + NEWLINE + "    OR \"dd-MM-yyyy\"";
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
-                    + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE
-                    + "NOTE: datetime entries can be of the format \"dd-MM-yyyy HH:mm\" " + NEWLINE
-                    + "    OR \"dd-MM-yyyy\"";
+                    + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE;
 
     // Tootie logos
     public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
@@ -115,11 +115,21 @@ public class Duke {
             do {
                 userInput = SCANNER.nextLine();
             } while (userInput.matches("(\r\n|[\n\r\u2028\u2029\u0085])?"));
+            if (userInput.startsWith(INPUT_COMMENT_MARKER)){
+                continue;
+            }
+            echoUserInput(userInput);
             printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
             printDivider();
         }
+    }
+
+    // echo the userInput for testing
+    private static void echoUserInput(String userInput) {
+        System.out.println(userInput);
+        return;
     }
 
     // prints Tootie logo (text art randomized each run)
@@ -284,7 +294,8 @@ public class Duke {
             startTimeFormatCorrect = false;
         }
         if (startTime == null || !startTimeFormatCorrect){
-            System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+            System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE);
             return;
         }
 
@@ -297,7 +308,8 @@ public class Duke {
             endTimeFormatCorrect = false;
         }
         if (endTime == null || !endTimeFormatCorrect){
-            System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+            System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE);
             return;
         }
 
@@ -317,10 +329,14 @@ public class Duke {
             return;
         }
 
+        if (taskName.isBlank()){
+            System.out.println("event taskname is empty? " + CONFUSED_EMOTICON);
+            return;
+        }
 
         // add event to list
         allTasks.add(new Event(taskName.trim(), startTime, endTime));
-        System.out.println("added: ");
+        System.out.println("added event:");
         allTasks.get(numTasks).printTaskDescription();
         numTasks++;
     }
@@ -368,7 +384,13 @@ public class Duke {
             dueDateFormatCorrect = false;
         }
         if (dueDate == null || !dueDateFormatCorrect){
-            System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
+            System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE);
+            return;
+        }
+
+        if (taskName.isBlank()){
+            System.out.println("deadline taskname is empty? " + CONFUSED_EMOTICON);
             return;
         }
 
@@ -380,7 +402,7 @@ public class Duke {
 
         // add event to list
         allTasks.add(new Deadline(taskName.trim(), dueDate));
-        System.out.println("added: ");
+        System.out.println("added deadline:");
         allTasks.get(numTasks).printTaskDescription();
         numTasks++;
     }
@@ -445,10 +467,15 @@ public class Duke {
         }
         String taskName = userInput.substring(taskNamePosition + 2);
 
+        if (taskName.isBlank()){
+            System.out.println("todo taskname is empty? " + CONFUSED_EMOTICON);
+            return;
+        }
+
         // add task to list
         allTasks.add(new ToDo(taskName.trim()));
         numTasks++;
-        System.out.println("added: " + taskName.trim());
+        System.out.println("added todo: " + taskName.trim());
     }
 
 
@@ -470,7 +497,7 @@ public class Duke {
 
         // print response
         if (taskExists) {
-            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println("Nice! I've marked this task as done:");
             System.out.println("    " + TICK_SYMBOL + allTasks.get(taskNum - 1).getTaskName());
             System.out.println(SPARKLY_EMOTICON);
         } else {
