@@ -112,7 +112,9 @@ public class Duke {
         printHelloMessage();
 
         while(commandType != CommandType.BYE){
-            userInput = SCANNER.nextLine();
+            do {
+                userInput = SCANNER.nextLine();
+            } while (userInput.matches("(\r\n|[\n\r\u2028\u2029\u0085])?"));
             printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
@@ -348,7 +350,7 @@ public class Duke {
                 placementCorrect = false;
             }
         }
-        if (placementCorrect) {
+        if (!placementCorrect) {
             System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
             return;
         }
