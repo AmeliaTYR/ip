@@ -93,7 +93,13 @@ public class Duke {
             + " " + "\u2500\u2500\u2500\u2500\u2500" + "\u2500\u2500";
 
     public static final int MAX_TASKS = 100;
+    public static final String TASKNAME_MARKER = "t/";
+    public static final String STARTTIME_MARKER = "s/";
+    public static final String ENDTIME_MARKER = "e/";
+    public static final String DUEDATE_MARKER = "d/";
+    public static final int NUM_LOGOS_AVALIABLE = 4;
 
+    // array containing all tasks the user has input
     private static ArrayList<Task> allTasks = new ArrayList<>(MAX_TASKS);
 
     private static int numTasks = 0;
@@ -116,7 +122,7 @@ public class Duke {
 
     // prints Tootie logo (text art randomized each run)
     public static void printTootieLogo() {
-        String[] logos = new String[4];
+        String[] logos = new String[NUM_LOGOS_AVALIABLE];
         logos[0] = SIMPLE_TOOTIE_LOGO;
         logos[1] = BLOCKY_TOOTIE_LOGO;
         logos[2] = TRAIN_THEME_TOOTIE_LOGO;
@@ -234,17 +240,14 @@ public class Duke {
         Date startTime = null;
         Date endTime = null;
 
-        SimpleDateFormat dateWithTime = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
-
         String taskName = "";
         String startTimeUnformatted = "";
         String endTimeUnformatted = "";
 
         // identify placements
-        int taskNamePosition = userInput.indexOf("t/");
-        int startTimePosition = userInput.indexOf("s/");
-        int endTimePosition = userInput.indexOf("e/");
+        int taskNamePosition = userInput.indexOf(TASKNAME_MARKER);
+        int startTimePosition = userInput.indexOf(STARTTIME_MARKER);
+        int endTimePosition = userInput.indexOf(ENDTIME_MARKER);
 
         // check if placement is correct
         if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1) {
@@ -258,61 +261,60 @@ public class Duke {
                 placementCorrect = false;
             }
         }
-
-        // checks if date is correctly formatted and valid
-        if (placementCorrect) {
-            // for start time
-            boolean isStartDateWithTime = isDateWithTime(startTimeUnformatted);
-            boolean isStartDateWithoutTime = isDateWithoutTime(startTimeUnformatted);
-            // for end time
-            boolean isEndDateWithTime = isDateWithTime(endTimeUnformatted);
-            boolean isEndDateWithoutTime = isDateWithoutTime(endTimeUnformatted);
-
-            if (isStartDateWithTime) {
-                startTime = parseDateWithTime(startTimeUnformatted);
-            } else if(isStartDateWithoutTime){
-                startTime = parseDateWithoutTime(startTimeUnformatted);
-            } else {
-                startTimeFormatCorrect = false;
-            }
-
-            if (startTime == null || !startTimeFormatCorrect){
-                System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
-                return;
-            }
-
-            if (isEndDateWithTime) {
-                endTime = parseDateWithTime(endTimeUnformatted);
-            } else if(isEndDateWithoutTime){
-                endTime = parseDateWithoutTime(endTimeUnformatted);
-            } else {
-                endTimeFormatCorrect = false;
-            }
-
-            if (endTime == null || !endTimeFormatCorrect){
-                System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
-                return;
-            }
-
-            // check if date entered is valid
-            if(!isValidDate(startTime)){
-                System.out.println("Invalid start date");
-                return;
-            }
-            if(!isValidDate(endTime)) {
-                System.out.println("Invalid end date");
-                return;
-            }
-
-            if(startTime.after(endTime)){
-                System.out.println("Error! End time cannot be before start time!");
-                return;
-            }
-
-        } else {
+        if (!placementCorrect) {
             System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
             return;
         }
+
+        // for start time
+        boolean isStartDateWithTime = isDateWithTime(startTimeUnformatted);
+        boolean isStartDateWithoutTime = isDateWithoutTime(startTimeUnformatted);
+        // for end time
+        boolean isEndDateWithTime = isDateWithTime(endTimeUnformatted);
+        boolean isEndDateWithoutTime = isDateWithoutTime(endTimeUnformatted);
+
+        // try to parse start time
+        if (isStartDateWithTime) {
+            startTime = parseDateWithTime(startTimeUnformatted);
+        } else if(isStartDateWithoutTime){
+            startTime = parseDateWithoutTime(startTimeUnformatted);
+        } else {
+            startTimeFormatCorrect = false;
+        }
+        if (startTime == null || !startTimeFormatCorrect){
+            System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+            return;
+        }
+
+        // try to parse end time
+        if (isEndDateWithTime) {
+            endTime = parseDateWithTime(endTimeUnformatted);
+        } else if(isEndDateWithoutTime){
+            endTime = parseDateWithoutTime(endTimeUnformatted);
+        } else {
+            endTimeFormatCorrect = false;
+        }
+        if (endTime == null || !endTimeFormatCorrect){
+            System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + EVENT_COMMAND_DESCRIPTION);
+            return;
+        }
+
+        // check if date entered is valid
+        if(!isValidDate(startTime)){
+            System.out.println("Invalid start date");
+            return;
+        }
+        if(!isValidDate(endTime)) {
+            System.out.println("Invalid end date");
+            return;
+        }
+
+        // check if start and end time are in chronological order
+        if(startTime.after(endTime)){
+            System.out.println("Error! End time cannot be before start time!");
+            return;
+        }
+
 
         // add event to list
         allTasks.add(new Event(taskName.trim(), startTime, endTime));
@@ -332,10 +334,10 @@ public class Duke {
         String dueDateUnformatted = "";
 
         // identify placements
-        int taskNamePosition = userInput.indexOf("t/");
-        int dueDatePosition = userInput.indexOf("d/");
+        int taskNamePosition = userInput.indexOf(TASKNAME_MARKER);
+        int dueDatePosition = userInput.indexOf(DUEDATE_MARKER);
 
-        // check if placement is correct
+        // check if placement is correct, split if correct
         if (taskNamePosition == -1 || dueDatePosition == -1) {
             placementCorrect = false;
         } else {
@@ -346,32 +348,31 @@ public class Duke {
                 placementCorrect = false;
             }
         }
-
-        // checks if date is correctly formatted and valid
         if (placementCorrect) {
-            // for due date
-            boolean isDueDateWithTime = isDateWithTime(dueDateUnformatted);
-            boolean isDueDateWithoutTime = isDateWithoutTime(dueDateUnformatted);
-
-            if (isDueDateWithTime) {
-                dueDate = parseDateWithTime(dueDateUnformatted);
-            } else if(isDueDateWithoutTime){
-                dueDate = parseDateWithoutTime(dueDateUnformatted);
-            } else {
-                dueDateFormatCorrect = false;
-            }
-            if (dueDate == null || !dueDateFormatCorrect){
-                System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
-                return;
-            }
-
-            // check if date entered is valid
-            if(!isValidDate(dueDate)){
-                System.out.println("Invalid due date");
-                return;
-            }
-        } else {
             System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
+            return;
+        }
+
+        // for due date
+        boolean isDueDateWithTime = isDateWithTime(dueDateUnformatted);
+        boolean isDueDateWithoutTime = isDateWithoutTime(dueDateUnformatted);
+
+        // try to parse due date
+        if (isDueDateWithTime) {
+            dueDate = parseDateWithTime(dueDateUnformatted);
+        } else if(isDueDateWithoutTime){
+            dueDate = parseDateWithoutTime(dueDateUnformatted);
+        } else {
+            dueDateFormatCorrect = false;
+        }
+        if (dueDate == null || !dueDateFormatCorrect){
+            System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + DEADLINE_COMMAND_DESCRIPTION);
+            return;
+        }
+
+        // check if date entered is valid
+        if(!isValidDate(dueDate)){
+            System.out.println("Invalid due date");
             return;
         }
 
@@ -396,7 +397,7 @@ public class Duke {
         return true;
     }
 
-    // parse the date if no time is included in input
+    // parse the date if time is not included in input
     private static Date parseDateWithoutTime(String unformattedDate) {
         Date formattedDate;
         SimpleDateFormat dateWithoutTime = new SimpleDateFormat("dd-MM-yyyy");
@@ -435,7 +436,7 @@ public class Duke {
     // adds a toto task to the allTasks list
     private static void addToDo(String userInput) {
         // identify placements
-        int taskNamePosition = userInput.indexOf("t/");
+        int taskNamePosition = userInput.indexOf(TASKNAME_MARKER);
         if (taskNamePosition == -1){
             System.out.println("Check todo input formatting!" + NEWLINE + NEWLINE + TODO_COMMAND_DESCRIPTION);
             return;
@@ -451,26 +452,27 @@ public class Duke {
 
     // process the user input and mark the
     private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) {
-        int taskNum;
-        // mark task in allTasks as complete
+        int taskNum = 0;
+        boolean taskExists = true;
+        // try to parse task and check if it exists
         try {
             taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
             if (taskNum > numTasks || taskNum < 1) {
-                taskNum = -1;
+                taskExists = false;
             } else {
                 allTasks.get(taskNum - 1).setComplete(true);
             }
         } catch (NumberFormatException exception) {
-            taskNum = -1;
+            taskExists = false;
         }
 
         // print response
-        if (taskNum == -1) {
-            System.out.println("No such task? " + CONFUSED_EMOTICON);
-        } else {
+        if (taskExists) {
             System.out.println("Nice! I've marked this task as done: ");
             System.out.println("    " + TICK_SYMBOL + allTasks.get(taskNum - 1).getTaskName());
             System.out.println(SPARKLY_EMOTICON);
+        } else {
+            System.out.println("No such task? " + CONFUSED_EMOTICON);
         }
     }
 }
