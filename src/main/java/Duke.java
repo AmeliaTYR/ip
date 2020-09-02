@@ -32,8 +32,8 @@ public class Duke {
             "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
     public static final String BYE_COMMAND_DESCRIPTION =
             "bye: closes the program" + NEWLINE + "  Example:  bye" + NEWLINE;
-    public static final String DATE_FORMAT_MESSAGE = "NOTE: datetime entries can be of the format \"dd-MM-yyyy" +
-            "HH:mm\" " + NEWLINE + "    OR \"dd-MM-yyyy\"";
+    public static final String DATE_FORMAT_MESSAGE = "NOTE: datetime entries can be of the format \"dd-MM-yyyy " +
+            "HH:mm\"" + NEWLINE + "    OR \"dd-MM-yyyy\"";
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
@@ -100,7 +100,7 @@ public class Duke {
     public static final int NUM_LOGOS_AVALIABLE = 4;
 
     // array containing all tasks the user has input
-    private static ArrayList<Task> allTasks = new ArrayList<>(MAX_TASKS);
+    private static ArrayList<Task> allTasks = new ArrayList<Task>(MAX_TASKS);
 
     private static int numTasks = 0;
 
@@ -112,18 +112,23 @@ public class Duke {
         printHelloMessage();
 
         while(commandType != CommandType.BYE){
-            do {
-                userInput = SCANNER.nextLine();
-            } while (userInput.matches("(\r\n|[\n\r\u2028\u2029\u0085])?"));
-            if (userInput.startsWith(INPUT_COMMENT_MARKER)){
-                continue;
-            }
+            userInput = getUserInput();
             echoUserInput(userInput);
             printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
             printDivider();
         }
+    }
+
+    // get user input, ignore comments and blank lines
+    private static String getUserInput() {
+        String userInput;
+        do {
+            userInput = SCANNER.nextLine();
+        } while (userInput.matches("(\r\n|[\n\r\u2028\u2029\u0085])?")
+                || userInput.startsWith(INPUT_COMMENT_MARKER));
+        return userInput;
     }
 
     // echo the userInput for testing
@@ -238,9 +243,23 @@ public class Duke {
         case BYE:
             printFarewellMessage();
             break;
+        case SAVE:
+            saveTasks(allTasks);
+            break;
+        case DELETE:
+            deleteTask(userInput, allTasks);
+            break;
         default:
             printConfusedMessage();
         }
+    }
+
+    // TODO: implement save tasks function
+    private static void saveTasks(ArrayList<Task> allTasks) {
+    }
+
+    // TODO: implement delete task function
+    private static void deleteTask(String userInput, ArrayList<Task> allTasks) {
     }
 
     // add an event task to the allTasks list
@@ -278,10 +297,10 @@ public class Duke {
             return;
         }
 
-        // for start time
+        // check format start time
         boolean isStartDateWithTime = isDateWithTime(startTimeUnformatted);
         boolean isStartDateWithoutTime = isDateWithoutTime(startTimeUnformatted);
-        // for end time
+        // check format end time
         boolean isEndDateWithTime = isDateWithTime(endTimeUnformatted);
         boolean isEndDateWithoutTime = isDateWithoutTime(endTimeUnformatted);
 
@@ -371,7 +390,7 @@ public class Duke {
             return;
         }
 
-        // for due date
+        // check format due date
         boolean isDueDateWithTime = isDateWithTime(dueDateUnformatted);
         boolean isDueDateWithoutTime = isDateWithoutTime(dueDateUnformatted);
 
@@ -407,6 +426,8 @@ public class Duke {
         numTasks++;
     }
 
+
+    // TODO fix the date validator it doesn't work properly :(
     // check if the date entered is a valid calendar date
     private static boolean isValidDate(Date date) {
         Calendar cal = Calendar.getInstance();

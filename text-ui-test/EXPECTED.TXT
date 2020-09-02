@@ -39,7 +39,7 @@ bye: closes the program
   Example:  bye
 
 -----
-NOTE: datetime entries can be of the format "dd-MM-yyyyHH:mm"
+NOTE: datetime entries can be of the format "dd-MM-yyyy HH:mm"
     OR "dd-MM-yyyy"
 
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────

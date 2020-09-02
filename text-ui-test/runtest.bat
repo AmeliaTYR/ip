@@ -19,6 +19,7 @@ java -Dfile.encoding=UTF8 -classpath ..\bin Duke < input.txt > ACTUAL.TXT
 
 
 REM compare the output to the expected output USE INTELLIJ INSTEAD FC BAD :(
+echo -------------------
 echo check output by selecting both files in intellij
 echo and then right click and find compare files
 echo or press ctrl + D after selecting
