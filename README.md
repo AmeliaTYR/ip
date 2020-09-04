@@ -18,15 +18,10 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 1. After the importing is complete, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()`. If the setup is correct, you should see something like the below:
    ```
    Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
+      _____                    _        _            
+     |_   _|   ___     ___    | |_     (_)     ___   
+       | |    / _ \   / _ \   |  _|    | |    / -_)  
+      _|_|_   \___/   \___/   _\__|   _|_|_   \___|  
+    _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| 
+    "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
    ```
-```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
