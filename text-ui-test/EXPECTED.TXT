@@ -6,7 +6,7 @@ Hello from
    ██║   ╚██████╔╝╚██████╔╝   ██║   ██║███████╗
    ╚═╝    ╚═════╝  ╚═════╝    ╚═╝   ╚═╝╚══════╝
 
-Tootie - Version 1.3
+Tootie - Version 1.4
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Hello! I'm Tootie!
 What can I do for you?
@@ -144,6 +144,7 @@ clean room (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 6 tasks!
 1. [T][✗] clean room
 2. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
 3. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
@@ -175,6 +176,7 @@ Nice! I've marked this task as done:
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 6 tasks!
 1. [T][✗] clean room
 2. [D][✓] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
 3. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)

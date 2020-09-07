@@ -1,4 +1,10 @@
-public class Task {
+package duke.task;
+
+public abstract class Task {
+    // is complete indicator symbols
+    public static final String TICK_SYMBOL = "[\u2713]";
+    public static final String CROSS_SYMBOL = "[\u2717]";
+
     private String taskName;
     private boolean isComplete;
 
@@ -33,5 +39,13 @@ public class Task {
 
     public void printTaskDescription(){
         System.out.println(taskName);
+    }
+
+    public void printCompletionIndicator (){
+        if (isComplete) {
+            System.out.print(TICK_SYMBOL + " ");
+        } else {
+            System.out.print(CROSS_SYMBOL + " ");
+        }
     }
 }
