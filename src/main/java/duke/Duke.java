@@ -3,6 +3,7 @@ package duke;
 import duke.exceptions.*;
 import duke.finalObjects.*;
 
+import duke.printers.TootiePrintFunctions;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -12,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Calendar;
 
@@ -31,16 +31,16 @@ public class Duke {
         String userInput;
         CommandType commandType = CommandType.START;
 
-        printTootieLogo();
-        printHelloMessage();
+        TootiePrintFunctions.printTootieLogo();
+        TootiePrintFunctions.printHelloMessage();
 
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
             echoUserInput(userInput);
-            printDivider();
+            TootiePrintFunctions.printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
-            printDivider();
+            TootiePrintFunctions.printDivider();
         }
     }
 
@@ -59,34 +59,6 @@ public class Duke {
         System.out.println(userInput);
     }
 
-    // prints Tootie logo (text art randomized each run)
-    public static void printTootieLogo() {
-        String[] logos = new String[TootieConstants.NUM_LOGOS_AVAILABLE];
-        logos[0] = TootieSymbols.SIMPLE_TOOTIE_LOGO;
-        logos[1] = TootieSymbols.BLOCKY_TOOTIE_LOGO;
-        logos[2] = TootieSymbols.TRAIN_THEME_TOOTIE_LOGO;
-        logos[3] = TootieSymbols.THICK_TOOTIE_LOGO;
-        Random rand = new Random(System.currentTimeMillis());
-        System.out.println(String.format(TootieNormalMsgs.LOGO_PRINT_FORMAT, logos[Math.abs(rand.nextInt() % 4)]));
-    }
-
-    // prints the line divider
-    public static void printDivider() {
-        System.out.println(TootieSymbols.SPARKLY_TEXT_DIVIDER);
-    }
-
-    // prints the hello when starting
-    public static void printHelloMessage() {
-        printDivider();
-        System.out.print(TootieNormalMsgs.HELLO_GREETING);
-        printDivider();
-    }
-
-    // prints farewell message
-    public static void printFarewellMessage() {
-        System.out.print(TootieNormalMsgs.FAREWELL_GREETING);
-    }
-
     // prints all list items with index and check
     public static void printAllTasks (ArrayList<Task> taskList) throws TasklistEmptyException {
         if (numTasks == 0) {
@@ -102,17 +74,6 @@ public class Duke {
         }
 
         // TODO: print "all done ʕ•ᴥ•ʔ" if all tasks done for now
-    }
-
-    // print the message when command is not understood
-    private static void printConfusedMessage() {
-        System.out.println(TootieErrorMsgs.COMMAND_NOT_FOUND_MSG);
-        System.out.println(TootieErrorMsgs.SUGGEST_HELP_OPTION_MSG);
-    }
-
-    // print list of commands and example usage
-    private static void printHelpInfo() {
-        System.out.println(TootieNormalMsgs.HELP_INFO_MSG);
     }
 
     // figure out the command type from userInput
@@ -140,7 +101,7 @@ public class Duke {
     private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) {
         switch (commandType) {
         case HELP:
-            printHelpInfo();
+            TootiePrintFunctions.printHelpInfo();
             break;
         case ADD_TODO:
             try {
@@ -198,7 +159,7 @@ public class Duke {
             }
             break;
         case BYE:
-            printFarewellMessage();
+            TootiePrintFunctions.printFarewellMessage();
             break;
         case SAVE:
             saveTasks(allTasks);
@@ -207,7 +168,7 @@ public class Duke {
             deleteTask(userInput, allTasks);
             break;
         default:
-            printConfusedMessage();
+            TootiePrintFunctions.printConfusedMessage();
         }
     }
 
