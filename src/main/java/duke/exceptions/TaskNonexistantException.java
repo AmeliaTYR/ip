@@ -1,2 +1,5 @@
-package duke.exceptions;public class TaskNonexistantException extends Throwable {
+package duke.exceptions;
+
+public class TaskNonexistantException extends Throwable {
+
 }
