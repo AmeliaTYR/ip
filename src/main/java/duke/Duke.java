@@ -3,11 +3,11 @@ package duke;
 import duke.exceptions.*;
 import duke.finalObjects.*;
 
-import duke.tootieFunctions.Printer;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
+import duke.tootieFunctions.Printer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
