@@ -2,6 +2,8 @@ package duke;
 
 import duke.exceptions.*;
 import duke.finalObjects.*;
+
+import duke.tootieFunctions.Printer;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -11,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Calendar;
 
@@ -30,18 +31,16 @@ public class Duke {
         String userInput;
         CommandType commandType = CommandType.START;
 
-        System.out.println(TootieStrings.BLOCKY_TOOTIE_LOGO);
-
-        printTootieLogo();
-        printHelloMessage();
+        Printer.printTootieLogo();
+        Printer.printHelloMessage();
 
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
             echoUserInput(userInput);
-            printDivider();
+            Printer.printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
-            printDivider();
+            Printer.printDivider();
         }
     }
 
@@ -60,41 +59,13 @@ public class Duke {
         System.out.println(userInput);
     }
 
-    // prints Tootie logo (text art randomized each run)
-    public static void printTootieLogo() {
-        String[] logos = new String[TootieConstants.NUM_LOGOS_AVAILABLE];
-        logos[0] = TootieStrings.SIMPLE_TOOTIE_LOGO;
-        logos[1] = TootieStrings.BLOCKY_TOOTIE_LOGO;
-        logos[2] = TootieStrings.TRAIN_THEME_TOOTIE_LOGO;
-        logos[3] = TootieStrings.THICK_TOOTIE_LOGO;
-        Random rand = new Random(System.currentTimeMillis());
-        System.out.println("Hello from" + NEWLINE + logos[Math.abs(rand.nextInt() % 4)] + NEWLINE + TootieStrings.VERSION);
-    }
-
-    // prints the line divider
-    public static void printDivider() {
-        System.out.println(TootieStrings.SPARKLY_TEXT_DIVIDER);
-    }
-
-    // prints the hello when starting
-    public static void printHelloMessage() {
-        printDivider();
-        System.out.print(TootieStrings.HELLO_GREETING);
-        printDivider();
-    }
-
-    // prints farewell message
-    public static void printFarewellMessage() {
-        System.out.print(TootieStrings.FAREWELL_GREETING);
-    }
-
     // prints all list items with index and check
     public static void printAllTasks (ArrayList<Task> taskList) throws TasklistEmptyException {
         if (numTasks == 0) {
             throw new TasklistEmptyException();
         }
 
-        System.out.println("You have " + numTasks +" tasks!");
+        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks));
         for (int i = 0; i < numTasks; i++) {
             System.out.print((i + 1) + ". ");
             taskList.get(i).printTaskType();
@@ -103,17 +74,6 @@ public class Duke {
         }
 
         // TODO: print "all done ʕ•ᴥ•ʔ" if all tasks done for now
-    }
-
-    // print the message when command is not understood
-    private static void printConfusedMessage() {
-        System.out.println("Command not found? " + TootieStrings.CONFUSED_EMOTICON);
-        System.out.println("Type \"help\" for a list of commands!");
-    }
-
-    // print list of commands and example usage
-    private static void printHelpInfo() {
-        System.out.println("Here is the list of commands I understand:" + NEWLINE + NEWLINE + TootieStrings.HELP_COMMAND_TEXT);
     }
 
     // figure out the command type from userInput
@@ -141,50 +101,47 @@ public class Duke {
     private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) {
         switch (commandType) {
         case HELP:
-            printHelpInfo();
+            Printer.printHelpInfo();
             break;
         case ADD_TODO:
             try {
                 addToDo(userInput);
             } catch (ToDoInputWrongFormatException e){
-                System.out.println("Check todo input formatting!" + NEWLINE + NEWLINE + TootieStrings.TODO_COMMAND_DESCRIPTION);
+                System.out.println(TootieErrorMsgs.TODO_WRONG_FORMAT_MSG);
             } catch (TaskNameEmptyException e){
-                System.out.println("todo taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+                System.out.println(TootieErrorMsgs.TODO_TASKNAME_EMPTY_MSG);
             }
             break;
         case ADD_DEADLINE:
             try {
                 addDeadline(userInput);
             } catch (DeadlineInputWrongFormatException e) {
-                System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION);
+                System.out.println(TootieErrorMsgs.DEADLINE_WRONG_FORMAT_MSG);
             } catch (DueDateWrongFormatException e) {
-                System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+                System.out.println(TootieErrorMsgs.DUEDATE_WRONG_FORMAT_MSG);
             } catch (TaskNameEmptyException e) {
-                System.out.println("deadline taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+                System.out.println(TootieErrorMsgs.DEADLINE_TASKNAME_EMPTY_MSG);
             } catch (InvalidDueDateException e){
-                System.out.println("Invalid due date");
+                System.out.println(TootieErrorMsgs.INVALID_DUE_DATE_MSG);
             }
             break;
         case ADD_EVENT:
             try {
                 addEvent(userInput);
             } catch (EventInputWrongFormatException e) {
-                System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION);
+                System.out.println(TootieErrorMsgs.EVENT_WRONG_FORMAT_MSG);
             } catch (InvalidStartDateException e) {
-                System.out.println("Invalid start date");
+                System.out.println(TootieErrorMsgs.INVALID_START_DATE_MSG);
             } catch (InvalidEndTimeException e) {
-                System.out.println("Invalid end date");
+                System.out.println(TootieErrorMsgs.INVALID_END_DATE_MSG);
             } catch (StartTimeWrongFormatException e ) {
-                System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+                System.out.println(TootieErrorMsgs.STARTDATE_WRONG_FORMAT_MSG);
             } catch (EndTimeWrongFormatException e) {
-                System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+                System.out.println(TootieErrorMsgs.ENDDATE_WRONG_FORMAT_MSG);
             } catch (EndTimeBeforeStartTimeException e) {
-                System.out.println("Error! End time cannot be before start time!");
+                System.out.println(TootieErrorMsgs.ENDTIME_BEFORE_STARTIME_ERROR_MSG);
             } catch (TaskNameEmptyException e) {
-                System.out.println("event taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+                System.out.println(TootieErrorMsgs.EVENT_TASKNAME_EMPTY_MSG);
             }
             break;
         case LIST:
@@ -198,11 +155,11 @@ public class Duke {
             try {
                 markTaskComplete(userInput, allTasks);
             } catch (TaskNonexistantException e){
-                System.out.println("No such task? " + TootieStrings.CONFUSED_EMOTICON);
+                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case BYE:
-            printFarewellMessage();
+            Printer.printFarewellMessage();
             break;
         case SAVE:
             saveTasks(allTasks);
@@ -211,7 +168,7 @@ public class Duke {
             deleteTask(userInput, allTasks);
             break;
         default:
-            printConfusedMessage();
+            Printer.printConfusedMessage();
         }
     }
 
@@ -429,8 +386,7 @@ public class Duke {
         numTasks++;
         System.out.println("added todo: " + taskName.trim());
     }
-
-
+    
     // process the user input and mark the
     private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
         int taskNum = 0;
@@ -448,13 +404,7 @@ public class Duke {
         }
 
         // print response
-        printTaskMarkedDoneResponse(allTasks.get(taskNum - 1).getTaskName());
-    }
-
-    private static void printTaskMarkedDoneResponse(String taskName) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("    " + TootieStrings.TICK_SYMBOL + taskName);
-        System.out.println(TootieStrings.SPARKLY_EMOTICON);
+        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG, allTasks.get(taskNum - 1).getTaskName()));
     }
 }
 
