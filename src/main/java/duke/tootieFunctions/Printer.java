@@ -1,4 +1,4 @@
-package duke.printers;
+package duke.tootieFunctions;
 
 import duke.finalObjects.TootieConstants;
 import duke.finalObjects.TootieErrorMsgs;
@@ -7,7 +7,7 @@ import duke.finalObjects.TootieSymbols;
 
 import java.util.Random;
 
-public class TootiePrintFunctions {
+public class PrintFunctions {
     // prints the line divider
     public static void printDivider() {
         System.out.println(TootieSymbols.SPARKLY_TEXT_DIVIDER);
