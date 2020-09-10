@@ -1,6 +1,6 @@
 package duke;
 
-import duke.exceptions.*;
+import duke.exceptions.TasklistEmptyException;
 import duke.finalObjects.*;
 import duke.task.ToDo;
 import duke.task.Deadline;
@@ -102,6 +102,7 @@ public class Duke {
             taskList.get(i).printTaskDescription();
         }
 
+
         // TODO: print "all done ʕ•ᴥ•ʔ" if all tasks done for now
     }
 
@@ -144,48 +145,13 @@ public class Duke {
             printHelpInfo();
             break;
         case ADD_TODO:
-            try {
-                addToDo(userInput);
-            } catch (ToDoInputWrongFormatException e){
-                System.out.println("Check todo input formatting!" + NEWLINE + NEWLINE + TootieStrings.TODO_COMMAND_DESCRIPTION);
-            } catch (TaskNameEmptyException e){
-                System.out.println("todo taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
-            }
+            addToDo(userInput);
             break;
         case ADD_DEADLINE:
-            try {
-                addDeadline(userInput);
-            } catch (DeadlineInputWrongFormatException e) {
-                System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION);
-            } catch (DueDateWrongFormatException e) {
-                System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
-            } catch (TaskNameEmptyException e) {
-                System.out.println("deadline taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
-            } catch (InvalidDueDateException e){
-                System.out.println("Invalid due date");
-            }
+            addDeadline(userInput);
             break;
         case ADD_EVENT:
-            try {
-                addEvent(userInput);
-            } catch (EventInputWrongFormatException e) {
-                System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION);
-            } catch (InvalidStartDateException e) {
-                System.out.println("Invalid start date");
-            } catch (InvalidEndTimeException e) {
-                System.out.println("Invalid end date");
-            } catch (StartTimeWrongFormatException e ) {
-                System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
-            } catch (EndTimeWrongFormatException e) {
-                System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
-                        + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
-            } catch (EndTimeBeforeStartTimeException e) {
-                System.out.println("Error! End time cannot be before start time!");
-            } catch (TaskNameEmptyException e) {
-                System.out.println("event taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
-            }
+            addEvent(userInput);
             break;
         case LIST:
             try {
@@ -195,11 +161,7 @@ public class Duke {
             }
             break;
         case DONE:
-            try {
-                markTaskComplete(userInput, allTasks);
-            } catch (TaskNonexistantException e){
-                System.out.println("No such task? " + TootieStrings.CONFUSED_EMOTICON);
-            }
+            markTaskComplete(userInput, allTasks);
             break;
         case BYE:
             printFarewellMessage();
@@ -224,7 +186,11 @@ public class Duke {
     }
 
     // add an event task to the allTasks list
-    private static void addEvent(String userInput) throws EventInputWrongFormatException, InvalidStartDateException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
+    private static void addEvent(String userInput) {
+        boolean isPlacementCorrect = true;
+        boolean startTimeFormatCorrect = true;
+        boolean endTimeFormatCorrect = true;
+
         Date startTime = null;
         Date endTime = null;
 
@@ -239,15 +205,19 @@ public class Duke {
 
         // check if placement is correct
         if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1) {
-            throw new EventInputWrongFormatException();
+            isPlacementCorrect = false;
         } else {
             try {
                 taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
                 startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition).trim();
                 endTimeUnformatted = userInput.substring(endTimePosition + 2).trim();
             } catch (StringIndexOutOfBoundsException exception) {
-                throw new EventInputWrongFormatException();
+                isPlacementCorrect = false;
             }
+        }
+        if (!isPlacementCorrect) {
+            System.out.println("Check event input formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION);
+            return;
         }
 
         // check format start time
@@ -263,10 +233,12 @@ public class Duke {
         } else if(isStartDateWithoutTime){
             startTime = parseDateWithoutTime(startTimeUnformatted);
         } else {
-            throw new StartTimeWrongFormatException();
+            startTimeFormatCorrect = false;
         }
-        if (startTime == null){
-            throw new StartTimeWrongFormatException();
+        if (startTime == null || !startTimeFormatCorrect){
+            System.out.println("Check start date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+            return;
         }
 
         // try to parse end time
@@ -275,27 +247,33 @@ public class Duke {
         } else if(isEndDateWithoutTime){
             endTime = parseDateWithoutTime(endTimeUnformatted);
         } else {
-            throw new EndTimeWrongFormatException();
+            endTimeFormatCorrect = false;
         }
-        if (endTime == null){
-            throw new EndTimeWrongFormatException();
+        if (endTime == null || !endTimeFormatCorrect){
+            System.out.println("Check end date formatting!" + NEWLINE + NEWLINE + TootieStrings.EVENT_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+            return;
         }
 
         // check if date entered is valid
         if(!isValidDate(startTime)){
-            throw new InvalidStartDateException();
+            System.out.println("Invalid start date");
+            return;
         }
         if(!isValidDate(endTime)) {
-            throw new InvalidEndTimeException();
+            System.out.println("Invalid end date");
+            return;
         }
 
         // check if start and end time are in chronological order
         if(startTime.after(endTime)){
-            throw new EndTimeBeforeStartTimeException();
+            System.out.println("Error! End time cannot be before start time!");
+            return;
         }
 
         if (taskName.isBlank()){
-            throw new TaskNameEmptyException();
+            System.out.println("event taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+            return;
         }
 
         // add event to list
@@ -306,7 +284,10 @@ public class Duke {
     }
 
     // adds a deadline task to the allTasks list
-    private static void addDeadline(String userInput) throws DeadlineInputWrongFormatException, DueDateWrongFormatException, TaskNameEmptyException, InvalidDueDateException {
+    private static void addDeadline(String userInput) {
+        boolean isPlacementCorrect = true;
+        boolean dueDateFormatCorrect = true;
+
         Date dueDate = null;
 
         String taskName = "";
@@ -318,14 +299,18 @@ public class Duke {
 
         // check if placement is correct, split if correct
         if (taskNamePosition == -1 || dueDatePosition == -1) {
-            throw new DeadlineInputWrongFormatException();
+            isPlacementCorrect = false;
         } else {
             try {
                 taskName = userInput.substring(taskNamePosition + 2, dueDatePosition);
                 dueDateUnformatted = userInput.substring(dueDatePosition + 2).trim();
             } catch (StringIndexOutOfBoundsException exception) {
-                throw new DeadlineInputWrongFormatException();
+                isPlacementCorrect = false;
             }
+        }
+        if (!isPlacementCorrect) {
+            System.out.println("Check deadline input formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION);
+            return;
         }
 
         // check format due date
@@ -338,19 +323,23 @@ public class Duke {
         } else if(isDueDateWithoutTime){
             dueDate = parseDateWithoutTime(dueDateUnformatted);
         } else {
-            throw new DueDateWrongFormatException();
+            dueDateFormatCorrect = false;
         }
-        if (dueDate == null){
-            throw new DueDateWrongFormatException();
+        if (dueDate == null || !dueDateFormatCorrect){
+            System.out.println("Check due date formatting!" + NEWLINE + NEWLINE + TootieStrings.DEADLINE_COMMAND_DESCRIPTION
+                    + NEWLINE + NEWLINE + TootieStrings.DATE_FORMAT_MESSAGE + NEWLINE);
+            return;
         }
 
         if (taskName.isBlank()){
-            throw new TaskNameEmptyException();
+            System.out.println("deadline taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+            return;
         }
 
         // check if date entered is valid
         if(!isValidDate(dueDate)){
-            throw new InvalidDueDateException();
+            System.out.println("Invalid due date");
+            return;
         }
 
         // add event to list
@@ -412,16 +401,18 @@ public class Duke {
     }
 
     // adds a toto task to the allTasks list
-    private static void addToDo(String userInput) throws ToDoInputWrongFormatException, TaskNameEmptyException {
+    private static void addToDo(String userInput) {
         // identify placements
         int taskNamePosition = userInput.indexOf(TootieInputMarkers.TASKNAME_MARKER);
         if (taskNamePosition == -1){
-            throw new ToDoInputWrongFormatException();
+            System.out.println("Check todo input formatting!" + NEWLINE + NEWLINE + TootieStrings.TODO_COMMAND_DESCRIPTION);
+            return;
         }
         String taskName = userInput.substring(taskNamePosition + 2);
 
         if (taskName.isBlank()){
-            throw new TaskNameEmptyException();
+            System.out.println("todo taskname is empty? " + TootieStrings.CONFUSED_EMOTICON);
+            return;
         }
 
         // add task to list
@@ -432,29 +423,29 @@ public class Duke {
 
 
     // process the user input and mark the
-    private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
+    private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) {
         int taskNum = 0;
-
+        boolean taskExists = true;
         // try to parse task and check if it exists
         try {
             taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
             if (taskNum > numTasks || taskNum < 1) {
-                throw new TaskNonexistantException();
+                taskExists = false;
             } else {
                 allTasks.get(taskNum - 1).setComplete(true);
             }
         } catch (NumberFormatException exception) {
-            throw new TaskNonexistantException();
+            taskExists = false;
         }
 
         // print response
-        printTaskMarkedDoneResponse(allTasks.get(taskNum - 1).getTaskName());
-    }
-
-    private static void printTaskMarkedDoneResponse(String taskName) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("    " + TootieStrings.TICK_SYMBOL + taskName);
-        System.out.println(TootieStrings.SPARKLY_EMOTICON);
+        if (taskExists) {
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println("    " + TootieStrings.TICK_SYMBOL + allTasks.get(taskNum - 1).getTaskName());
+            System.out.println(TootieStrings.SPARKLY_EMOTICON);
+        } else {
+            System.out.println("No such task? " + TootieStrings.CONFUSED_EMOTICON);
+        }
     }
 }
 
