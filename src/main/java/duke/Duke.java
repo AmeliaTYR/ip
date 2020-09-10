@@ -3,7 +3,7 @@ package duke;
 import duke.exceptions.*;
 import duke.finalObjects.*;
 
-import duke.printers.TootiePrintFunctions;
+import duke.tootieFunctions.Printer;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -31,16 +31,16 @@ public class Duke {
         String userInput;
         CommandType commandType = CommandType.START;
 
-        TootiePrintFunctions.printTootieLogo();
-        TootiePrintFunctions.printHelloMessage();
+        Printer.printTootieLogo();
+        Printer.printHelloMessage();
 
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
             echoUserInput(userInput);
-            TootiePrintFunctions.printDivider();
+            Printer.printDivider();
             commandType = extractCommandType(userInput);
             executeCommand(commandType, userInput, allTasks);
-            TootiePrintFunctions.printDivider();
+            Printer.printDivider();
         }
     }
 
@@ -101,7 +101,7 @@ public class Duke {
     private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) {
         switch (commandType) {
         case HELP:
-            TootiePrintFunctions.printHelpInfo();
+            Printer.printHelpInfo();
             break;
         case ADD_TODO:
             try {
@@ -159,7 +159,7 @@ public class Duke {
             }
             break;
         case BYE:
-            TootiePrintFunctions.printFarewellMessage();
+            Printer.printFarewellMessage();
             break;
         case SAVE:
             saveTasks(allTasks);
@@ -168,7 +168,7 @@ public class Duke {
             deleteTask(userInput, allTasks);
             break;
         default:
-            TootiePrintFunctions.printConfusedMessage();
+            Printer.printConfusedMessage();
         }
     }
 

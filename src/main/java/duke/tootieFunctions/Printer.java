@@ -7,7 +7,7 @@ import duke.finalObjects.TootieSymbols;
 
 import java.util.Random;
 
-public class PrintFunctions {
+public class Printer {
     // prints the line divider
     public static void printDivider() {
         System.out.println(TootieSymbols.SPARKLY_TEXT_DIVIDER);
