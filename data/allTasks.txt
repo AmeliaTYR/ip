@@ -1,4 +1,4 @@
-Total tasks: 2
+Total tasks: 5
 
 Task completion status:
 0 is not done([✗]), 1 is done([✓])
@@ -13,5 +13,8 @@ Examples:
 
 --------------------------------------------------------
 Tasks:
-[T][0]1241241
-[T][0]afafdsfdasdfas
+[D][1]write essay (by:Thu Dec 31 04:55:00 SGT 2020)
+[D][0]write essay (by:Thu Dec 31 04:55:00 SGT 2020)
+[D][0]write essay (by:Thu Dec 31 04:55:00 SGT 2020)
+[D][1]write essay (by:Thu Dec 31 04:55:00 SGT 2020)
+[D][0]write essay (by:Thu Dec 31 04:55:00 SGT 2020)

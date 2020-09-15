@@ -66,6 +66,8 @@ public class Duke {
         } catch (FileEmptyException e) {
             System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);
         }
+        
+        Printer.printDivider();
 
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
