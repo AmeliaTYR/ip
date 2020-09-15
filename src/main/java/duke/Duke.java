@@ -1,6 +1,23 @@
 package duke;
 
-import duke.exceptions.*;
+import duke.exceptions.DeadlineInputWrongFormatException;
+import duke.exceptions.DueDateWrongFormatException;
+import duke.exceptions.EndTimeBeforeStartTimeException;
+import duke.exceptions.EndTimeWrongFormatException;
+import duke.exceptions.EventInputWrongFormatException;
+import duke.exceptions.FileEmptyException;
+import duke.exceptions.InvalidDueDateException;
+import duke.exceptions.InvalidEndTimeException;
+import duke.exceptions.InvalidStartDateException;
+import duke.exceptions.SavedTaskFormatWrongException;
+import duke.exceptions.StartTimeWrongFormatException;
+import duke.exceptions.TaskNameEmptyException;
+import duke.exceptions.TaskNonexistantException;
+import duke.exceptions.TaskTypeInvalidException;
+import duke.exceptions.TasklistEmptyException;
+import duke.exceptions.ToDoInputWrongFormatException;
+import duke.exceptions.TotalTasksNumInvalidException;
+
 import duke.finalObjects.*;
 
 import duke.task.ToDo;
@@ -9,12 +26,20 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.tootieFunctions.Printer;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Calendar;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Duke {
 
@@ -34,6 +59,14 @@ public class Duke {
         Printer.printTootieLogo();
         Printer.printHelloMessage();
 
+        try{
+            readAllTasksFile();
+        } catch (FileNotFoundException e) {
+            System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
+        } catch (FileEmptyException e) {
+            System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);
+        }
+
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
             echoUserInput(userInput);
@@ -42,6 +75,225 @@ public class Duke {
             executeCommand(commandType, userInput, allTasks);
             Printer.printDivider();
         }
+
+        try {
+            saveTasks(allTasks);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // try to read the allTasks.txt file into allTasks array
+    private static void readAllTasksFile() throws FileNotFoundException, FileEmptyException {
+        // Check if the file exists (extract as method)
+        File allTasksFile = new File("data/allTasks.txt");
+        System.out.println("full path: " + allTasksFile.getAbsolutePath());
+
+        // if it exists
+        if (allTasksFile.exists()){
+            Scanner FILE_SCANNER = new Scanner(allTasksFile);
+
+            // get total number of tasks stored
+            int numTasksInList = 0;
+            if (FILE_SCANNER.hasNext()){
+                String totalTasks = getFileNextLine(FILE_SCANNER);
+                try {
+                    numTasksInList = getNumTasks(totalTasks);
+                } catch (TotalTasksNumInvalidException e) {
+                    System.out.println("File header invalid!");
+                }
+            } else {
+                throw new FileEmptyException();
+            }
+
+            // skip past the instructions
+            while (FILE_SCANNER.hasNext()){
+                String fileInput = getFileNextLine(FILE_SCANNER);
+                if (fileInput.equals("Tasks:")){
+                    break;
+                }
+            }
+
+            // read each task and add to the allTasks arraylist
+            while (FILE_SCANNER.hasNext()){
+                String fileInput = getFileNextLine(FILE_SCANNER);
+                try {
+                    addTaskToAllTasksArrayList(fileInput);
+                } catch (TaskTypeInvalidException | SavedTaskFormatWrongException e) {
+                    System.out.println(String.format("Error reading file! Error on line:" + NEWLINE + "%1$s",
+                            fileInput));
+                    break;
+                }
+            }
+            System.out.println(String.format("%1$d of %2$d tasks read successfully!",
+                    numTasks, numTasksInList));
+        } else {
+            throw new FileEmptyException();
+        }
+
+    }
+
+    private static void addTaskToAllTasksArrayList(String fileInput) throws TaskTypeInvalidException, SavedTaskFormatWrongException {
+        TaskType taskType = getTaskType(fileInput);
+        switch (taskType) {
+        case TODO:
+            addToDoToList(fileInput);
+            break;
+        case DEADLINE:
+            addDeadlineToList(fileInput);
+            break;
+        case EVENT:
+            addEventToList(fileInput);
+            break;
+        default:
+            throw new TaskTypeInvalidException();
+        }
+    }
+
+    private static void addToDoToList(String fileInput) throws SavedTaskFormatWrongException {
+        Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1]{1})\\](.*)");
+        Matcher matcher = pattern.matcher(fileInput);
+        if (matcher.matches()) {
+            allTasks.add(new ToDo(matcher.group(2).trim()));
+            if(matcher.group(1) == "1"){
+                allTasks.get(numTasks).setComplete(true);
+            }
+            numTasks++;
+        } else {
+            throw new SavedTaskFormatWrongException();
+        }
+    }
+
+    private static void addDeadlineToList(String fileInput) throws SavedTaskFormatWrongException {
+        Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(by:(.*)\\)");
+        Matcher matcher = pattern.matcher(fileInput);
+        if (matcher.matches()) {
+            Date dueDate = parseComplexDate(matcher.group(3));
+            allTasks.add(new Deadline(matcher.group(2).trim(),dueDate));
+            if(matcher.group(1) == "1"){
+                allTasks.get(numTasks).setComplete(true);
+            }
+            numTasks++;
+        } else {
+            throw new SavedTaskFormatWrongException();
+        }
+    }
+
+    private static void addEventToList(String fileInput) throws SavedTaskFormatWrongException {
+        Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(from:(.*)to(.*)\\)");
+        Matcher matcher = pattern.matcher(fileInput);
+        if (matcher.matches()) {
+            Date startDate = parseComplexDate(matcher.group(3));
+            Date endDate = parseComplexDate(matcher.group(4));
+            allTasks.add(new Event(matcher.group(2).trim(), startDate, endDate));
+            if(matcher.group(1) == "1"){
+                allTasks.get(numTasks).setComplete(true);
+            }
+            numTasks++;
+        } else {
+            throw new SavedTaskFormatWrongException();
+        }
+    }
+
+    private static Date parseComplexDate(String unformattedDate) {
+        Date formattedDate;
+        SimpleDateFormat dateWithoutTime = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        try {
+            formattedDate = dateWithoutTime.parse(unformattedDate.trim());
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static TaskType getTaskType(String fileInput) {
+        if (fileInput.trim().startsWith("[T]")){
+            return TaskType.TODO;
+        } else if (fileInput.trim().startsWith("[D]")){
+            return TaskType.DEADLINE;
+        } else if (fileInput.trim().startsWith("[E]")){
+            return TaskType.EVENT;
+        } else {
+            return TaskType.INVALID;
+        }
+    }
+
+    private static String getFileNextLine(Scanner FILE_SCANNER) {
+        String fileInput;
+        do {
+            fileInput = FILE_SCANNER.nextLine();
+        } while (fileInput.matches(TootieRegex.BLANK_STRING_REGEX)
+                || fileInput.startsWith(TootieInputMarkers.INPUT_COMMENT_MARKER));
+        return fileInput;
+    }
+
+    private static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
+        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
+        Matcher matcher = pattern.matcher(totalTasks);
+        if (matcher.matches()) {
+            try {
+                return Integer.parseInt(matcher.group(1));
+            } catch (NumberFormatException exception) {
+                throw new TotalTasksNumInvalidException();
+            }
+        } else {
+            throw new TotalTasksNumInvalidException();
+        }
+    }
+
+    // TODO: implement save tasks function
+    private static void saveTasks(ArrayList<Task> allTasks) throws IOException {
+        String filePath = "data/allTasks.txt";
+        File allTasksFile = new File(filePath);
+
+        if (allTasksFile.createNewFile()){
+            System.out.println("File created: " + allTasksFile.getName());
+            //if it doesnt exist create it
+        } else {
+            System.out.println("File already exists.");
+        }
+
+        // clear the file
+        new FileWriter(filePath, false).close();
+
+        // write file header
+        try {
+            writeToFile(String.format("Total tasks: %1$d", numTasks), filePath);
+            writeDoubleNewlineToFile(filePath);
+            writeToFile(TootieFileMsgs.FILE_INSTRUCTIONS_HEADER, filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String printOut = "";
+        for (int i = 0; i < numTasks; i++){
+            if (allTasks.get(i) instanceof ToDo) {
+                printOut = "[T][" + ((allTasks.get(i).isComplete()) ? 1 : 0) + "]" + allTasks.get(i).getTaskName();
+            }
+            if (allTasks.get(i) instanceof Deadline) {
+                printOut = "[D][" + ((allTasks.get(i).isComplete()) ? 1 : 0) + "]" + allTasks.get(i).getTaskName() +
+                        " (by:" + ((Deadline) allTasks.get(i)).getDueDate() + ")";
+            }
+            if (allTasks.get(i) instanceof Event) {
+                printOut = "[E][" + ((allTasks.get(i).isComplete()) ? 1 : 0) + "]" + allTasks.get(i).getTaskName() +
+                        " (from:" + ((Event) allTasks.get(i)).getStartTime() + " to " +
+                        ((Event) allTasks.get(i)).getEndTime() + ")";
+            }
+            writeToFile(printOut,filePath);
+            writeToFile(NEWLINE, filePath);
+        }
+    }
+
+    private static void writeDoubleNewlineToFile(String filePath) throws IOException {
+        writeToFile(NEWLINE, filePath);
+        writeToFile(NEWLINE, filePath);
+    }
+
+    private static void writeToFile(String textToAppend, String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
     }
 
     // get user input, ignore comments and blank lines
@@ -162,7 +414,11 @@ public class Duke {
             Printer.printFarewellMessage();
             break;
         case SAVE:
-            saveTasks(allTasks);
+            try {
+                saveTasks(allTasks);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             break;
         case DELETE:
             deleteTask(userInput, allTasks);
@@ -170,10 +426,6 @@ public class Duke {
         default:
             Printer.printConfusedMessage();
         }
-    }
-
-    // TODO: implement save tasks function
-    private static void saveTasks(ArrayList<Task> allTasks) {
     }
 
     // TODO: implement delete task function

@@ -15,6 +15,10 @@ public class Deadline extends Task {
         this.dueDate = dueDate;
     }
 
+    public Date getDueDate() {
+        return dueDate;
+    }
+
     @Override
     public void printTaskType() {
         System.out.print("[D]");
