@@ -18,8 +18,15 @@ import duke.exceptions.TasklistEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
 import duke.exceptions.TotalTasksNumInvalidException;
 
-import duke.finalObjects.*;
-
+import duke.finalObjects.CommandType;
+import duke.finalObjects.TaskType;
+import duke.finalObjects.TootieConstants;
+import duke.finalObjects.TootieErrorMsgs;
+import duke.finalObjects.TootieFileMsgs;
+import duke.finalObjects.TootieInputMarkers;
+import duke.finalObjects.TootieNormalMsgs;
+import duke.finalObjects.TootieRegex;
+import duke.finalObjects.TootieSymbols;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -59,12 +66,43 @@ public class Duke {
         Printer.printTootieLogo();
         Printer.printHelloMessage();
 
+        String path = "data/allTasks.txt";
         try{
-            readAllTasksFile();
+            readAllTasksFile(path);
         } catch (FileNotFoundException e) {
             System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
         } catch (FileEmptyException e) {
             System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);
+            System.out.println("(1)Create new file or (2)read existing? (type \"1\" or \"2\") ");
+            String response = SCANNER.next();
+            if (response.equals("1")){
+                // make new file
+                System.out.println("Enter the path to create a directory: ");
+                path = SCANNER.next();
+                System.out.println("Enter the name of the desired a directory: ");
+                path = path+SCANNER.next();
+                //Creating a File object
+                File file = new File(path);
+                //Creating the directory
+                boolean bool = file.mkdir();
+                if(bool){
+                    System.out.println("Directory created successfully");
+                    path = path+"/allTasks.txt";
+                }else{
+                    System.out.println("Sorry couldn’t create specified directory");
+                }
+            } else {
+                System.out.println("Enter the full path to existing file: ");
+                path = SCANNER.next();
+                try {
+                    readAllTasksFile(path);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                } catch (FileEmptyException fileEmptyException) {
+                    fileEmptyException.printStackTrace();
+                }
+            }
+
         }
         
         Printer.printDivider();
@@ -74,22 +112,24 @@ public class Duke {
             echoUserInput(userInput);
             Printer.printDivider();
             commandType = extractCommandType(userInput);
-            executeCommand(commandType, userInput, allTasks);
+            executeCommand(commandType, userInput, allTasks, path);
             Printer.printDivider();
         }
 
         try {
-            saveTasks(allTasks);
+            saveTasks(allTasks, path);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     // try to read the allTasks.txt file into allTasks array
-    private static void readAllTasksFile() throws FileNotFoundException, FileEmptyException {
+    private static void readAllTasksFile(String filePath) throws FileNotFoundException, FileEmptyException {
         // Check if the file exists (extract as method)
-        File allTasksFile = new File("data/allTasks.txt");
+        File allTasksFile = new File(filePath);
         System.out.println("full path: " + allTasksFile.getAbsolutePath());
+        System.out.println("file exists?: " + allTasksFile.exists());
+        System.out.println("is Directory?: " + allTasksFile.isDirectory());
 
         // if it exists
         if (allTasksFile.exists()){
@@ -245,8 +285,7 @@ public class Duke {
     }
 
     // TODO: implement save tasks function
-    private static void saveTasks(ArrayList<Task> allTasks) throws IOException {
-        String filePath = "data/allTasks.txt";
+    private static void saveTasks(ArrayList<Task> allTasks, String filePath) throws IOException {
         File allTasksFile = new File(filePath);
 
         if (allTasksFile.createNewFile()){
@@ -355,7 +394,7 @@ public class Duke {
     }
 
     // execute the command as required
-    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
+    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks, String filePath) throws TaskNonexistantException {
         switch (commandType) {
         case HELP:
             Printer.printHelpInfo();
@@ -420,7 +459,7 @@ public class Duke {
             break;
         case SAVE:
             try {
-                saveTasks(allTasks);
+                saveTasks(allTasks, filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
