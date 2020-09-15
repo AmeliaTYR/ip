@@ -29,12 +29,13 @@ public class Event extends Task {
     }
 
     @Override
-    public void printTaskType() {
-        System.out.print("[E]");
+    public String getTaskType() {
+        return "[E]";
     }
 
     @Override
-    public void printTaskDescription() {
-        System.out.println(super.getTaskName() + " (from: " + startTime + " to " + endTime + ")");
+    public String getTaskDescription() {
+        return super.getTaskName() + " (from: " + startTime + " to " + endTime + ")";
     }
+
 }
