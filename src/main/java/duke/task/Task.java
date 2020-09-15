@@ -33,19 +33,19 @@ public abstract class Task {
         return isComplete;
     }
 
-    public String getTaskType(){
-        return "[?]";
+    public void printTaskType(){
+        System.out.println("[?]");
     }
 
-    public String getTaskDescription(){
-        return getTaskName();
+    public void printTaskDescription(){
+        System.out.println(taskName);
     }
 
-    public String getCompletionIndicator (){
+    public void printCompletionIndicator (){
         if (isComplete) {
-            return TICK_SYMBOL;
+            System.out.print(TICK_SYMBOL + " ");
         } else {
-            return CROSS_SYMBOL;
+            System.out.print(CROSS_SYMBOL + " ");
         }
     }
 }

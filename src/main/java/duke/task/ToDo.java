@@ -9,8 +9,13 @@ public class ToDo extends Task {
     }
 
     @Override
-    public String getTaskType() {
-        return "[T]";
+    public void printTaskType() {
+        System.out.print("[T]");
+    }
+
+    @Override
+    public void printTaskDescription() {
+        System.out.println(super.getTaskName());
     }
 
 }

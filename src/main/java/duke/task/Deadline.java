@@ -16,12 +16,12 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getTaskType() {
-        return "[D]";
+    public void printTaskType() {
+        System.out.print("[D]");
     }
 
     @Override
-    public String getTaskDescription() {
-        return super.getTaskName() + " (by: " + dueDate + ")";
+    public void printTaskDescription() {
+        System.out.println(super.getTaskName() + " (by: " + dueDate + ")");
     }
 }
