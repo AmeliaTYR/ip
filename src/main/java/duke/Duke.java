@@ -52,7 +52,7 @@ public class Duke {
 
     private static int numTasks = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TaskNonexistantException {
         String userInput;
         CommandType commandType = CommandType.START;
 
@@ -312,17 +312,18 @@ public class Duke {
     }
 
     // prints all list items with index and check
-    public static void printAllTasks (ArrayList<Task> taskList) throws TasklistEmptyException {
+    public static void printAllTasks (ArrayList<Task> allTasks) throws TasklistEmptyException {
         if (numTasks == 0) {
             throw new TasklistEmptyException();
         }
 
         System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks));
         for (int i = 0; i < numTasks; i++) {
-            System.out.print((i + 1) + ". ");
-            taskList.get(i).printTaskType();
-            taskList.get(i).printCompletionIndicator();
-            taskList.get(i).printTaskDescription();
+            System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT,
+                    (i + 1),
+                    allTasks.get(i).getTaskType(),
+                    allTasks.get(i).getCompletionIndicator(),
+                    allTasks.get(i).getTaskDescription()));
         }
 
         // TODO: print "all done ʕ•ᴥ•ʔ" if all tasks done for now
@@ -344,13 +345,15 @@ public class Duke {
             return CommandType.DONE;
         } else if (userInput.trim().startsWith("bye")){
                 return CommandType.BYE;
+        } else if (userInput.trim().startsWith("delete")){
+            return CommandType.DELETE;
         } else {
             return CommandType.UNRECOGNISED;
         }
     }
 
     // execute the command as required
-    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) {
+    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
         switch (commandType) {
         case HELP:
             Printer.printHelpInfo();
@@ -421,7 +424,11 @@ public class Duke {
             }
             break;
         case DELETE:
-            deleteTask(userInput, allTasks);
+            try {
+                deleteTask(userInput, allTasks);
+            } catch (TaskNonexistantException e){
+                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
+            }
             break;
         default:
             Printer.printConfusedMessage();
@@ -429,7 +436,27 @@ public class Duke {
     }
 
     // TODO: implement delete task function
-    private static void deleteTask(String userInput, ArrayList<Task> allTasks) {
+    private static void deleteTask(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
+        int taskNum = 0;
+
+        // try to parse task and check if it exists
+        try {
+            taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
+            if (taskNum > numTasks || taskNum < 1) {
+                throw new TaskNonexistantException();
+            } else {
+                // print response
+                System.out.println(String.format(TootieNormalMsgs.TASK_DELETED_RESPONSE_MSG,
+                        allTasks.get(taskNum - 1).getTaskType(),
+                        allTasks.get(taskNum - 1).getCompletionIndicator(),
+                        allTasks.get(taskNum - 1).getTaskDescription()));
+                allTasks.remove(taskNum -1);
+                numTasks--;
+            }
+        } catch (NumberFormatException e) {
+            throw new TaskNonexistantException();
+        }
+
     }
 
     // add an event task to the allTasks list
@@ -509,8 +536,7 @@ public class Duke {
 
         // add event to list
         allTasks.add(new Event(taskName.trim(), startTime, endTime));
-        System.out.println("added event:");
-        allTasks.get(numTasks).printTaskDescription();
+        System.out.println(String.format(TootieNormalMsgs.ADDED_EVENT_FORMAT, allTasks.get(numTasks).getTaskDescription()));
         numTasks++;
     }
 
@@ -564,8 +590,7 @@ public class Duke {
 
         // add event to list
         allTasks.add(new Deadline(taskName.trim(), dueDate));
-        System.out.println("added deadline:");
-        allTasks.get(numTasks).printTaskDescription();
+        System.out.println(String.format(TootieNormalMsgs.ADDED_DEADLINE_FORMAT, allTasks.get(numTasks).getTaskDescription()));
         numTasks++;
     }
 
@@ -636,7 +661,7 @@ public class Duke {
         // add task to list
         allTasks.add(new ToDo(taskName.trim()));
         numTasks++;
-        System.out.println("added todo: " + taskName.trim());
+        System.out.println(String.format(TootieNormalMsgs.ADDED_TODO_FORMAT, taskName.trim()));
     }
     
     // process the user input and mark the
@@ -656,7 +681,9 @@ public class Duke {
         }
 
         // print response
-        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG, allTasks.get(taskNum - 1).getTaskName()));
+        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG,
+                allTasks.get(taskNum - 1).getTaskType(),
+                allTasks.get(taskNum - 1).getTaskDescription()));
     }
 }
 
