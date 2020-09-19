@@ -51,12 +51,15 @@ public class TootieSymbols {
     public static final String CONFUSED_EMOTICON = "\u0028\u30fb\u2227\u2010\u0029\u309e";
     public static final String HAPPY_EMOTICON = "\uff08\u00b4\u30fb\u03c9\u30fb \u0060\uff09";
     public static final String FLOWER_SMILE_EMOTICON = "(\u25e0\u203f\u25e0\u273f)";
+    public static final String ANGRY_EMOTICON = "\u005b\u25cb\uff65\uff40\u0414\u00b4\uff65\u25cb\u005d";
+    public static final String SAD_EMOTICON = "\u0028\u2565\ufe4f\u2565\u0029";
 
     public static final String SPARKLY_TEXT_DIVIDER = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500 "
             + "\u2731\u002a\u002e\uff61\u003a\uff61" + "\u2731\u002a\u002e\u003a\uff61\u2727\u002a\u002e\uff61"
             + "\u2730\u002a\u002e\u003a\uff61\u2727" + "\u002a\u002e\uff61\u003a\uff61\u002a\u002e\uff61\u2731"
             + " " + "\u2500\u2500\u2500\u2500\u2500" + "\u2500\u2500";
+    public static final String PLAIN_TEXT_DIVIDER = "---------------------------------------------";
+    public static final String SIMPLE_TEXT_DIVIDER = "*---*---*---*---*---*---*---*---*---*---*---*";
 
-
-    public static final String VERSION = "Tootie - Version 1.4";
+    public static final String VERSION = "Tootie - Version 1.5";
 }

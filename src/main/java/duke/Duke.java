@@ -18,15 +18,7 @@ import duke.exceptions.TasklistEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
 import duke.exceptions.TotalTasksNumInvalidException;
 
-import duke.finalObjects.CommandType;
-import duke.finalObjects.TaskType;
-import duke.finalObjects.TootieConstants;
-import duke.finalObjects.TootieErrorMsgs;
-import duke.finalObjects.TootieFileMsgs;
-import duke.finalObjects.TootieInputMarkers;
-import duke.finalObjects.TootieNormalMsgs;
-import duke.finalObjects.TootieRegex;
-import duke.finalObjects.TootieSymbols;
+import duke.finalObjects.*;
 import duke.task.ToDo;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -57,6 +49,7 @@ public class Duke {
     // array containing all tasks the user has input
     private static ArrayList<Task> allTasks = new ArrayList<Task>(TootieConstants.MAX_TASKS);
 
+    // number of Tasks in the allTasks array
     private static int numTasks = 0;
 
     public static void main(String[] args) throws TaskNonexistantException {
@@ -66,79 +59,60 @@ public class Duke {
         Printer.printTootieLogo();
         Printer.printHelloMessage();
 
-        String path = "data/allTasks.txt";
+        // search for a tootieSettings save file
+        String tootie_settings_save_path = TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH;
+        System.out.println("Loading tootieSettings save file...");
         try{
-            readAllTasksFile(path);
+            File tootieSettingsFile = getFile(tootie_settings_save_path);
+            readTootieSettingsFile(tootieSettingsFile);
+        } catch (FileNotFoundException | FileEmptyException e) {
+            System.out.println("tootieSettings save file not found" + NEWLINE + "Creating new file");
+            tootie_settings_save_path = getNewFile();
+        }
+
+        // search for a allTasks save file
+        String all_tasks_file_path = TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH;
+        System.out.println("Searching for allTasks save file...");
+        try{
+            File allTasksFile = getFile(all_tasks_file_path);
+            readAllTasksFile(allTasksFile);
         } catch (FileNotFoundException e) {
             System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
+            all_tasks_file_path = getNewFile();
         } catch (FileEmptyException e) {
             System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);
-            System.out.println("(1)Create new file or (2)read existing? (type \"1\" or \"2\") ");
-            String response = SCANNER.next();
-            if (response.equals("1")){
-                // make new file
-                System.out.println("Enter the path to create a directory: ");
-                path = SCANNER.next();
-                System.out.println("Enter the name of the desired a directory: ");
-                path = path+SCANNER.next();
-                //Creating a File object
-                File file = new File(path);
-                //Creating the directory
-                boolean bool = file.mkdir();
-                if(bool){
-                    System.out.println("Directory created successfully");
-                    path = path+"/allTasks.txt";
-                }else{
-                    System.out.println("Sorry couldn’t create specified directory");
-                }
-            } else {
-                System.out.println("Enter the full path to existing file: ");
-                path = SCANNER.next();
-                try {
-                    readAllTasksFile(path);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                } catch (FileEmptyException fileEmptyException) {
-                    fileEmptyException.printStackTrace();
-                }
-            }
-
+            all_tasks_file_path = getNewFile();
         }
         
         Printer.printDivider();
 
+        // process commands
         while(commandType != CommandType.BYE){
             userInput = getUserInput();
             echoUserInput(userInput);
             Printer.printDivider();
             commandType = extractCommandType(userInput);
-            executeCommand(commandType, userInput, allTasks, path);
+            executeCommand(commandType, userInput, allTasks, all_tasks_file_path);
             Printer.printDivider();
         }
 
         try {
-            saveTasks(allTasks, path);
+            saveTasks(allTasks, all_tasks_file_path);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // try to read the allTasks.txt file into allTasks array
-    private static void readAllTasksFile(String filePath) throws FileNotFoundException, FileEmptyException {
-        // Check if the file exists (extract as method)
-        File allTasksFile = new File(filePath);
-        System.out.println("full path: " + allTasksFile.getAbsolutePath());
-        System.out.println("file exists?: " + allTasksFile.exists());
-        System.out.println("is Directory?: " + allTasksFile.isDirectory());
-
+    private static void readTootieSettingsFile(File tootieSettingsFile) throws FileEmptyException,
+            FileNotFoundException {
         // if it exists
-        if (allTasksFile.exists()){
-            Scanner FILE_SCANNER = new Scanner(allTasksFile);
+        if (tootieSettingsFile.exists()){
+            Scanner SETTINGS_FILE_SCANNER = new Scanner(tootieSettingsFile);
 
             // get total number of tasks stored
             int numTasksInList = 0;
-            if (FILE_SCANNER.hasNext()){
-                String totalTasks = getFileNextLine(FILE_SCANNER);
+            if (SETTINGS_FILE_SCANNER.hasNext()){
+                String totalTasks = getFileNextLine(SETTINGS_FILE_SCANNER);
                 try {
                     numTasksInList = getNumTasks(totalTasks);
                 } catch (TotalTasksNumInvalidException e) {
@@ -148,17 +122,9 @@ public class Duke {
                 throw new FileEmptyException();
             }
 
-            // skip past the instructions
-            while (FILE_SCANNER.hasNext()){
-                String fileInput = getFileNextLine(FILE_SCANNER);
-                if (fileInput.equals("Tasks:")){
-                    break;
-                }
-            }
-
-            // read each task and add to the allTasks arraylist
-            while (FILE_SCANNER.hasNext()){
-                String fileInput = getFileNextLine(FILE_SCANNER);
+            // read each setting and return the variables accordingly
+            while (SETTINGS_FILE_SCANNER.hasNext()){
+                String fileInput = getFileNextLine(SETTINGS_FILE_SCANNER);
                 try {
                     addTaskToAllTasksArrayList(fileInput);
                 } catch (TaskTypeInvalidException | SavedTaskFormatWrongException e) {
@@ -172,7 +138,120 @@ public class Duke {
         } else {
             throw new FileEmptyException();
         }
+    }
 
+    private static String getNewFile() {
+        String path = "";
+        System.out.println("Options:" + NEWLINE + "(1)Find existing file" + NEWLINE +
+                "(2)Manually create directory for file" + NEWLINE + "(3)Automatically create directory and file" +
+                NEWLINE + "(type \"1\" \"2\" or \"3\")");
+        String response = SCANNER.next();
+        if (response.equals("1")){
+            System.out.println("Enter the full path to existing file: ");
+            path = SCANNER.next();
+            try {
+                File allTasksFile = getFile(path);
+                readAllTasksFile(allTasksFile);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            } catch (FileEmptyException fileEmptyException) {
+                fileEmptyException.printStackTrace();
+            }
+        } else if (response.equals("2")){
+            // make new file
+            System.out.println("Enter the path to new directory location (without new directory name): ");
+            path = SCANNER.next();
+            System.out.println("Enter the name of the desired a directory: ");
+            path = path+SCANNER.next();
+            //Creating a File object
+            File file = new File(path);
+            //Creating the directory
+            boolean bool = file.mkdir();
+            if(bool){
+                System.out.println("Directory created successfully " + TootieSymbols.HAPPY_EMOTICON);
+                path = path+"/allTasks.txt";
+            }else{
+                System.out.println("Sorry couldn’t create specified directory");
+            }
+        } else if (response.equals("3")){
+            System.out.println("Automatically creating directory and file");
+            autoCreateNewFile(TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH);
+        } else {
+            System.out.println("Directory created successfully " + TootieSymbols.HAPPY_EMOTICON);
+        }
+        return path;
+    }
+
+    private static void autoCreateNewFile(String defaultTootieSettingsFilePath) {
+
+    }
+
+
+    // try to read the allTasks.txt file into allTasks array
+    private static void readAllTasksFile(File allTasksFile) throws FileNotFoundException, FileEmptyException {
+        // if it exists
+        if (allTasksFile.exists()){
+            Scanner FILE_SCANNER = new Scanner(allTasksFile);
+
+            // get total number of tasks stored
+            int numTasksInList = 0;
+            numTasksInList = getNumTasksInList(FILE_SCANNER, numTasksInList);
+
+            // skip past the instructions
+            skipAllTasksInstructions(FILE_SCANNER);
+
+            // read each task and add to the allTasks arraylist
+            addReadTasksToAllTasks(FILE_SCANNER);
+            System.out.println(String.format("%1$d of %2$d tasks read successfully!",
+                    numTasks, numTasksInList));
+        } else {
+            throw new FileEmptyException();
+        }
+
+    }
+
+    private static void addReadTasksToAllTasks(Scanner FILE_SCANNER) {
+        while (FILE_SCANNER.hasNext()) {
+            String fileInput = getFileNextLine(FILE_SCANNER);
+            try {
+                addTaskToAllTasksArrayList(fileInput);
+            } catch (TaskTypeInvalidException | SavedTaskFormatWrongException e) {
+                System.out.println(String.format("Error reading file! Error on line:" + NEWLINE + "%1$s", fileInput));
+                break;
+            }
+        }
+    }
+
+    private static int getNumTasksInList(Scanner FILE_SCANNER, int numTasksInList) throws FileEmptyException {
+        if (FILE_SCANNER.hasNext()) {
+            String totalTasks = getFileNextLine(FILE_SCANNER);
+            try {
+                numTasksInList = getNumTasks(totalTasks);
+            } catch (TotalTasksNumInvalidException e) {
+                System.out.println("File header invalid!");
+            }
+        } else {
+            throw new FileEmptyException();
+        }
+        return numTasksInList;
+    }
+
+    private static void skipAllTasksInstructions(Scanner FILE_SCANNER) {
+        while (FILE_SCANNER.hasNext()) {
+            String fileInput = getFileNextLine(FILE_SCANNER);
+            if (fileInput.equals("Tasks:")) {
+                break;
+            }
+        }
+    }
+
+    private static File getFile(String filePath) {
+        // Check if the file exists (extract as method)
+        File allTasksFile = new File(filePath);
+        System.out.println("full path: " + allTasksFile.getAbsolutePath());
+        System.out.println("file exists?: " + allTasksFile.exists());
+        System.out.println("is Directory?: " + allTasksFile.isDirectory());
+        return allTasksFile;
     }
 
     private static void addTaskToAllTasksArrayList(String fileInput) throws TaskTypeInvalidException, SavedTaskFormatWrongException {
@@ -261,6 +340,7 @@ public class Duke {
         }
     }
 
+    // read non-blank lines of the file
     private static String getFileNextLine(Scanner FILE_SCANNER) {
         String fileInput;
         do {
@@ -476,28 +556,20 @@ public class Duke {
         }
     }
 
-    // TODO: implement delete task function
+    // deletes the selected task based on user input
     private static void deleteTask(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
         int taskNum = 0;
 
         // try to parse task and check if it exists
-        try {
-            taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
-            if (taskNum > numTasks || taskNum < 1) {
-                throw new TaskNonexistantException();
-            } else {
-                // print response
-                System.out.println(String.format(TootieNormalMsgs.TASK_DELETED_RESPONSE_MSG,
-                        allTasks.get(taskNum - 1).getTaskType(),
-                        allTasks.get(taskNum - 1).getCompletionIndicator(),
-                        allTasks.get(taskNum - 1).getTaskDescription()));
-                allTasks.remove(taskNum -1);
-                numTasks--;
-            }
-        } catch (NumberFormatException e) {
-            throw new TaskNonexistantException();
-        }
-
+        taskNum = getTaskNumFromInput(userInput, allTasks);
+        
+        // print response
+        System.out.println(String.format(TootieNormalMsgs.TASK_DELETED_RESPONSE_MSG,
+                allTasks.get(taskNum - 1).getTaskType(),
+                allTasks.get(taskNum - 1).getCompletionIndicator(),
+                allTasks.get(taskNum - 1).getTaskDescription()));
+        allTasks.remove(taskNum -1);
+        numTasks--;
     }
 
     // add an event task to the allTasks list
@@ -704,25 +776,46 @@ public class Duke {
         numTasks++;
         System.out.println(String.format(TootieNormalMsgs.ADDED_TODO_FORMAT, taskName.trim()));
     }
-    
-    // process the user input and mark the
+
+    // process the user input and mark the task complete
     private static void markTaskComplete(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
         int taskNum = 0;
 
         // try to parse task and check if it exists
+        taskNum = getTaskNumFromInput(userInput, allTasks);
+
+        allTasks.get(taskNum - 1).setComplete(true);
+
+        // print response
+        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG,
+                allTasks.get(taskNum - 1).getTaskType(),
+                allTasks.get(taskNum - 1).getTaskDescription()));
+    }
+
+    private static int getTaskNumFromInput(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
+        int taskNum;
         try {
             taskNum = Integer.parseInt(userInput.replaceAll("[\\D]", ""));
             if (taskNum > numTasks || taskNum < 1) {
                 throw new TaskNonexistantException();
-            } else {
-                allTasks.get(taskNum - 1).setComplete(true);
             }
         } catch (NumberFormatException exception) {
             throw new TaskNonexistantException();
         }
+        return taskNum;
+    }
+
+    // process the user input and mark the task incomplete
+    private static void markTaskIncomplete(String userInput, ArrayList<Task> allTasks) throws TaskNonexistantException {
+        int taskNum = 0;
+
+        // try to parse task and check if it exists
+        taskNum = getTaskNumFromInput(userInput, allTasks);
+
+        allTasks.get(taskNum - 1).setComplete(false);
 
         // print response
-        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG,
+        System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_UNDONE_RESPONSE_MSG,
                 allTasks.get(taskNum - 1).getTaskType(),
                 allTasks.get(taskNum - 1).getTaskDescription()));
     }

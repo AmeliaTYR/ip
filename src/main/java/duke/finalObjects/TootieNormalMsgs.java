@@ -1,5 +1,7 @@
 package duke.finalObjects;
 
+import java.util.Locale;
+
 public class TootieNormalMsgs {
     public static final String NEWLINE = System.lineSeparator();
 
@@ -36,6 +38,8 @@ public class TootieNormalMsgs {
 
     public static final String TASK_MARKED_DONE_RESPONSE_MSG = "Nice! I've marked this task as done:" + NEWLINE +
             "    %1$s" + TootieSymbols.TICK_SYMBOL + " %2$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;
+    public static final String TASK_MARKED_UNDONE_RESPONSE_MSG = "Aww... I've marked this task undone:" + NEWLINE +
+            "    %1$s" + TootieSymbols.CROSS_SYMBOL + " %2$s" + NEWLINE + TootieSymbols.SAD_EMOTICON;
 
     public static final String TASK_DELETED_RESPONSE_MSG = "Yay! I have deleted this task:" + NEWLINE +
             "    " + "%1$s%2$s %3$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;

@@ -1,0 +1,21 @@
+INFORMATION
+Tootie version: 1.5
+
+==============================
+FILE PATHS:
++ Tootie settings: 
++ All Tasks:
++ User History:
+
+==============================
+USER PREFERENCES:
++ Divider choice: 1
++ Username: Amelia
+
+==============================
+USER STATISTICS:
++ total sessions:
++ total time spent: 
++ total tasks completed: 
+
+==============================
