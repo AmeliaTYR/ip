@@ -8,10 +8,10 @@ public class Deadline extends Task {
 
     public Deadline(String taskName, Date dueDate) {
         super(taskName, false);
-        setBy(dueDate);
+        setDueDate(dueDate);
     }
 
-    public void setBy(Date dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
