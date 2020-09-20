@@ -52,7 +52,7 @@ public class Duke {
     // number of Tasks in the allTasks array
     private static int numTasks = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TaskNonexistantException {
         String userInput;
         CommandType commandType = CommandType.START;
 
@@ -222,7 +222,6 @@ public class Duke {
         }
     }
 
-    // gets the number of tasks recorded in the allTasks.txt file from the header
     private static int getNumTasksInList(Scanner FILE_SCANNER, int numTasksInList) throws FileEmptyException {
         if (FILE_SCANNER.hasNext()) {
             String totalTasks = getFileNextLine(FILE_SCANNER);
@@ -237,22 +236,6 @@ public class Duke {
         return numTasksInList;
     }
 
-    // parses the string to return number of tasks as an int
-    private static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
-        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
-        Matcher matcher = pattern.matcher(totalTasks);
-        if (matcher.matches()) {
-            try {
-                return Integer.parseInt(matcher.group(1));
-            } catch (NumberFormatException exception) {
-                throw new TotalTasksNumInvalidException();
-            }
-        } else {
-            throw new TotalTasksNumInvalidException();
-        }
-    }
-
-    // skips past the instructions segment when reading the allTasks.txt file
     private static void skipAllTasksInstructions(Scanner FILE_SCANNER) {
         while (FILE_SCANNER.hasNext()) {
             String fileInput = getFileNextLine(FILE_SCANNER);
@@ -262,8 +245,8 @@ public class Duke {
         }
     }
 
-    // Checks if the file with the given file path exists 
     private static File getFile(String filePath) {
+        // Check if the file exists (extract as method)
         File allTasksFile = new File(filePath);
         System.out.println("full path: " + allTasksFile.getAbsolutePath());
         System.out.println("file exists?: " + allTasksFile.exists());
@@ -271,7 +254,6 @@ public class Duke {
         return allTasksFile;
     }
 
-    // parses lines from the allTasks.txt file and adds the corresponding task to the allTasks ArrayList
     private static void addTaskToAllTasksArrayList(String fileInput) throws TaskTypeInvalidException, SavedTaskFormatWrongException {
         TaskType taskType = getTaskType(fileInput);
         switch (taskType) {
@@ -289,7 +271,6 @@ public class Duke {
         }
     }
 
-    // adds a ToDo task read from the file to the allTasks ArrayList
     private static void addToDoToList(String fileInput) throws SavedTaskFormatWrongException {
         Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1]{1})\\](.*)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -304,7 +285,6 @@ public class Duke {
         }
     }
 
-    // adds a Deadline task read from the file to the allTasks ArrayList
     private static void addDeadlineToList(String fileInput) throws SavedTaskFormatWrongException {
         Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(by:(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -320,7 +300,6 @@ public class Duke {
         }
     }
 
-    // adds a Event task read from the file to the allTasks ArrayList
     private static void addEventToList(String fileInput) throws SavedTaskFormatWrongException {
         Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(from:(.*)to(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -337,7 +316,6 @@ public class Duke {
         }
     }
 
-    // parses the default date format and returns a Date object
     private static Date parseComplexDate(String unformattedDate) {
         Date formattedDate;
         SimpleDateFormat dateWithoutTime = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
@@ -350,7 +328,6 @@ public class Duke {
         }
     }
 
-    // checks the task type for each task in the allTasks.txt file
     private static TaskType getTaskType(String fileInput) {
         if (fileInput.trim().startsWith("[T]")){
             return TaskType.TODO;
@@ -373,9 +350,21 @@ public class Duke {
         return fileInput;
     }
 
+    private static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
+        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
+        Matcher matcher = pattern.matcher(totalTasks);
+        if (matcher.matches()) {
+            try {
+                return Integer.parseInt(matcher.group(1));
+            } catch (NumberFormatException exception) {
+                throw new TotalTasksNumInvalidException();
+            }
+        } else {
+            throw new TotalTasksNumInvalidException();
+        }
+    }
 
-
-    // saves all tasks from the allTasks ArrayList to the allTasks.txt file
+    // TODO: implement save tasks function
     private static void saveTasks(ArrayList<Task> allTasks, String filePath) throws IOException {
         File allTasksFile = new File(filePath);
 
@@ -391,9 +380,9 @@ public class Duke {
 
         // write file header
         try {
-            appendsStringToFile(String.format("Total tasks: %1$d", numTasks), filePath);
+            writeToFile(String.format("Total tasks: %1$d", numTasks), filePath);
             writeDoubleNewlineToFile(filePath);
-            appendsStringToFile(TootieFileMsgs.FILE_INSTRUCTIONS_HEADER, filePath);
+            writeToFile(TootieFileMsgs.FILE_INSTRUCTIONS_HEADER, filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -412,19 +401,17 @@ public class Duke {
                         " (from:" + ((Event) allTasks.get(i)).getStartTime() + " to " +
                         ((Event) allTasks.get(i)).getEndTime() + ")";
             }
-            appendsStringToFile(printOut,filePath);
-            appendsStringToFile(NEWLINE, filePath);
+            writeToFile(printOut,filePath);
+            writeToFile(NEWLINE, filePath);
         }
     }
 
-    // writes a double new line to the file to create one blank line of space
     private static void writeDoubleNewlineToFile(String filePath) throws IOException {
-        appendsStringToFile(NEWLINE, filePath);
-        appendsStringToFile(NEWLINE, filePath);
+        writeToFile(NEWLINE, filePath);
+        writeToFile(NEWLINE, filePath);
     }
 
-    // appends the string to the given file specified by filePath
-    private static void appendsStringToFile(String textToAppend, String filePath) throws IOException {
+    private static void writeToFile(String textToAppend, String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);
         fw.close();
@@ -465,33 +452,29 @@ public class Duke {
 
     // figure out the command type from userInput
     private static CommandType extractCommandType(String userInput) {
-        if (userInput.toLowerCase().trim().startsWith("help")){
+        if (userInput.trim().startsWith("help")){
             return CommandType.HELP;
-        } else if (userInput.toLowerCase().trim().startsWith("todo")){
+        } else if (userInput.trim().startsWith("todo")){
             return CommandType.ADD_TODO;
-        } else if (userInput.toLowerCase().trim().startsWith("deadline")){
+        } else if (userInput.trim().startsWith("deadline")){
             return CommandType.ADD_DEADLINE;
-        } else if (userInput.toLowerCase().trim().startsWith("event")){
+        } else if (userInput.trim().startsWith("event")){
             return CommandType.ADD_EVENT;
-        } else if (userInput.toLowerCase().trim().startsWith("list")){
+        } else if (userInput.trim().startsWith("list")){
             return CommandType.LIST;
-        } else if (userInput.toLowerCase().trim().startsWith("done")){
-            return CommandType.MARK_TASK_DONE;
-        } else if (userInput.toLowerCase().trim().startsWith("bye")){
+        } else if (userInput.trim().startsWith("done")){
+            return CommandType.DONE;
+        } else if (userInput.trim().startsWith("bye")){
                 return CommandType.BYE;
-        } else if (userInput.toLowerCase().trim().startsWith("delete")){
-            return CommandType.DELETE_TASK;
-        } else if (userInput.toLowerCase().trim().startsWith("undone")){
-            return CommandType.MARK_TASK_UNDONE;
-        } else if (userInput.toLowerCase().trim().startsWith("save")){
-            return CommandType.SAVE;
+        } else if (userInput.trim().startsWith("delete")){
+            return CommandType.DELETE;
         } else {
             return CommandType.UNRECOGNISED;
         }
     }
 
     // execute the command as required
-    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks, String filePath) {
+    private static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks, String filePath) throws TaskNonexistantException {
         switch (commandType) {
         case HELP:
             Printer.printHelpInfo();
@@ -544,16 +527,9 @@ public class Duke {
                 System.out.println(TootieErrorMsgs.TasklistEmptyMsg);
             }
             break;
-        case MARK_TASK_DONE:
+        case DONE:
             try {
                 markTaskComplete(userInput, allTasks);
-            } catch (TaskNonexistantException e){
-                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
-            }
-            break;
-        case MARK_TASK_UNDONE:
-            try {
-                markTaskIncomplete(userInput, allTasks);
             } catch (TaskNonexistantException e){
                 System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
             }
@@ -568,7 +544,7 @@ public class Duke {
                 e.printStackTrace();
             }
             break;
-        case DELETE_TASK:
+        case DELETE:
             try {
                 deleteTask(userInput, allTasks);
             } catch (TaskNonexistantException e){
@@ -586,7 +562,7 @@ public class Duke {
 
         // try to parse task and check if it exists
         taskNum = getTaskNumFromInput(userInput, allTasks);
-
+        
         // print response
         System.out.println(String.format(TootieNormalMsgs.TASK_DELETED_RESPONSE_MSG,
                 allTasks.get(taskNum - 1).getTaskType(),
