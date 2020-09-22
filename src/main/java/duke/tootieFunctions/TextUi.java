@@ -1,16 +1,15 @@
 package duke.tootieFunctions;
 
-import duke.finalObjects.TootieConstants;
-import duke.finalObjects.TootieErrorMsgs;
-import duke.finalObjects.TootieNormalMsgs;
-import duke.finalObjects.TootieSymbols;
+import duke.finalObjects.*;
 
 import java.util.Random;
 
-public class Printer {
+public class UI {
+    public static String currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
+
     // prints the line divider
     public static void printDivider() {
-        System.out.println(TootieSymbols.SPARKLY_TEXT_DIVIDER);
+        System.out.println(currentLineDivider);
     }
 
     // prints the hello when starting
