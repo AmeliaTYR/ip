@@ -2,9 +2,24 @@ package duke.tootieFunctions;
 
 import duke.finalObjects.*;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Random;
+import java.util.Scanner;
 
-public class UI {
+public class TextUi {
+    private final Scanner in;
+    private final PrintStream out;
+
+    public TextUi() {
+        this(System.in, System.out);
+    }
+
+    public TextUi(InputStream in, PrintStream out) {
+        this.in = new Scanner(in);
+        this.out = out;
+    }
+
     public static String currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
 
     // prints the line divider

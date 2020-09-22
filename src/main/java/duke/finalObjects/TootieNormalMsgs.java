@@ -14,6 +14,13 @@ public class TootieNormalMsgs {
             "event: add a scheduled event task to the list" + NEWLINE + "  Parameters:  event t/TASKNAME s/START_TIME "
                     + "e/END_TIME" + NEWLINE + "  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45"
                     + NEWLINE + "  Example:  event t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE;
+    public static final String DONE_COMMAND_DESCRIPTION =
+            "done: marks indicated task done (choose number from list)" + NEWLINE + "  Example:  done 1" + NEWLINE;
+    public static final String UNDONE_COMMAND_DESCRIPTION =
+            "undone: marks indicated task undone (choose number from list)" + NEWLINE + "  Example:  undone 1"
+                    + NEWLINE;
+    public static final String DELETE_COMMAND_DESCRIPTION =
+            "delete: deletes indicated task (choose number from list)" + NEWLINE + "  Example:  delete 1" + NEWLINE;
     public static final String LIST_COMMAND_DESCRIPTION =
             "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
     public static final String BYE_COMMAND_DESCRIPTION =
@@ -26,8 +33,10 @@ public class TootieNormalMsgs {
             "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
-                    + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + LIST_COMMAND_DESCRIPTION + NEWLINE
-                    + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----" + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE;
+                    + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + DONE_COMMAND_DESCRIPTION + NEWLINE
+                    + UNDONE_COMMAND_DESCRIPTION + NEWLINE + DELETE_COMMAND_DESCRIPTION+ NEWLINE
+                    + LIST_COMMAND_DESCRIPTION + NEWLINE + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----"
+                    + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE;
     public static final String HELP_INFO_MSG = "Here is the list of commands I understand:" + NEWLINE + NEWLINE
             + HELP_COMMAND_TEXT;
 

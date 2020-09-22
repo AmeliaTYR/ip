@@ -29,7 +29,7 @@ public abstract class Task {
         return taskName;
     }
 
-    public boolean isComplete(){
+    public boolean getComplete(){
         return isComplete;
     }
 

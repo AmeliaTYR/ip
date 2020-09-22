@@ -2,20 +2,13 @@ INFORMATION
 Tootie version: 1.5
 
 ==============================
-FILE PATHS:
-+ Tootie settings: 
-+ All Tasks:
-+ User History:
+FILE PATHS
++ Tootie settings: C:\Users\Amelia\Documents\GitHub\ip\data\tootieSettings.txt
++ All Tasks: C:\Users\Amelia\Documents\GitHub\ip\data\allTasks.txt
 
 ==============================
-USER PREFERENCES:
-+ Divider choice: 1
+USER PREFERENCES
++ Divider choice: SPARKLY
 + Username: Amelia
-
-==============================
-USER STATISTICS:
-+ total sessions:
-+ total time spent: 
-+ total tasks completed: 
 
 ==============================
