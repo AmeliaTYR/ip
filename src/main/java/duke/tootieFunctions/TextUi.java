@@ -1,9 +1,12 @@
 package duke.tootieFunctions;
 
+import duke.exceptions.TasklistEmptyException;
 import duke.finalObjects.*;
+import duke.task.Task;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,16 +14,27 @@ public class TextUi {
     private final Scanner in;
     private final PrintStream out;
 
-    public TextUi() {
-        this(System.in, System.out);
-    }
 
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
     }
 
-    public static String currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
+    public static String currentLineDivider = TootieSymbols.STANDARD_TEXT_DIVIDER;
+
+    public static void changeDivider(DividerChoice dividerChoice) {
+        switch (dividerChoice){
+        case SIMPLE:
+            currentLineDivider = TootieSymbols.SIMPLE_TEXT_DIVIDER;
+            break;
+        case SPARKLY:
+            currentLineDivider = TootieSymbols.SPARKLY_TEXT_DIVIDER;
+            break;
+        default:
+            currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
+            break;
+        }
+    }
 
     // prints the line divider
     public static void printDivider() {
@@ -28,15 +42,15 @@ public class TextUi {
     }
 
     // prints the hello when starting
-    public static void printHelloMessage() {
+    public static void printHelloMessage(String username) {
         printDivider();
-        System.out.print(TootieNormalMsgs.HELLO_GREETING);
+        System.out.print(String.format(TootieNormalMsgs.HELLO_GREETING, username));
         printDivider();
     }
 
     // prints farewell message
-    public static void printFarewellMessage() {
-        System.out.print(TootieNormalMsgs.FAREWELL_GREETING);
+    public static void printFarewellMessage(String username) {
+        System.out.print(String.format(TootieNormalMsgs.FAREWELL_GREETING, username));
     }
 
     // prints Tootie logo (text art randomized each run)
@@ -59,5 +73,28 @@ public class TextUi {
     // print list of commands and example usage
     public static void printHelpInfo() {
         System.out.println(TootieNormalMsgs.HELP_INFO_MSG);
+    }
+
+    // prints all list items with index and check
+    public static void printAllTasks (ArrayList<Task> allTasks, int numTasks, int numTasksCompleted)
+            throws TasklistEmptyException {
+
+        if (numTasks == 0) {
+            throw new TasklistEmptyException();
+        }
+
+        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks));
+        for (int i = 0; i < numTasks; i++) {
+            System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT,
+                    (i + 1),
+                    allTasks.get(i).getTaskType(),
+                    allTasks.get(i).getCompletionIndicator(),
+                    allTasks.get(i).getTaskDescription())
+            );
+        }
+
+        if (numTasks == numTasksCompleted){
+            System.out.println(TootieNormalMsgs.TASKS_ALL_DONE_MSG);
+        }
     }
 }

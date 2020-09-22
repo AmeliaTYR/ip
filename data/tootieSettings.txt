@@ -1,14 +1,14 @@
 INFORMATION
-Tootie version: 1.5
+Tootie - Version 1.5
 
 ==============================
 FILE PATHS
 + Tootie settings: C:\Users\Amelia\Documents\GitHub\ip\data\tootieSettings.txt
-+ All Tasks: C:\Users\Amelia\Documents\GitHub\ip\data\allTasks.txt
++ All Tasks: data/allTasks.txt
 
 ==============================
 USER PREFERENCES
-+ Divider choice: SPARKLY
-+ Username: Amelia
++ Divider choice: PLAIN
++ Username: user
 
 ==============================

@@ -13,6 +13,7 @@ public enum CommandType {
     DELETE_TASK,
     MARK_TASK_UNDONE,
     CHOOSE_DIVIDER,
+    SET_USERNAME,
     FILTER_TASKS,
     MODIFY_TASK,
     UNRECOGNISED

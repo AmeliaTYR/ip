@@ -1,2 +1,4 @@
-package duke.exceptions;public class UsernameEmptyException {
+package duke.exceptions;
+
+public class UsernameEmptyException extends Throwable {
 }

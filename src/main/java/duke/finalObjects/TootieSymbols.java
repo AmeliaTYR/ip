@@ -59,7 +59,8 @@ public class TootieSymbols {
             + "\u2731\u002a\u002e\uff61\u003a\uff61" + "\u2731\u002a\u002e\u003a\uff61\u2727\u002a\u002e\uff61"
             + "\u2730\u002a\u002e\u003a\uff61\u2727" + "\u002a\u002e\uff61\u003a\uff61\u002a\u002e\uff61\u2731"
             + " " + "\u2500\u2500\u2500\u2500\u2500" + "\u2500\u2500";
-    public static final String PLAIN_TEXT_DIVIDER = "---------------------------------------------";
+    public static final String PLAIN_TEXT_DIVIDER = "----------------------------------------------";
+    public static final String STANDARD_TEXT_DIVIDER = "==============================================";
     public static final String SIMPLE_TEXT_DIVIDER = "*---*---*---*---*---*---*---*---*---*---*---*";
 
     public static final String VERSION = "Tootie - Version 1.5";

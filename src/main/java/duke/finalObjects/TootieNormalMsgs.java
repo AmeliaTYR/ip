@@ -31,10 +31,19 @@ public class TootieNormalMsgs {
             "  " + "Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room" + NEWLINE;
     public static final String HELP_COMMAND_DESCRIPTION =
             "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
+    public static final String USERNAME_COMMAND_DESCRIPTION =
+            "username: allows user to set username" + NEWLINE + "  Example:  username Sophia" + NEWLINE;
+    public static final String DIVIDER_COMMAND_DESCRIPTION =
+            "divider: select a divider for customisation" + NEWLINE + "  dividers avaliable:" + NEWLINE
+                    + "1) " + TootieSymbols.SPARKLY_TEXT_DIVIDER + NEWLINE
+                    + "2) " + TootieSymbols.PLAIN_TEXT_DIVIDER + NEWLINE
+                    + "3) " + TootieSymbols.SIMPLE_TEXT_DIVIDER + NEWLINE
+                    + "  Example:  divider 1" + NEWLINE;
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + DONE_COMMAND_DESCRIPTION + NEWLINE
                     + UNDONE_COMMAND_DESCRIPTION + NEWLINE + DELETE_COMMAND_DESCRIPTION+ NEWLINE
+                    + DIVIDER_COMMAND_DESCRIPTION + NEWLINE + USERNAME_COMMAND_DESCRIPTION + NEWLINE
                     + LIST_COMMAND_DESCRIPTION + NEWLINE + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----"
                     + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE;
     public static final String HELP_INFO_MSG = "Here is the list of commands I understand:" + NEWLINE + NEWLINE
@@ -42,8 +51,8 @@ public class TootieNormalMsgs {
 
     // Greetings
     public static final String FAREWELL_GREETING =
-            "Bye! Hope to see you again soon! " + TootieSymbols.FLOWER_SMILE_EMOTICON + NEWLINE;
-    public static final String HELLO_GREETING = "Hello! I'm Tootie!" + NEWLINE + "What can I do for you?" + NEWLINE;
+            "Bye %1$s! Hope to see you again soon! " + TootieSymbols.FLOWER_SMILE_EMOTICON + NEWLINE;
+    public static final String HELLO_GREETING = "Hello %1$s! I'm Tootie!" + NEWLINE + "What can I do for you?" + NEWLINE;
 
     public static final String TASK_MARKED_DONE_RESPONSE_MSG = "Nice! I've marked this task as done:" + NEWLINE +
             "    %1$s" + TootieSymbols.TICK_SYMBOL + " %2$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;
@@ -61,4 +70,5 @@ public class TootieNormalMsgs {
 
     public static final String LOGO_PRINT_FORMAT = "Hello from" + NEWLINE + "%1$s" + NEWLINE + TootieSymbols.VERSION;
     public static final String NUMTASKS_PRINT_FORMAT = "You have " + "%1$d" + " tasks!";
+    public static final String TASKS_ALL_DONE_MSG = "all done " + TootieSymbols.BEAR_EMOTICON;
 }

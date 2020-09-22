@@ -1,0 +1,43 @@
+---------------------------------------------
+Here is the list of commands I understand:
+
+help: displays a list of commands tootie understands
+  Example:  help
+
+todo: add a todo task to the list
+  Parameters:  todo t/TASKNAME
+  Example:  todo t/clean room
+
+deadline: add a task with a deadline to the list
+  Parameters:  deadline t/TASKNAME d/DUE_DATE
+  Example:  deadline t/write essay d/31-12-2020 04:55
+  Example:  deadline t/submit report d/30-10-2020
+
+event: add a scheduled event task to the list
+  Parameters:  event t/TASKNAME s/START_TIME e/END_TIME
+  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
+  Example:  event t/clean room s/31-12-2020 e/31-12-2020
+
+done: marks indicated task done (choose number from list)
+  Example:  done 1
+
+undone: marks indicated task undone (choose number from list)
+  Example:  undone 1
+
+delete: deletes indicated task (choose number from list)
+  Example:  delete 1
+
+divider: select a divider for customisation
+  dividers avaliable: 
+    1) ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+    2) ----------------------------------------------
+    3) *---*---*---*---*---*---*---*---*---*---*---*
+  Example:  divider 1
+
+list: displays the complete list of tasks entered
+  Example:  list
+
+bye: closes the program
+  Example:  bye
+
+-----
