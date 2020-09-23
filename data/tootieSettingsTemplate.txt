@@ -9,7 +9,7 @@ FILE PATHS:
 
 ==============================
 USER PREFERENCES:
-+ Divider choice: 1
++ Divider choice: PLAIN
 + Username: Amelia
 
 ==============================

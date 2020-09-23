@@ -7,10 +7,10 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
 
 Tootie - Version 1.5
-----------------------------------------------
+==============================================
 Loading tootieSettings.txt save file...
 full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\tootieSettings.txt
-----------------------------------------------
+==============================================
 Loading allTasks.txt save file...
 full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────

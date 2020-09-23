@@ -20,7 +20,7 @@ public class TextUi {
         this.out = out;
     }
 
-    public static String currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
+    public static String currentLineDivider = TootieSymbols.STANDARD_TEXT_DIVIDER;
 
     public static void changeDivider(DividerChoice dividerChoice) {
         switch (dividerChoice){
