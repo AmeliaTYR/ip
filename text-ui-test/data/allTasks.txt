@@ -1,5 +1,5 @@
-Total tasks: 3
-Tasks completed: 1
+Total tasks: 7
+Tasks completed: 2
 
 Task completion status:
 0 is not done([✗]), 1 is done([✓])
@@ -14,6 +14,10 @@ Examples:
 
 --------------------------------------------------------
 Tasks:
-[T][1] clean shoes
+[T][0] clean shoes
+[E][1] clean kitchen (from:Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+[T][1] clean turtle tank
 [D][0] do project (by:Thu Jan 30 04:55:00 SGT 2020)
 [E][0] clean kitchen (from:Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+[E][0] clean shoes (from:Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+[E][0] clean socks (from:Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)

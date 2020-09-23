@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class TotalTasksNumInvalidException extends Throwable {
+public class TotalTasksNumInvalidException extends Exception {
 }

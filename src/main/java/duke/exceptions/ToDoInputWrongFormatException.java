@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class ToDoInputWrongFormatException extends Throwable {
+public class ToDoInputWrongFormatException extends Exception {
 }

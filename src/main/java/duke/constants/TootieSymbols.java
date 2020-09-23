@@ -1,23 +1,25 @@
 package duke.constants;
 
+/**
+ * Class containing version number, logos, divider and emoticon ascii art
+ */
 public class TootieSymbols {
-
+    /** Newline object specific to system used  */
     public static final String NEWLINE = System.lineSeparator();
 
-    // Tootie logos
-    public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b          " + NEWLINE
+    /** Different versions of the Tootie logo  */
+    public static final String THICK_TOOTIE_LOGO = "88888888888                888    d8b" + NEWLINE
             + "    888                    " + "888" +
-            "    Y8P          " + NEWLINE + "    888                    888                 " + NEWLINE + "    " +
-            "888   .d88b.   .d88b.  888888 888  .d88b.  " + NEWLINE + "    888  d88\"\"88b d88\"\"88b 888    888 " +
-            "d8P  Y8b " + NEWLINE + "    888  888  888 888  888 888    888 88888888 " + NEWLINE + "    888  Y88." +
-            ".88P Y88..88P Y88b.  888 Y8b.     " + NEWLINE + "    888   \"Y88P\"   \"Y88P\"   \"Y888 888  \"Y8888" +
-            "  " + NEWLINE;
-    public static final String TRAIN_THEME_TOOTIE_LOGO = "  _____                    _        _            " + NEWLINE
+            "    Y8P" + NEWLINE + "    888                    888" + NEWLINE + "    " +
+            "888   .d88b.   .d88b.  888888 888  .d88b." + NEWLINE + "    888  d88\"\"88b d88\"\"88b 888    888 " +
+            "d8P  Y8b" + NEWLINE + "    888  888  888 888  888 888    888 88888888" + NEWLINE + "    888  Y88." +
+            ".88P Y88..88P Y88b.  888 Y8b." + NEWLINE + "    888   \"Y88P\"   \"Y88P\"   \"Y888 888  \"Y8888" + NEWLINE;
+    public static final String TRAIN_THEME_TOOTIE_LOGO = "  _____                    _        _" + NEWLINE
             + " |_   _|   ___     ___    " + "| " +
-            "|_     (_)     ___   " + NEWLINE + "   | |    / _ \\   / _ \\  " + " |" + "  _|    | |   " + " /" +
-            " -_)  " + NEWLINE + "  _|_|_   \\___/   \\___/   _\\__|   _|_|_   \\___|  " + NEWLINE + "_" +
-            "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_" + "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| " + NEWLINE +
-            "\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-' " + NEWLINE;
+            "|_     (_)     ___" + NEWLINE + "   | |    / _ \\   / _ \\  " + " |" + "  _|    | |   " + " /" +
+            " -_)" + NEWLINE + "  _|_|_   \\___/   \\___/   _\\__|   _|_|_   \\___|" + NEWLINE + "_" +
+            "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_" + "|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|" + NEWLINE +
+            "\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'\"`-0-0-'" + NEWLINE;
     public static final String BLOCKY_TOOTIE_LOGO = "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557 "
             + "\u2588\u2588\u2588\u2588\u2588\u2588" + "\u2557" + "  \u2588\u2588\u2588\u2588\u2588\u2588\u2557 "
             + "\u2588\u2588\u2588\u2588\u2588" + "\u2588"
@@ -41,11 +43,11 @@ public class TootieSymbols {
             " ___ | |_ _  ___ " + NEWLINE + "  | |/ _ \\ / _ \\| __| |/ _ \\" + NEWLINE + "  | | (_) | (_) | |_| " +
             "|  __/" + NEWLINE + "  \\_/\\___/ \\___/ \\__|_|\\___|" + NEWLINE;
 
-    // is complete indicator symbols
+    /** Task completion indication symbols  */
     public static final String TICK_SYMBOL = "[\u2713]";
     public static final String CROSS_SYMBOL = "[\u2717]";
 
-    // Emoticons in unicode
+    /** Emoticons in unicode  */
     public static final String SPARKLY_EMOTICON =
             "\u0028\uff89\u25d5\u30ee\u25d5\u0029\uff89\u002a\u003a\uff65\uff9f\u2727";
     public static final String CONFUSED_EMOTICON = "\u0028\u30fb\u2227\u2010\u0029\u309e";
@@ -55,13 +57,15 @@ public class TootieSymbols {
     public static final String SAD_EMOTICON = "\u0028\u2565\ufe4f\u2565\u0029";
     public static final String BEAR_EMOTICON = "\u0295\u2022\u1d25\u2022\u0294";
 
+    /** Line divider options  */
     public static final String SPARKLY_TEXT_DIVIDER = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500 "
             + "\u2731\u002a\u002e\uff61\u003a\uff61" + "\u2731\u002a\u002e\u003a\uff61\u2727\u002a\u002e\uff61"
             + "\u2730\u002a\u002e\u003a\uff61\u2727" + "\u002a\u002e\uff61\u003a\uff61\u002a\u002e\uff61\u2731"
             + " " + "\u2500\u2500\u2500\u2500\u2500" + "\u2500\u2500";
     public static final String PLAIN_TEXT_DIVIDER = "----------------------------------------------";
-    public static final String STANDARD_TEXT_DIVIDER = "==============================================";
+    public static final String DOUBLE_TEXT_DIVIDER = "==============================================";
     public static final String SIMPLE_TEXT_DIVIDER = "*---*---*---*---*---*---*---*---*---*---*---*";
 
+    /** Version info of the program. */
     public static final String VERSION = "Tootie - Version 1.5";
 }

@@ -1,9 +1,13 @@
 package duke.constants;
 
+/**
+ * Messages printed to console
+ */
 public class TootieNormalMsgs {
+    /** Newline object specific to system used  */
     public static final String NEWLINE = System.lineSeparator();
 
-    // Help command descriptions
+    /** Help command descriptions */
     public static final String DEADLINE_COMMAND_DESCRIPTION =
             "deadline: add a task with a deadline to the list" + NEWLINE + "  Parameters:  deadline t/TASKNAME " +
                     "d/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  " +
@@ -36,6 +40,7 @@ public class TootieNormalMsgs {
                     + "1) " + TootieSymbols.SPARKLY_TEXT_DIVIDER + NEWLINE
                     + "2) " + TootieSymbols.PLAIN_TEXT_DIVIDER + NEWLINE
                     + "3) " + TootieSymbols.SIMPLE_TEXT_DIVIDER + NEWLINE
+                    + "4) " + TootieSymbols.DOUBLE_TEXT_DIVIDER + NEWLINE
                     + "  Example:  divider 1" + NEWLINE;
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
@@ -47,7 +52,7 @@ public class TootieNormalMsgs {
     public static final String HELP_INFO_MSG = "Here is the list of commands I understand:" + NEWLINE + NEWLINE
             + HELP_COMMAND_TEXT;
 
-    // Greetings
+    /** Greetings  */
     public static final String FAREWELL_GREETING =
             "Bye %1$s! Hope to see you again soon! " + TootieSymbols.FLOWER_SMILE_EMOTICON + NEWLINE;
     public static final String HELLO_GREETING = "Hello %1$s! I'm Tootie!" + NEWLINE + "What can I do for you?" + NEWLINE;
@@ -60,7 +65,7 @@ public class TootieNormalMsgs {
     public static final String TASK_DELETED_RESPONSE_MSG = "Yay! I have deleted this task:" + NEWLINE +
             "    " + "%1$s%2$s %3$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;
 
-    // Message formats
+    /** Message formats  */
     public static final String LIST_TASK_FORMAT = "%1$d. %2$s%3$s %4$s";
     public static final String ADDED_EVENT_FORMAT = "added event:" + NEWLINE + "%1$s";
     public static final String ADDED_DEADLINE_FORMAT = "added deadline:" + NEWLINE + "%1$s";

@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class EndTimeWrongFormatException extends Throwable {
+public class EndTimeWrongFormatException extends Exception {
 }

@@ -54,8 +54,6 @@ public class AllTasksSaver {
             fileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);
         }
 
-        System.out.println("All tasks saved.");
-
         return allTasksFile.getAbsolutePath();
     }
 }

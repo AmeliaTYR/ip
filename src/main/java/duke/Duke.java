@@ -1,5 +1,6 @@
 package duke;
 
+import duke.constants.TootieConstants;
 import duke.storage.AllTasksLoader;
 import duke.storage.AllTasksSaver;
 import duke.storage.SettingsLoader;
@@ -24,49 +25,62 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static duke.parsers.Parsers.parseLineDividerFromString;
 import static duke.storage.SettingsLoader.addSavedSettings;
 
+/**
+ * Entry point of the Tootie Tasklist application.
+ * Initializes the application and starts the interaction with the user.
+ */
 public class Duke {
-
+    /** Scanner to read input from the console **/
     public static final Scanner SCANNER = new Scanner(System.in);
-    public static final String NEWLINE = System.lineSeparator();
 
-    // array containing all tasks the user has input
+    /** An array containing all tasks the user has input **/
     public static ArrayList<Task> allTasks = new ArrayList<>();
 
-    // number of Tasks in the allTasks array
+    /** Number of Tasks in the allTasks array **/
     public static AtomicInteger numTasks = new AtomicInteger(0);
     public static AtomicInteger numTasksCompleted = new AtomicInteger(0);
 
-    // settings set to defaults
+    /** settings set to defaults **/
     public static String tootieSettingsFilePath = TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH;
     public static String allTasksFilePath = TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH;
     public static DividerChoice dividerChoice = DividerChoice.SPARKLY;
     public static String username = "user";
+    public static ArrayList<String> savedSettings = new ArrayList<String>(TootieConstants.NUMBER_OF_SETTINGS);
 
     public static void main(String[] args) {
         run();
     }
 
+    /** Runs the program until termination.  */
     private static void run() {
-        loadTasksAndSettings();
+        start();
         runCommandLoopUntilExitCommand();
         saveTasksAndSettings();
     }
 
-    private static void loadTasksAndSettings() {
-        ArrayList<String> savedSettings = new ArrayList<String>(4);
-        addSavedSettings(savedSettings, tootieSettingsFilePath, allTasksFilePath, dividerChoice, username);
-
+    /** Loads saved items, and prints the welcome message.  */
+    private static void start() {
         Printers.printTootieLogo();
         Printers.printDivider();
+        loadTasksAndSettings();
+        Printers.printHelloMessage(username);
+    }
+
+    /** Loads all the saved Tasks and Settings  */
+    private static void loadTasksAndSettings() {
+        addSavedSettings(savedSettings, tootieSettingsFilePath, allTasksFilePath, dividerChoice, username);
 
         SettingsLoader.loadTootieSettingsFile(savedSettings, tootieSettingsFilePath,
                 allTasksFilePath, dividerChoice, username);
         updateSettingsVariables(savedSettings);
         AllTasksLoader.loadAllTasksFile(allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
-
-        Printers.printHelloMessage(username);
     }
 
+    /**
+     * Loads the saved settings variables into the current session
+     *
+     * @param savedSettings list of saved settings parsed from settings file
+     */
     private static void updateSettingsVariables(ArrayList<String> savedSettings) {
         tootieSettingsFilePath = savedSettings.get(0);
         allTasksFilePath = savedSettings.get(1);
@@ -74,6 +88,7 @@ public class Duke {
         username = savedSettings.get(3);
     }
 
+    /** Reads user commands until the "bye" command is entered */
     private static void runCommandLoopUntilExitCommand() {
         String userInput;
         CommandType commandType = CommandType.START;
@@ -84,17 +99,22 @@ public class Duke {
             UserInputHandlers.echoUserInput(userInput);
             Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
-            CommandExecutor.executeCommand(commandType, userInput, allTasks, allTasksFilePath, dividerChoice,
+            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, allTasksFilePath, dividerChoice,
                     numTasks, numTasksCompleted, username);
+            // load settings if any were changed
+            updateSettingsVariables(savedSettings);
             Printers.printDivider();
         }
     }
 
+    /** Saves all the updated list of Tasks and Settings into the .txt files */
     private static void saveTasksAndSettings() {
         // Save tasks and settings
         try {
             allTasksFilePath = AllTasksSaver.saveAllTasks(allTasks, allTasksFilePath, numTasks, numTasksCompleted);
+            System.out.println("All tasks saved.");
             SettingsSaver.saveTootieSettings(tootieSettingsFilePath, allTasksFilePath, username, dividerChoice);
+            System.out.println("All settings saved.");
             Printers.printDivider();
         } catch (IOException e) {
             e.printStackTrace();

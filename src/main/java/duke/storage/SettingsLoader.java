@@ -87,6 +87,14 @@ public class SettingsLoader {
         }
     }
 
+    /**
+     *
+     * @param savedSettings
+     * @param tootieSettingsFilePath
+     * @param allTasksFilePath
+     * @param dividerChoice
+     * @param username
+     */
     public static void addSavedSettings(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                         String allTasksFilePath, DividerChoice dividerChoice, String username) {
         savedSettings.add(Parsers.pathReplaceIllegalCharacters(tootieSettingsFilePath));

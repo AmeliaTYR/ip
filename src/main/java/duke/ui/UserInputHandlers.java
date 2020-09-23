@@ -5,8 +5,16 @@ import duke.constants.TootieRegex;
 
 import java.util.Scanner;
 
+/**
+ * For user input detection and echoing
+ */
 public class UserInputHandlers {
-    // get user input, ignore comments and blank lines
+    /**
+     * Gets user input, ignore comments and blank lines
+     *
+     * @param SCANNER Scanner object for console inputs
+     * @return raw user input
+     */
     public static String getUserInput(Scanner SCANNER) {
         String userInput;
         do {
@@ -15,7 +23,11 @@ public class UserInputHandlers {
         return userInput;
     }
 
-    // echo the userInput for testing
+    /**
+     * Echos the userInput for testing
+     *
+     * @param userInput raw user input
+     */
     public static void echoUserInput(String userInput) {
         System.out.println(userInput);
     }

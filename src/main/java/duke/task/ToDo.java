@@ -1,7 +1,8 @@
 package duke.task;
 
-import duke.task.Task;
-
+/**
+ * Todo class, only contains taskname with no due date
+ */
 public class ToDo extends Task {
 
     public ToDo(String taskName) {

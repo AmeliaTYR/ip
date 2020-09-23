@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+/**
+ * Filters the tasks in the list
+ */
 public class Filters {
 
     // parse the user input and filter out the suitable tasks

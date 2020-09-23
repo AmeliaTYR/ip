@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class DividerNonexistantException extends Throwable {
+public class DividerNonexistantException extends Exception {
 }
