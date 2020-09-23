@@ -2,7 +2,7 @@ package duke.parsers;
 
 import duke.exceptions.DividerNonexistantException;
 import duke.exceptions.SettingObjectWrongFormatException;
-import duke.finalObjects.DividerChoice;
+import duke.constants.DividerChoice;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,6 +86,21 @@ public class Parsers {
         return newDividerChoice;
     }
 
+    public static DividerChoice parseLineDividerFromString(String userInput) {
+        DividerChoice newDividerChoice;
+        switch (userInput){
+        case "PLAIN":
+            newDividerChoice = DividerChoice.PLAIN;
+            break;
+        case "SIMPLE":
+            newDividerChoice = DividerChoice.SIMPLE;
+            break;
+        default:
+            newDividerChoice = DividerChoice.SPARKLY;
+        }
+        return newDividerChoice;
+    }
+
     // parse the date if time is not included in input
     public static Date parseDateWithoutTime(String unformattedDate) {
         Date formattedDate;
@@ -110,5 +125,9 @@ public class Parsers {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String pathReplaceIllegalCharacters(String path) {
+        return path.replace('\\', '/');
     }
 }

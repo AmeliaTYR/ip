@@ -1,7 +1,7 @@
-package duke.tootieFunctions;
+package duke.ui;
 
 import duke.exceptions.TasklistEmptyException;
-import duke.finalObjects.*;
+import duke.constants.*;
 import duke.task.Task;
 
 import java.io.InputStream;
@@ -20,7 +20,7 @@ public class TextUi {
         this.out = out;
     }
 
-    public static String currentLineDivider = TootieSymbols.STANDARD_TEXT_DIVIDER;
+    public static String currentLineDivider = TootieSymbols.PLAIN_TEXT_DIVIDER;
 
     public static void changeDivider(DividerChoice dividerChoice) {
         switch (dividerChoice){
@@ -83,7 +83,7 @@ public class TextUi {
             throw new TasklistEmptyException();
         }
 
-        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks));
+        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks, numTasks - numTasksCompleted));
         for (int i = 0; i < numTasks; i++) {
             System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT,
                     (i + 1),

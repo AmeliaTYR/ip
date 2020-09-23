@@ -1,9 +1,9 @@
-# test ignore comment
+# automatically create new allTasks.txt file
 help
 # test unrecognised command
 blah
 list
-done 1
+done 0
 # test todo versions/ error handling
 todo
 todo t/
@@ -22,16 +22,27 @@ event t/clean shoes s/01-02-2020 e/31-12-2020 05:45
 event t/clean socks s/01-02-2020 04:55 e/31-12-2020 05:45
 list
 # test done function
-done 7
+done 11
+list
 done 3
+list
 done 2
+list
 done 4
+list
+undone 11
+list
+undone 5
+list
+undone 1
+list
+undone 0
 list
 delete 5
 list
 delete 2
 list
-delete 7
+delete 12
 list
 delete 0
 list

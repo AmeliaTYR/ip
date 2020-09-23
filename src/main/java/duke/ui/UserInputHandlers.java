@@ -1,8 +1,7 @@
-package duke.tootieFunctions;
+package duke.ui;
 
-import duke.Duke;
-import duke.finalObjects.TootieInputMarkers;
-import duke.finalObjects.TootieRegex;
+import duke.constants.TootieInputMarkers;
+import duke.constants.TootieRegex;
 
 import java.util.Scanner;
 

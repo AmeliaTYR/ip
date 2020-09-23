@@ -1,17 +1,19 @@
 package duke.tootieFunctions;
 
-import duke.Duke;
+import duke.constants.TootieSymbols;
 import duke.exceptions.*;
-import duke.fileHandlers.AllTasksSaver;
-import duke.finalObjects.CommandType;
-import duke.finalObjects.DividerChoice;
-import duke.finalObjects.TootieErrorMsgs;
+import duke.storage.AllTasksSaver;
+import duke.constants.CommandType;
+import duke.constants.DividerChoice;
+import duke.constants.TootieErrorMsgs;
 import duke.parsers.Parsers;
 import duke.task.Task;
+import duke.ui.TextUi;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class CommandExecutor {
     public static final String NEWLINE = System.lineSeparator();
@@ -31,7 +33,7 @@ public class CommandExecutor {
         } else if (userInput.toLowerCase().trim().startsWith("done")) {
             return CommandType.MARK_TASK_DONE;
         } else if (userInput.toLowerCase().trim().startsWith("bye")) {
-                return CommandType.BYE;
+            return CommandType.BYE;
         } else if (userInput.toLowerCase().trim().startsWith("delete")) {
             return CommandType.DELETE_TASK;
         } else if (userInput.toLowerCase().trim().startsWith("undone")) {
@@ -40,6 +42,8 @@ public class CommandExecutor {
             return CommandType.CHOOSE_DIVIDER;
         } else if (userInput.toLowerCase().trim().startsWith("username")) {
             return CommandType.SET_USERNAME;
+        } else if (userInput.toLowerCase().trim().startsWith("filter")) {
+            return CommandType.FILTER_TASKS;
         } else if (userInput.toLowerCase().trim().startsWith("save")) {
             return CommandType.SAVE;
         } else {
@@ -49,7 +53,8 @@ public class CommandExecutor {
 
     // execute the command as required
     public static void executeCommand(CommandType commandType, String userInput, ArrayList<Task> allTasks,
-                                      String filePath, DividerChoice dividerChoice, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
+                                      String allTasksFilePath, DividerChoice dividerChoice, AtomicInteger numTasks,
+                                      AtomicInteger numTasksCompleted, String username) {
         switch (commandType) {
         case HELP:
             TextUi.printHelpInfo();
@@ -57,9 +62,9 @@ public class CommandExecutor {
         case ADD_TODO:
             try {
                 AddNewTasks.addToDo(userInput, allTasks, numTasks);
-            } catch (ToDoInputWrongFormatException e){
+            } catch (ToDoInputWrongFormatException e) {
                 System.out.println(TootieErrorMsgs.TODO_WRONG_FORMAT_MSG);
-            } catch (TaskNameEmptyException e){
+            } catch (TaskNameEmptyException e) {
                 System.out.println(TootieErrorMsgs.TODO_TASKNAME_EMPTY_MSG);
             }
             break;
@@ -72,7 +77,7 @@ public class CommandExecutor {
                 System.out.println(TootieErrorMsgs.DUEDATE_WRONG_FORMAT_MSG);
             } catch (TaskNameEmptyException e) {
                 System.out.println(TootieErrorMsgs.DEADLINE_TASKNAME_EMPTY_MSG);
-            } catch (InvalidDueDateException e){
+            } catch (InvalidDueDateException e) {
                 System.out.println(TootieErrorMsgs.INVALID_DUE_DATE_MSG);
             }
             break;
@@ -85,7 +90,7 @@ public class CommandExecutor {
                 System.out.println(TootieErrorMsgs.INVALID_START_DATE_MSG);
             } catch (InvalidEndTimeException e) {
                 System.out.println(TootieErrorMsgs.INVALID_END_DATE_MSG);
-            } catch (StartTimeWrongFormatException e ) {
+            } catch (StartTimeWrongFormatException e) {
                 System.out.println(TootieErrorMsgs.STARTDATE_WRONG_FORMAT_MSG);
             } catch (EndTimeWrongFormatException e) {
                 System.out.println(TootieErrorMsgs.ENDDATE_WRONG_FORMAT_MSG);
@@ -105,14 +110,14 @@ public class CommandExecutor {
         case MARK_TASK_DONE:
             try {
                 ModifyTasks.markTaskComplete(userInput, allTasks, numTasksCompleted, numTasks);
-            } catch (TaskNonexistantException e){
+            } catch (TaskNonexistantException e) {
                 System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case MARK_TASK_UNDONE:
             try {
                 ModifyTasks.markTaskIncomplete(userInput, allTasks, numTasksCompleted, numTasks);
-            } catch (TaskNonexistantException e){
+            } catch (TaskNonexistantException e) {
                 System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
@@ -121,7 +126,7 @@ public class CommandExecutor {
             break;
         case SAVE:
             try {
-                AllTasksSaver.saveAllTasks(allTasks, filePath, numTasks, numTasksCompleted);
+                AllTasksSaver.saveAllTasks(allTasks, allTasksFilePath, numTasks, numTasksCompleted);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -129,29 +134,60 @@ public class CommandExecutor {
         case DELETE_TASK:
             try {
                 ModifyTasks.deleteTask(userInput, allTasks, numTasks, numTasksCompleted);
-            } catch (TaskNonexistantException e){
+            } catch (TaskNonexistantException e) {
                 System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case CHOOSE_DIVIDER:
             try {
                 dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
-                TextUi.changeDivider( dividerChoice);
-            } catch (DividerNonexistantException e){
+                TextUi.changeDivider(dividerChoice);
+            } catch (DividerNonexistantException e) {
                 System.out.println("Divider choice not found!" + NEWLINE);
             }
             break;
         case SET_USERNAME:
             try {
                 SetPreferences.setUsername(userInput, username);
-            } catch (UsernameCommandInvalidException e){
-                System.out.println("Username command invalid!" + NEWLINE);
+            } catch (UsernameCommandInvalidException e) {
+                System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON + NEWLINE);
             } catch (UsernameEmptyException e) {
-                System.out.println("Username is blank!" + NEWLINE);
+                System.out.println("Username is blank? " + TootieSymbols.CONFUSED_EMOTICON + NEWLINE);
             }
+            break;
+        case FILTER_TASKS:
+            //            try {
+            //                filterTasks(userInput, allTasks, numTasks);
+            //            } catch ( e){
+            //                System.out.println("Username command invalid!" + NEWLINE);
+            //            }
             break;
         default:
             TextUi.printConfusedMessage();
         }
+    }
+
+    // parse the user input and filter out the suitable tasks
+    private static void filterTasks(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) {
+        int taskIndexInList = 1;
+        boolean isDoneFiltering = false;
+        Stream<Task> taskStream = allTasks.stream();
+
+        // parse into segments
+
+        // check for unrecgonised parmeters
+
+
+        while (!isDoneFiltering) {
+            // if user indicated ToDo
+
+            // if user indicated ToDo
+
+            // if user indicated ToDo
+
+            // check what variables it contains
+            // for each of the variables it conttains add it to the stresam
+        }
+
     }
 }

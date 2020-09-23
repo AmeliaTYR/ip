@@ -1,4 +1,4 @@
-package duke.finalObjects;
+package duke.constants;
 
 public class TootieFilePaths {
     public static final String DEFAULT_ALL_TASKS_FILE_PATH = "data/allTasks.txt";

@@ -3,8 +3,8 @@ Tootie - Version 1.5
 
 ==============================
 FILE PATHS
-+ Tootie settings: C:\Users\Amelia\Documents\GitHub\ip\data\tootieSettings.txt
-+ All Tasks: C:\Users\Amelia\Documents\GitHub\ip\data\allTasks.txt
++ Tootie settings: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\tootieSettings.txt
++ All Tasks: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 
 ==============================
 USER PREFERENCES

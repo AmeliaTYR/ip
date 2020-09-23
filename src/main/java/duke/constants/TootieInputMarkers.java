@@ -1,4 +1,4 @@
-package duke.finalObjects;
+package duke.constants;
 
 public class TootieInputMarkers {
     public static final String INPUT_COMMENT_MARKER = "#";

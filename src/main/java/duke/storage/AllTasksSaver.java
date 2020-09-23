@@ -1,7 +1,6 @@
-package duke.fileHandlers;
+package duke.storage;
 
-import duke.Duke;
-import duke.finalObjects.TootieFileMsgs;
+import duke.constants.TootieFileMsgs;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -20,7 +19,7 @@ public class AllTasksSaver {
     public static final String NEWLINE = System.lineSeparator();
 
     // saves all tasks from the allTasks ArrayList to the allTasks.txt file
-    public static void saveAllTasks(ArrayList<Task> allTasks, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws IOException {
+    public static String saveAllTasks(ArrayList<Task> allTasks, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws IOException {
         File allTasksFile = new File(allTasksFilePath);
 
         if (allTasksFile.createNewFile()){
@@ -57,6 +56,6 @@ public class AllTasksSaver {
 
         System.out.println("All tasks saved.");
 
-        allTasksFilePath = allTasksFile.getAbsolutePath();
+        return allTasksFile.getAbsolutePath();
     }
 }

@@ -1,15 +1,17 @@
-package duke.fileHandlers;
+package duke.storage;
 
 import duke.exceptions.FileEmptyException;
 import duke.exceptions.SavedTaskFormatWrongException;
 import duke.exceptions.TaskTypeInvalidException;
 import duke.exceptions.TotalTasksNumInvalidException;
-import duke.finalObjects.*;
+import duke.constants.*;
 import duke.parsers.Parsers;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+import duke.ui.TextUi;
+import duke.ui.UserInputHandlers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,9 +44,12 @@ public class AllTasksLoader {
                 isFileNotRead = false;
             } catch (FileNotFoundException e) {
                 System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
-                boolean isNewFilePathObtained = true;
-                while (isNewFilePathObtained) {
-                    isNewFilePathObtained = getNewAllTasksFilePath(SCANNER, allTasksFilePath);
+                boolean isNewFilePathObtained = false;
+                while (!isNewFilePathObtained) {
+                    ArrayList<String> allTasksFilePathReturn = new ArrayList<String>(1);
+                    isNewFilePathObtained = getNewAllTasksFilePath(SCANNER, allTasksFilePathReturn);
+                    allTasksFilePath = allTasksFilePathReturn.get(1);
+                    TextUi.printDivider();
                 }
             } catch (FileEmptyException e) {
                 System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);
@@ -54,23 +59,23 @@ public class AllTasksLoader {
     }
 
     // get a new file path from user
-    private static boolean getNewAllTasksFilePath(Scanner SCANNER, String allTasksFilePath) {
+    private static boolean getNewAllTasksFilePath(Scanner SCANNER, ArrayList<String> allTasksFilePathReturn) {
         String path = "";
 
         System.out.println("Options:" + NEWLINE + "(1)Find existing file" + NEWLINE +
                 "(2)Manually create directory for file" + NEWLINE + "(3)Automatically create directory and file" +
                 NEWLINE + "(type \"1\" \"2\" or \"3\")");
 
-        String response = SCANNER.next();
+        String response = UserInputHandlers.getUserInput(SCANNER);
+        UserInputHandlers.echoUserInput(response);
 
         if (response.trim().equals("1")){
             System.out.println("Enter the full path to existing file: ");
-            path = SCANNER.next();
-            allTasksFilePath = path;
+            path = UserInputHandlers.getUserInput(SCANNER);
         } else if (response.equals("2")){
             // make new file
             System.out.println("Enter the path to new directory location: ");
-            path = SCANNER.next();
+            path = UserInputHandlers.getUserInput(SCANNER);
             if (path.endsWith("/")) {
                 path = path + "data";
             } else {
@@ -83,18 +88,30 @@ public class AllTasksLoader {
             if(isFileCreated){
                 System.out.println("Directory created successfully " + TootieSymbols.HAPPY_EMOTICON);
                 path = path + "/allTasks.txt";
-                allTasksFilePath = path;
             }else{
                 System.out.println("Sorry, could not create specified directory");
-                return true;
+                return false;
             }
         } else if (response.equals("3")){
             System.out.println("Automatically creating directory and file");
-            allTasksFilePath = fileFunctions.autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
+            path = fileFunctions.autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
+            System.out.println(path + TootieSymbols.CONFUSED_EMOTICON);
         } else {
             System.out.println("Response not recognised? " + TootieSymbols.CONFUSED_EMOTICON);
         }
-        return false;
+
+        path = Parsers.pathReplaceIllegalCharacters(path);
+        allTasksFilePathReturn.set(0, path);
+
+        // check if the file path is valid
+        File allTasksFile = fileFunctions.getFileFromFilePath(path);
+        try {
+            fileFunctions.checkFileExists(allTasksFile);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found uwu " + path);
+            return false;
+        }
+        return true;
     }
 
     // try to read the allTasks.txt file into allTasks array

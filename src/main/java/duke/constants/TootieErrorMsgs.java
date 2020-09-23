@@ -1,4 +1,4 @@
-package duke.finalObjects;
+package duke.constants;
 
 public class TootieErrorMsgs {
     public static final String NEWLINE = System.lineSeparator();

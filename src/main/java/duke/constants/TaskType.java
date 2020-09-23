@@ -1,4 +1,4 @@
-package duke.finalObjects;
+package duke.constants;
 
 public enum TaskType {
     TASK,

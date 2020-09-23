@@ -1,4 +1,4 @@
-package duke.finalObjects;
+package duke.constants;
 
 public class TootieRegex {
     public static final String BLANK_STRING_REGEX = "(\r\n|[\n\r\u2028\u2029\u0085])?";

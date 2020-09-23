@@ -1,8 +1,7 @@
 package duke.tootieFunctions;
 
-import duke.Duke;
 import duke.exceptions.TaskNonexistantException;
-import duke.finalObjects.TootieNormalMsgs;
+import duke.constants.TootieNormalMsgs;
 import duke.task.Task;
 
 import java.util.ArrayList;
@@ -66,12 +65,14 @@ public class ModifyTasks {
         // try to parse task and check if it exists
         taskNum = getTaskNumFromInput(userInput, numTasks);
 
+        if (allTasks.get(taskNum - 1).getComplete()){
+            numTasksCompleted.getAndDecrement();
+        }
+
         allTasks.get(taskNum - 1).setComplete(false);
 
         // print response
         System.out.println(String.format(TootieNormalMsgs.TASK_MARKED_UNDONE_RESPONSE_MSG,
                 allTasks.get(taskNum - 1).getTaskType(), allTasks.get(taskNum - 1).getTaskDescription()));
-
-        numTasksCompleted.getAndDecrement();
     }
 }

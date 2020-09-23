@@ -6,9 +6,17 @@ Hello from
 _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
 
-Tootie - Version 1.4
+Tootie - Version 1.5
+----------------------------------------------
+Loading tootieSettings.txt save file...
+full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\tootieSettings.txt
+----------------------------------------------
+Loading allTasks.txt save file...
+full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-Hello! I'm Tootie!
+3 of 3 tasks read successfully!
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Hello Ames! I'm Tootie!
 What can I do for you?
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 help
@@ -32,6 +40,25 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
+done: marks indicated task done (choose number from list)
+  Example:  done 1
+
+undone: marks indicated task undone (choose number from list)
+  Example:  undone 1
+
+delete: deletes indicated task (choose number from list)
+  Example:  delete 1
+
+divider: select a divider for customisation
+  dividers avaliable:
+1) ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+2) ----------------------------------------------
+3) *---*---*---*---*---*---*---*---*---*---*---*
+  Example:  divider 1
+
+username: allows user to set username
+  Example:  username Sophia
+
 list: displays the complete list of tasks entered
   Example:  list
 
@@ -50,9 +77,12 @@ Type "help" for a list of commands!
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-No tasks found! （´・ω・ `）
+You have 3 tasks, 2 not done
+1. [T][✓] clean shoes
+2. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-done 1
+done 0
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 No such task? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
@@ -132,102 +162,244 @@ event t/clean kitchen s/12-12-2020 e/31-12-2020
 added event:
 clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-event t/clean room s/01-02-2020 e/31-12-2020 05:45
+event t/clean shoes s/01-02-2020 e/31-12-2020 05:45
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 added event:
-clean room (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-event t/clean shoes s/01-02-2020 04:55 e/31-12-2020 05:45
+event t/clean socks s/01-02-2020 04:55 e/31-12-2020 05:45
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 added event:
-clean shoes (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 6 tasks!
-1. [T][✗] clean turtle tank
-2. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
-3. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
-4. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
-5. [E][✗] clean room (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
-6. [E][✗] clean shoes (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+You have 9 tasks, 8 not done
+1. [T][✓] clean shoes
+2. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✗] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-done 7
+done 11
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 No such task? (・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 8 not done
+1. [T][✓] clean shoes
+2. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✗] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 done 3
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Nice! I've marked this task as done:
-    [✓]do project
+    [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 7 not done
+1. [T][✓] clean shoes
+2. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✗] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 done 2
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Nice! I've marked this task as done:
-    [✓]write essay
+    [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 6 not done
+1. [T][✓] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✗] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 done 4
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Nice! I've marked this task as done:
-    [✓]clean kitchen
+    [T][✓] clean turtle tank
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 6 tasks!
-1. [T][✗] clean turtle tank
-2. [D][✓] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
-3. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
-4. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
-5. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
-6. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-delete 5
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-5
-Yay! I have deleted this task:
-    [✓]clean shoes
-(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 5 tasks!
-1. [T][✗] clean turtle tank
-2. [D][✓] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
-3. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
-4. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
-5. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-delete 2
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-2
-Yay! I have deleted this task:
-    [✓]write essay
-(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 4 tasks!
-1. [T][✗] clean turtle tank
-2. [D][✓] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+You have 9 tasks, 5 not done
+1. [T][✓] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
 3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
-4. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-delete 7
+undone 11
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 No such task? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 list
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 4 tasks!
-1. [T][✗] clean turtle tank
-2. [D][✓] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+You have 9 tasks, 5 not done
+1. [T][✓] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
 3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
-4. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+undone 5
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Aww... I've marked this task undone:
+    [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+(╥﹏╥)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 5 not done
+1. [T][✓] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+undone 1
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Aww... I've marked this task undone:
+    [T][✗] clean shoes
+(╥﹏╥)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 6 not done
+1. [T][✗] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+undone 0
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+No such task? (・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 9 tasks, 6 not done
+1. [T][✗] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+6. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+7. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+8. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+9. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+delete 5
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Yay! I have deleted this task:
+    [D][✗] write essay (by: Thu Dec 31 00:00:00 SGT 2020)
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 8 tasks, 5 not done
+1. [T][✗] clean shoes
+2. [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+3. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+4. [T][✓] clean turtle tank
+5. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+6. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+7. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+8. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+delete 2
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Yay! I have deleted this task:
+    [D][✓] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 7 tasks, 5 not done
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+3. [T][✓] clean turtle tank
+4. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+5. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+6. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+7. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+delete 12
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+No such task? (・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 7 tasks, 5 not done
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+3. [T][✓] clean turtle tank
+4. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+5. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+6. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+7. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+delete 0
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+No such task? (・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 7 tasks, 5 not done
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+3. [T][✓] clean turtle tank
+4. [D][✗] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+5. [E][✗] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
+6. [E][✗] clean shoes (from: Sat Feb 01 00:00:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
+7. [E][✗] clean socks (from: Sat Feb 01 04:55:00 SGT 2020 to Thu Dec 31 05:45:00 SGT 2020)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 bye
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-Bye! Hope to see you again soon! (◠‿◠✿)
+Bye Ames! Hope to see you again soon! (◠‿◠✿)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+All tasks saved.
+All settings saved.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────

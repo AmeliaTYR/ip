@@ -1,8 +1,7 @@
-package duke.fileHandlers;
+package duke.storage;
 
-import duke.Duke;
-import duke.finalObjects.DividerChoice;
-import duke.finalObjects.TootieFileMsgs;
+import duke.constants.DividerChoice;
+import duke.constants.TootieFileMsgs;
 
 import java.io.File;
 import java.io.FileWriter;

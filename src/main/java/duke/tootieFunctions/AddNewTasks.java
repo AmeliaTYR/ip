@@ -1,10 +1,9 @@
 package duke.tootieFunctions;
 
-import duke.Duke;
 import duke.exceptions.*;
-import duke.finalObjects.TootieInputMarkers;
-import duke.finalObjects.TootieNormalMsgs;
-import duke.finalObjects.TootieRegex;
+import duke.constants.TootieInputMarkers;
+import duke.constants.TootieNormalMsgs;
+import duke.constants.TootieRegex;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
