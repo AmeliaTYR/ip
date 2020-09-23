@@ -1,17 +1,13 @@
 package duke.storage;
 
-import duke.constants.TootieInputMarkers;
 import duke.constants.TootieSymbols;
-import duke.exceptions.EventInputWrongFormatException;
 import duke.exceptions.FilePathInvalidException;
-import duke.ui.TextUi;
-import duke.ui.UserInputHandlers;
+import duke.ui.Printers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 
 import static duke.parsers.Parsers.pathReplaceIllegalCharacters;
 
@@ -98,7 +94,7 @@ public class fileFunctions {
     public static File getFileFromFilePath(String filePath) {
         File allTasksFile = new File(filePath);
         System.out.println("full path: " + allTasksFile.getAbsolutePath());
-        TextUi.printDivider();
+        Printers.printDivider();
         return allTasksFile;
     }
 

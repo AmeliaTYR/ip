@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static duke.storage.AllTasksLoader.getFileNextLine;
-import static duke.ui.TextUi.changeDivider;
+import static duke.ui.Printers.changeDivider;
 
 public class SettingsLoader {
     public SettingsLoader() {

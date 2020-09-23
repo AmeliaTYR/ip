@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class TextUi {
+public class Printers {
     private final Scanner in;
     private final PrintStream out;
 
 
-    public TextUi(InputStream in, PrintStream out) {
+    public Printers(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
     }

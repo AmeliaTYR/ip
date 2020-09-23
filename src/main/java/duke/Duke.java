@@ -12,7 +12,7 @@ import duke.constants.TootieFilePaths;
 import duke.task.Task;
 
 import duke.tootieFunctions.CommandExecutor;
-import duke.ui.TextUi;
+import duke.ui.Printers;
 import duke.ui.UserInputHandlers;
 
 import java.io.IOException;
@@ -55,19 +55,23 @@ public class Duke {
     private static void loadTasksAndSettings() {
         ArrayList<String> savedSettings = new ArrayList<String>(4);
         addSavedSettings(savedSettings, tootieSettingsFilePath, allTasksFilePath, dividerChoice, username);
-        TextUi.printTootieLogo();
-        TextUi.printDivider();
+
+        Printers.printTootieLogo();
+        Printers.printDivider();
 
         SettingsLoader.loadTootieSettingsFile(savedSettings, tootieSettingsFilePath,
                 allTasksFilePath, dividerChoice, username);
+        updateSettingsVariables(savedSettings);
+        AllTasksLoader.loadAllTasksFile(allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
+
+        Printers.printHelloMessage(username);
+    }
+
+    private static void updateSettingsVariables(ArrayList<String> savedSettings) {
         tootieSettingsFilePath = savedSettings.get(0);
         allTasksFilePath = savedSettings.get(1);
         dividerChoice = parseLineDividerFromString(savedSettings.get(2));
         username = savedSettings.get(3);
-
-        AllTasksLoader.loadAllTasksFile(allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
-
-        TextUi.printHelloMessage(username);
     }
 
     private static void runCommandLoopUntilExitCommand() {
@@ -78,11 +82,11 @@ public class Duke {
         while (commandType != CommandType.BYE) {
             userInput = UserInputHandlers.getUserInput(SCANNER);
             UserInputHandlers.echoUserInput(userInput);
-            TextUi.printDivider();
+            Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
             CommandExecutor.executeCommand(commandType, userInput, allTasks, allTasksFilePath, dividerChoice,
                     numTasks, numTasksCompleted, username);
-            TextUi.printDivider();
+            Printers.printDivider();
         }
     }
 
@@ -91,7 +95,7 @@ public class Duke {
         try {
             allTasksFilePath = AllTasksSaver.saveAllTasks(allTasks, allTasksFilePath, numTasks, numTasksCompleted);
             SettingsSaver.saveTootieSettings(tootieSettingsFilePath, allTasksFilePath, username, dividerChoice);
-            TextUi.printDivider();
+            Printers.printDivider();
         } catch (IOException e) {
             e.printStackTrace();
         }

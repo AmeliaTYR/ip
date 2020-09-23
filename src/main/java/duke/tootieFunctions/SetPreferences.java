@@ -3,7 +3,7 @@ package duke.tootieFunctions;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
 
-import static duke.ui.TextUi.printDivider;
+import static duke.ui.Printers.printDivider;
 
 public class SetPreferences {
     public static void setUsername(String userInput, String username)

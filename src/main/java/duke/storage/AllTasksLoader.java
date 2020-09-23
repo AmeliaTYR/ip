@@ -10,7 +10,7 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
-import duke.ui.TextUi;
+import duke.ui.Printers;
 import duke.ui.UserInputHandlers;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class AllTasksLoader {
                     ArrayList<String> allTasksFilePathReturn = new ArrayList<String>(1);
                     isNewFilePathObtained = getNewAllTasksFilePath(SCANNER, allTasksFilePathReturn);
                     allTasksFilePath = allTasksFilePathReturn.get(1);
-                    TextUi.printDivider();
+                    Printers.printDivider();
                 }
             } catch (FileEmptyException e) {
                 System.out.println("Save file empty? " + TootieSymbols.CONFUSED_EMOTICON);

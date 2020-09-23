@@ -8,12 +8,14 @@ import duke.constants.DividerChoice;
 import duke.constants.TootieErrorMsgs;
 import duke.parsers.Parsers;
 import duke.task.Task;
-import duke.ui.TextUi;
+import duke.ui.Printers;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
+
+import static duke.tootieFunctions.Filters.filterTasks;
 
 public class CommandExecutor {
     public static final String NEWLINE = System.lineSeparator();
@@ -57,7 +59,7 @@ public class CommandExecutor {
                                       AtomicInteger numTasksCompleted, String username) {
         switch (commandType) {
         case HELP:
-            TextUi.printHelpInfo();
+            Printers.printHelpInfo();
             break;
         case ADD_TODO:
             try {
@@ -102,7 +104,7 @@ public class CommandExecutor {
             break;
         case LIST:
             try {
-                TextUi.printAllTasks(allTasks, numTasks.get(), numTasksCompleted.get());
+                Printers.printAllTasks(allTasks, numTasks.get(), numTasksCompleted.get());
             } catch (TasklistEmptyException e) {
                 System.out.println(TootieErrorMsgs.TasklistEmptyMsg);
             }
@@ -122,7 +124,7 @@ public class CommandExecutor {
             }
             break;
         case BYE:
-            TextUi.printFarewellMessage(username);
+            Printers.printFarewellMessage(username);
             break;
         case SAVE:
             try {
@@ -141,7 +143,7 @@ public class CommandExecutor {
         case CHOOSE_DIVIDER:
             try {
                 dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
-                TextUi.changeDivider(dividerChoice);
+                Printers.changeDivider(dividerChoice);
             } catch (DividerNonexistantException e) {
                 System.out.println("Divider choice not found!" + NEWLINE);
             }
@@ -156,38 +158,11 @@ public class CommandExecutor {
             }
             break;
         case FILTER_TASKS:
-            //            try {
-            //                filterTasks(userInput, allTasks, numTasks);
-            //            } catch ( e){
-            //                System.out.println("Username command invalid!" + NEWLINE);
-            //            }
+            filterTasks(userInput, allTasks, numTasks);
             break;
         default:
-            TextUi.printConfusedMessage();
+            Printers.printConfusedMessage();
         }
     }
 
-    // parse the user input and filter out the suitable tasks
-    private static void filterTasks(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) {
-        int taskIndexInList = 1;
-        boolean isDoneFiltering = false;
-        Stream<Task> taskStream = allTasks.stream();
-
-        // parse into segments
-
-        // check for unrecgonised parmeters
-
-
-        while (!isDoneFiltering) {
-            // if user indicated ToDo
-
-            // if user indicated ToDo
-
-            // if user indicated ToDo
-
-            // check what variables it contains
-            // for each of the variables it conttains add it to the stresam
-        }
-
-    }
 }
