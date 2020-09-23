@@ -212,7 +212,7 @@ public class AllTasksLoader {
         Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(by:(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
-            Date dueDate = Parsers.parseComplexDate(matcher.group(3));
+            Date dueDate = Parsers.parseSimpleDate(matcher.group(3));
             allTasks.add(new Deadline(matcher.group(2).trim(),dueDate));
             if(matcher.group(1).equals("1")){
                 allTasks.get(numTasks.get()).setComplete(true);
@@ -229,8 +229,8 @@ public class AllTasksLoader {
         Pattern pattern = Pattern.compile("\\[E\\]\\[([0-1]{1})\\](.*)\\(from:(.*)to(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
-            Date startDate = Parsers.parseComplexDate(matcher.group(3));
-            Date endDate = Parsers.parseComplexDate(matcher.group(4));
+            Date startDate = Parsers.parseSimpleDate(matcher.group(3));
+            Date endDate = Parsers.parseSimpleDate(matcher.group(4));
             allTasks.add(new Event(matcher.group(2).trim(), startDate, endDate));
             if(matcher.group(1).equals("1")){
                 allTasks.get(numTasks.get()).setComplete(true);

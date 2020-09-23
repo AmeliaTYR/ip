@@ -9,6 +9,7 @@ import duke.task.ToDo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -21,6 +22,7 @@ public class AllTasksSaver {
     // saves all tasks from the allTasks ArrayList to the allTasks.txt file
     public static String saveAllTasks(ArrayList<Task> allTasks, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws IOException {
         File allTasksFile = new File(allTasksFilePath);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
 
         if (allTasksFile.createNewFile()){
             System.out.println("New file created: " + allTasksFile.getName());
@@ -43,12 +45,12 @@ public class AllTasksSaver {
             }
             if (allTasks.get(i) instanceof Deadline) {
                 printOut = "[D][" + ((allTasks.get(i).getComplete()) ? 1 : 0) + "] " + allTasks.get(i).getTaskName() +
-                        " (by:" + ((Deadline) allTasks.get(i)).getDueDate() + ")";
+                        " (by: " + dateFormat.format(((Deadline) allTasks.get(i)).getDueDate()) + ")";
             }
             if (allTasks.get(i) instanceof Event) {
                 printOut = "[E][" + ((allTasks.get(i).getComplete()) ? 1 : 0) + "] " + allTasks.get(i).getTaskName() +
-                        " (from:" + ((Event) allTasks.get(i)).getStartTime() + " to " +
-                        ((Event) allTasks.get(i)).getEndTime() + ")";
+                        " (from: " + dateFormat.format(((Event) allTasks.get(i)).getStartTime()) + " to " +
+                        dateFormat.format(((Event) allTasks.get(i)).getEndTime()) + ")";
             }
             fileFunctions.appendsStringToFile(printOut,allTasksFilePath);
             fileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);

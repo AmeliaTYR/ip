@@ -1,10 +1,14 @@
 package duke.task;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static duke.parsers.Parsers.parseSimpleDate;
 
 public class Event extends Task {
     protected Date startTime;
     protected Date endTime;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
 
     public Event(String taskName, Date startTime, Date endTime) {
         super(taskName, false);
@@ -35,7 +39,8 @@ public class Event extends Task {
 
     @Override
     public String getTaskDescription() {
-        return super.getTaskName() + " (from: " + startTime + " to " + endTime + ")";
+        return super.getTaskName() + " (from: " + dateFormat.format(startTime) + " to "
+                + dateFormat.format(endTime) + ")";
     }
 
 }

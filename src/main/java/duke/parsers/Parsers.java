@@ -47,9 +47,22 @@ public class Parsers {
     // parses the default date format and returns a Date object
     public static Date parseComplexDate(String unformattedDate) {
         Date formattedDate;
-        SimpleDateFormat dateWithoutTime = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        SimpleDateFormat complexDateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         try {
-            formattedDate = dateWithoutTime.parse(unformattedDate.trim());
+            formattedDate = complexDateFormat.parse(unformattedDate.trim());
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // parses the default date format and returns a Date object
+    public static Date parseSimpleDate(String unformattedDate) {
+        Date formattedDate;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
+        try {
+            formattedDate = simpleDateFormat.parse(unformattedDate.trim());
             return formattedDate;
         } catch (ParseException e) {
             e.printStackTrace();
