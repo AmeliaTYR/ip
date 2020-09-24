@@ -201,7 +201,7 @@ public class AddNewTasks {
      * @param timeUnformmated a string containing a date without the time included
      * @return true if it matches the correct format
      */
-    private static boolean isDateWithoutTime(String timeUnformmated) {
+    public static boolean isDateWithoutTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITHOUT_TIME_REGEX);
     }
 
@@ -211,7 +211,7 @@ public class AddNewTasks {
      * @param timeUnformmated a string containing a date with the time included
      * @return true if it matches the correct format
      */
-    private static boolean isDateWithTime(String timeUnformmated) {
+    public static boolean isDateWithTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITH_TIME_REGEX);
     }
 

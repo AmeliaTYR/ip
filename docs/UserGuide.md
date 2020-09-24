@@ -48,7 +48,7 @@ Adds a new deadline task to the list of tasks.
 Format: `deadline t/TASKNAME d/DUE_DATE`
 
 * The `TASKNAME` cannot contain slashes.  
-* The `DUE_DATE` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy"
+* The `DUE_DATE` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
 * The parameters can be in any order
 
 Example of usage: 
@@ -65,7 +65,7 @@ Adds a new scheduled event task to the list of tasks.
 Format: `event t/TASKNAME s/START_TIME e/END_TIME`
 
 * The `TASKNAME` cannot contain slashes.  
-* The `START_TIME` and `END_TIME` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy"
+* The `START_TIME` and `END_TIME` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
 * The `START_TIME` should be before the `END_TIME`.
 * The parameters can be in any order
 
@@ -77,14 +77,89 @@ Example of usage:
 
 `event e/31-12-2020 t/clean room s/31-12-2020`
 
-### Mark a task done: `done`
-Marks an indicated task done
+### Filtered search: `filter`
+Filters out tasks from the list according to the parameters
 
-Format: `done [TASK_INDEX]`
+Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES`
+
+* The parameters can be in any order.
+* The command should contain at least one search parameter.
+* The `SEARCH_TERM` cannot contain slashes and is case-sensitive.  
+* The `TASK_TYPES` should not contain slashes, and should contain desired task types, which are `todo`, `deadline` and`event`.
+  * If no `TASK_TYPES` parameter is specified, the function will filter for all 3 types.
+* The `TASK_TYPES` can be separated by any delimiter of your choice, and may be in any order, and is not case-sensitive. 
+  * For example, `tt/event todo`, `tt/TODO,deadline` and `tt/eventdeadline` are all valid.
+* The `START_BEFORE`, `START_AFTER`, `END_BEFORE`, `END_AFTER`, `DUE_BEFORE`, `DUE_AFTER`, are dates and can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
+  *  `START_BEFORE` applies to `Event` tasks and filters for events which start time is before this date.
+  *  `START_AFTER` applies to `Event` tasks and filters for events which start time is after this date.
+  *  `END_BEFORE` applies to `Event` tasks and filters for events which end time is before this date.
+  *  `END_AFTER` applies to `Event` tasks and filters for events which end time is after this date.
+  *  `DUE_BEFORE` applies to `Deadline` tasks and filters for deadlines which due date is before this date.
+  *  `DUE_AFTER` applies to `Deadline` and filters for deadlines which due date is after this date.
+* If the "before" dates are after the "after" dates, they will be automatically swapped.
 
 Example of usage: 
 
-`help`
+`filter tt/event sb/13-01-2019 ea/31-01-2020`
+
+`filter tt/event todo st/homework`
+
+`filter tt/deadline,todo`
+
+`filter st/clean`
+
+### Mark a task done: `username`
+Change username stored in system
+
+Format: `username USERNAME`
+
+* The `USERNAME` may have spaces
+
+Example of usage: 
+
+`username 1`
+
+### Mark a task done: `done`
+Marks an indicated task done by index
+
+Format: `done TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`done 1`
+
+### Mark a task undone: `undone`
+Marks an indicated task undone by index
+
+Format: `undone TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`undone 1`
+
+### Delete a task: `delete`
+Delete a task from the task list by index
+
+Format: `delete TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`delete 1`
+
+### Select a new divider: `divider`
+Marks an indicated task done
+
+Format: `divider DIVIDER_INDEX`
+
+Example of usage: 
+
+`divider 1`
 
 ### Close the program: `bye`
 Signals the end of the program use and automatically saves settings and tasks in the task list
@@ -106,3 +181,20 @@ Example of usage:
 {Give a 'cheat sheet' of commands here}
 
 * Add todo `todo n/TODO_NAME d/DEADLINE`
+
+# Summary of Commands
+
+ Command | Purpose | Syntax
+---------|---------|-------
+list | Lists all tasks|_list /format \<format\>_
+command/s|Lists all commands|_command_, _commands_
+done|Mark task as done|_done \<index\>_
+todo|Add todo to list|_todo \<task name\>_
+event|Add event to list|_event \<task name\> /at \<start datetime\> to \<end datetime\>_
+deadline|Add deadline to list|_deadline \<taskname\> /by \<deadline datetime\>_  
+remove|Remove task from list|_remove \<index\>_
+save|Manually saves list to save state|_save /name \<name\> /dir \<path\>_
+load|Manually loads save state to list|_load /name \<name\> /dir \<path\>_
+saves|Shows all save states|_saves_
+find|Search task by string|_find \<word\>_
+bye|Exit the program|_bye_ 

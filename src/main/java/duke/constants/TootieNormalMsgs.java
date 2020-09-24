@@ -17,12 +17,12 @@ public class TootieNormalMsgs {
                     + "e/END_TIME" + NEWLINE + "  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45"
                     + NEWLINE + "  Example:  event t/clean room s/31-12-2020 e/31-12-2020" + NEWLINE;
     public static final String DONE_COMMAND_DESCRIPTION =
-            "done: marks indicated task done (choose number from list)" + NEWLINE + "  Parameters:  done [TASK_INDEX]" + NEWLINE  + "  Example:  done 1" + NEWLINE;
+            "done: marks indicated task done (choose number from list)" + NEWLINE + "  Parameters:  done TASK_INDEX" + NEWLINE  + "  Example:  done 1" + NEWLINE;
     public static final String UNDONE_COMMAND_DESCRIPTION =
-            "undone: marks indicated task undone (choose number from list)" + NEWLINE + "  Parameters:  undone [TASK_INDEX]" + NEWLINE  + "  Example:  undone 1"
+            "undone: marks indicated task undone (choose number from list)" + NEWLINE + "  Parameters:  undone TASK_INDEX" + NEWLINE  + "  Example:  undone 1"
                     + NEWLINE;
     public static final String DELETE_COMMAND_DESCRIPTION =
-            "delete: deletes indicated task (choose number from list)" + NEWLINE + "  Parameters:  delete [TASK_INDEX]" + NEWLINE  + "  Example:  delete 1" + NEWLINE;
+            "delete: deletes indicated task (choose number from list)" + NEWLINE + "  Parameters:  delete TASK_INDEX" + NEWLINE  + "  Example:  delete 1" + NEWLINE;
     public static final String LIST_COMMAND_DESCRIPTION =
             "list: displays the complete list of tasks entered" + NEWLINE + "  Example:  list" + NEWLINE;
     public static final String BYE_COMMAND_DESCRIPTION =
@@ -34,7 +34,7 @@ public class TootieNormalMsgs {
     public static final String HELP_COMMAND_DESCRIPTION =
             "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
     public static final String USERNAME_COMMAND_DESCRIPTION =
-            "username: allows user to set username" + NEWLINE + "  Parameters:  username [USERNAME]" + NEWLINE  + "  Example:  username Sophia" + NEWLINE;
+            "username: allows user to set username" + NEWLINE + "  Parameters:  username USERNAME" + NEWLINE  + "  Example:  username Sophia" + NEWLINE;
     public static final String DIVIDER_COMMAND_DESCRIPTION =
             "divider: select a divider for customisation" + NEWLINE + "  dividers avaliable:" + NEWLINE
                     + "1) SPARKLY " + TootieSymbols.SPARKLY_TEXT_DIVIDER + NEWLINE

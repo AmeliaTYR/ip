@@ -1,4 +1,4 @@
-Total tasks: 3
+Total tasks: 11
 Tasks completed: 1
 
 Task completion status:
@@ -9,11 +9,19 @@ T is to-do, D is deadline, E is event
 
 Examples:
 [T][0] clean shoes
-[D][0] do project (by: Thu 30 Jan 2020 04:55 PM)
-[E][1] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+[D][1] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+[E][1] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
 
 --------------------------------------------------------
 Tasks:
 [T][0] clean shoes
 [D][0] do project (by: Thu 30 Jan 2020 04:55 PM)
 [E][1] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+[E][0] test 1 (from: Fri 31 Jan 2020 05:45 AM to Mon 21 Dec 2020 04:55 AM)
+[E][0] test 2 (from: Sat 11 Jan 2020 05:45 AM to Tue 22 Dec 2020 04:55 AM)
+[E][0] test 3 (from: Fri 24 Apr 2020 05:45 AM to Thu 21 May 2020 04:55 AM)
+[E][0] clean room (from: Thu 31 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+[D][0] test d1 (by: Wed 23 Dec 2020 04:55 AM)
+[D][0] test d2 (by: Fri 11 Dec 2020 04:55 AM)
+[D][0] clean robot (by: Thu 31 Dec 2020 12:00 AM)
+[D][0] test d3 (by: Mon 4 May 2020 04:55 AM)
