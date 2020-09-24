@@ -29,7 +29,7 @@ Example of usage:
 
 `list`
 
-### Adding a todo: `todo`
+### Add a todo: `todo`
 Adds a new todo task to the list of tasks.
 
 Format: `todo n/TASKNAME`
@@ -42,7 +42,7 @@ Example of usage:
 
 `todo n/Refactor the User Guide to remove passive voice`
 
-### Adding a deadline: `deadline`
+### Add a deadline: `deadline`
 Adds a new deadline task to the list of tasks.
 
 Format: `deadline t/TASKNAME d/DUE_DATE`
@@ -59,7 +59,7 @@ Example of usage:
 
 `deadline d/30-10-2020 t/submit report `
 
-### Adding an event: `event`
+### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
 
 Format: `event t/TASKNAME s/START_TIME e/END_TIME`
@@ -108,7 +108,7 @@ Example of usage:
 
 `filter st/clean`
 
-### Mark a task done: `username`
+### Change username: `username`
 Change username stored in system
 
 Format: `username USERNAME`
@@ -117,7 +117,7 @@ Format: `username USERNAME`
 
 Example of usage: 
 
-`username 1`
+`username Tootie`
 
 ### Mark a task done: `done`
 Marks an indicated task done by index
@@ -153,9 +153,17 @@ Example of usage:
 `delete 1`
 
 ### Select a new divider: `divider`
-Marks an indicated task done
+Select a divider from the list of dividers for customisation
+
+  dividers avaliable:
+1. SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+1. PLAIN ----------------------------------------------
+1. SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
+1. DOUBLE ==============================================
 
 Format: `divider DIVIDER_INDEX`
+
+* The `DIVIDER_INDEX` should be a number from 1 to 4
 
 Example of usage: 
 
@@ -174,27 +182,21 @@ Example of usage:
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: {your answer here}
+**A**: Copy the allTasks.txt and tootieSettings.txt files over
 
 ## Command Summary
 
-{Give a 'cheat sheet' of commands here}
-
-* Add todo `todo n/TODO_NAME d/DEADLINE`
-
-# Summary of Commands
-
  Command | Purpose | Syntax
 ---------|---------|-------
-list | Lists all tasks|_list /format \<format\>_
-command/s|Lists all commands|_command_, _commands_
-done|Mark task as done|_done \<index\>_
-todo|Add todo to list|_todo \<task name\>_
-event|Add event to list|_event \<task name\> /at \<start datetime\> to \<end datetime\>_
-deadline|Add deadline to list|_deadline \<taskname\> /by \<deadline datetime\>_  
-remove|Remove task from list|_remove \<index\>_
-save|Manually saves list to save state|_save /name \<name\> /dir \<path\>_
-load|Manually loads save state to list|_load /name \<name\> /dir \<path\>_
-saves|Shows all save states|_saves_
-find|Search task by string|_find \<word\>_
-bye|Exit the program|_bye_ 
+list |List all tasks|_list_
+help|Bring up help guide|_help_
+todo|Add a todo|_todo n/TASKNAME_
+deadline|Add a deadline|_deadline t/TASKNAME d/DUE_DATE_
+event|Add an event|_event t/TASKNAME s/START_TIME e/END_TIME_
+filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
+username|Change username|_username Ames_
+done|Mark a task done|_done 1_
+undone|Mark a task undone|_undone_
+delete|Delete a task|_delete 1_
+divider|Mark a task done|_divider_
+bye|Close the program|_bye_ 
