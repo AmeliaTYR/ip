@@ -9,6 +9,6 @@ FILE PATHS
 ==============================
 USER PREFERENCES
 + Divider choice: SPARKLY
-+ Username: Ames
++ Username: Sophia
 
 ==============================

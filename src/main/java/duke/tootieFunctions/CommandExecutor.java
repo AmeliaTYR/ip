@@ -166,15 +166,16 @@ public class CommandExecutor {
                 dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
                 Printers.changeDivider(dividerChoice);
                 savedSettings.set(2, dividerChoice.toString());
+                System.out.println("Divider changed!" + TootieSymbols.FLOWER_SMILE_EMOTICON);
             } catch (DividerNonexistantException e) {
-                System.out.println("Divider choice not found!");
+                System.out.println("Divider choice not found?" + TootieSymbols.CONFUSED_EMOTICON);
             }
             break;
         case SET_USERNAME:
             try {
                 username = SetPreferences.setUsername(userInput, username);
-                System.out.println("Hello " + username);
-                printDivider();
+                System.out.println(String.format("Hello %1$s!" + TootieSymbols.FLOWER_SMILE_EMOTICON, username));
+                savedSettings.set(3, username);
             } catch (UsernameCommandInvalidException e) {
                 System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON);
             } catch (UsernameEmptyException e) {

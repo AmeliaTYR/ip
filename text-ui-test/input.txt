@@ -3,7 +3,6 @@ help
 # test unrecognised command
 blah
 list
-done 0
 # test todo versions/ error handling
 todo
 todo t/
@@ -30,6 +29,8 @@ done 2
 list
 done 4
 list
+done 0
+list
 undone 11
 list
 undone 5
@@ -46,4 +47,11 @@ delete 12
 list
 delete 0
 list
+divider 3
+divider 2
+divider 1
+username Sophia
+filter tt/event,todo
+filter tt/deadline
+filter st/clean
 bye

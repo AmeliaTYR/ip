@@ -1,5 +1,5 @@
 Total tasks: 3
-Tasks completed: 2
+Tasks completed: 1
 
 Task completion status:
 0 is not done([✗]), 1 is done([✓])
