@@ -13,7 +13,11 @@ import duke.parsers.Parsers;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static duke.parsers.Parsers.parseDoubleCharacterTaggedParamsFromUserInput;
+import static duke.parsers.Parsers.parseSingleCharacterTaggedParamsFromUserInput;
 
 /**
  * Add new Events, Todos or Deadlines to the list
@@ -38,27 +42,27 @@ public class AddNewTasks {
         Date startTime = null;
         Date endTime = null;
 
+        // for returning filter options parsed from the user input
+        HashMap<String, String> filterOptions = new HashMap<>();
+
+        // parse filter command into segments
+        try {
+            parseSingleCharacterTaggedParamsFromUserInput(userInput, filterOptions);
+        } catch (MissingParamsException e) {
+            throw new EventInputWrongFormatException();
+        }
+
+        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("s") || !filterOptions.containsKey("e")){
+            throw new EventInputWrongFormatException();
+        }
+
         String taskName = "";
         String startTimeUnformatted = "";
         String endTimeUnformatted = "";
 
-        // identify placements
-        int taskNamePosition = userInput.indexOf(TootieInputMarkers.TASKNAME_MARKER);
-        int startTimePosition = userInput.indexOf(TootieInputMarkers.STARTTIME_MARKER);
-        int endTimePosition = userInput.indexOf(TootieInputMarkers.ENDTIME_MARKER);
-
-        // check if placement is correct
-        if (taskNamePosition == -1 || startTimePosition == -1 || endTimePosition == -1) {
-            throw new EventInputWrongFormatException();
-        } else {
-            try {
-                taskName = userInput.substring(taskNamePosition + 2, startTimePosition);
-                startTimeUnformatted = userInput.substring(startTimePosition + 2, endTimePosition).trim();
-                endTimeUnformatted = userInput.substring(endTimePosition + 2).trim();
-            } catch (StringIndexOutOfBoundsException exception) {
-                throw new EventInputWrongFormatException();
-            }
-        }
+        taskName = filterOptions.get("t").trim();
+        startTimeUnformatted = filterOptions.get("s").trim();
+        endTimeUnformatted = filterOptions.get("e").trim();
 
         // check format start time
         boolean isStartDateWithTime = isDateWithTime(startTimeUnformatted);
@@ -129,24 +133,26 @@ public class AddNewTasks {
     public static void addDeadline(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws DeadlineInputWrongFormatException, DueDateWrongFormatException, TaskNameEmptyException, InvalidDueDateException {
         Date dueDate = null;
 
+        // for returning filter options parsed from the user input
+        HashMap<String, String> filterOptions = new HashMap<>();
+
+        // parse filter command into segments
+        try {
+            parseSingleCharacterTaggedParamsFromUserInput(userInput, filterOptions);
+        } catch (MissingParamsException e) {
+            throw new DeadlineInputWrongFormatException();
+        }
+
+        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("d")){
+            throw new DeadlineInputWrongFormatException();
+
+        }
+
         String taskName = "";
         String dueDateUnformatted = "";
 
-        // identify placements
-        int taskNamePosition = userInput.indexOf(TootieInputMarkers.TASKNAME_MARKER);
-        int dueDatePosition = userInput.indexOf(TootieInputMarkers.DUEDATE_MARKER);
-
-        // check if placement is correct, split if correct
-        if (taskNamePosition == -1 || dueDatePosition == -1) {
-            throw new DeadlineInputWrongFormatException();
-        } else {
-            try {
-                taskName = userInput.substring(taskNamePosition + 2, dueDatePosition);
-                dueDateUnformatted = userInput.substring(dueDatePosition + 2).trim();
-            } catch (StringIndexOutOfBoundsException exception) {
-                throw new DeadlineInputWrongFormatException();
-            }
-        }
+        taskName = filterOptions.get("t").trim();
+        dueDateUnformatted = filterOptions.get("d").trim();
 
         // check format due date
         boolean isDueDateWithTime = isDateWithTime(dueDateUnformatted);

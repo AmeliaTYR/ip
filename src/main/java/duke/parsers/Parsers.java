@@ -2,6 +2,7 @@ package duke.parsers;
 
 import duke.exceptions.DividerNonexistantException;
 import duke.exceptions.MissingFilterOptionsException;
+import duke.exceptions.MissingParamsException;
 import duke.exceptions.SettingObjectWrongFormatException;
 import duke.constants.DividerChoice;
 import duke.task.Task;
@@ -39,7 +40,7 @@ public class Parsers {
     /**
      * Extract the value string from line in settings save file
      *
-     * @param fileLine a line read from the file
+     * @param fileLine    a line read from the file
      * @param objectTitle the string indicating the type of object
      * @return returns the setting extracted from line in the settings file
      * @throws SettingObjectWrongFormatException the linel in the settings file was wrongly formatted
@@ -202,8 +203,9 @@ public class Parsers {
         return path.replace('\\', '/');
     }
 
-    public static void parseFilterOptionsFromUserInput(String userInput, ArrayList<Task> allTasks,
-                                                       AtomicInteger numTasks, HashMap<String, String> filterOptions) throws MissingFilterOptionsException {
+    public static void parseDoubleCharacterTaggedParamsFromUserInput(String userInput,
+                                                                     HashMap<String, String> filterOptions)
+            throws MissingFilterOptionsException {
 
         String parsedOption = "";
         String optionIndicator = "";
@@ -214,7 +216,7 @@ public class Parsers {
         // clear filter options
         filterOptions.clear();
 
-        if (!userInput.contains("/")){
+        if (!userInput.contains("/")) {
             throw new MissingFilterOptionsException();
         }
 
@@ -238,5 +240,44 @@ public class Parsers {
         optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
         // store the option
         filterOptions.put(optionIndicator, parsedOption);
+    }
+
+    public static void parseSingleCharacterTaggedParamsFromUserInput(String userInput,
+                                                                     HashMap<String, String> parsedParams)
+            throws MissingParamsException {
+
+        String parsedOption = "";
+        String optionIndicator = "";
+
+        int startPositionIndex = 0;
+        int endPositionIndex = 0;
+
+        // clear filter options
+        parsedParams.clear();
+
+        if (!userInput.contains("/")) {
+            throw new MissingParamsException();
+        }
+
+        while (userInput.indexOf("/", startPositionIndex) != -1) {
+            // identify placement
+            startPositionIndex = userInput.indexOf("/", startPositionIndex + 1);
+            endPositionIndex = userInput.indexOf("/", startPositionIndex + 1);
+            // if reached end of string
+            if (endPositionIndex == -1) {
+                break;
+            }
+            // extract the option
+            parsedOption = userInput.substring(startPositionIndex + 1, endPositionIndex - 1);
+            optionIndicator = userInput.substring(startPositionIndex - 1, startPositionIndex);
+            // store the option
+            parsedParams.put(optionIndicator, parsedOption);
+        }
+
+        // extract the option
+        parsedOption = userInput.substring(startPositionIndex + 1);
+        optionIndicator = userInput.substring(startPositionIndex - 1, startPositionIndex);
+        // store the option
+        parsedParams.put(optionIndicator, parsedOption);
     }
 }

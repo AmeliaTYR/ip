@@ -11,10 +11,9 @@ import duke.task.ToDo;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static duke.parsers.Parsers.parseFilterOptionsFromUserInput;
+import static duke.parsers.Parsers.parseDoubleCharacterTaggedParamsFromUserInput;
 
 /**
  * Filters the tasks in the list
@@ -43,7 +42,7 @@ public class Filters {
         HashMap<String, String> filterOptions = new HashMap<>();
 
         // parse filter command into segments
-        parseFilterOptionsFromUserInput(userInput, allTasks, numTasks, filterOptions);
+        parseDoubleCharacterTaggedParamsFromUserInput(userInput, filterOptions);
 
         if (filterOptions.containsKey("tt")){
             componentUserInput = filterOptions.get("tt");

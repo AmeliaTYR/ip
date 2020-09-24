@@ -2,7 +2,7 @@
 
 ## Introduction
 
-{Give a product intro}
+Tootie is a task list manager program
 
 ## Quick Start
 
