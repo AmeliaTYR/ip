@@ -41,15 +41,15 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
 done: marks indicated task done (choose number from list)
-  Parameters:  done [TASK_INDEX]
+  Parameters:  done TASK_INDEX
   Example:  done 1
 
 undone: marks indicated task undone (choose number from list)
-  Parameters:  undone [TASK_INDEX]
+  Parameters:  undone TASK_INDEX
   Example:  undone 1
 
 delete: deletes indicated task (choose number from list)
-  Parameters:  delete [TASK_INDEX]
+  Parameters:  delete TASK_INDEX
   Example:  delete 1
 
 divider: select a divider for customisation
@@ -62,7 +62,7 @@ divider: select a divider for customisation
   Example:  divider 1
 
 username: allows user to set username
-  Parameters:  username [USERNAME]
+  Parameters:  username USERNAME
   Example:  username Sophia
 
 list: displays the complete list of tasks entered
@@ -447,8 +447,12 @@ divider 2
 *---*---*---*---*---*---*---*---*---*---*---*
 Divider changed!(◠‿◠✿)
 ----------------------------------------------
-divider 1
+divider 4
 ----------------------------------------------
+Divider changed!(◠‿◠✿)
+==============================================
+divider 1
+==============================================
 Divider changed!(◠‿◠✿)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 username Sophia
@@ -481,6 +485,14 @@ filter st/clean
 7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 Filtered! 7 tasks found, 5 incomplete.
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+filter tt/event sb/13-01-2019 ea/31-01-2020
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+No tasks matching parameters found? ʕ•ᴥ•ʔ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+save
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+All tasks saved!
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 bye
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
