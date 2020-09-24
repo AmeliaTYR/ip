@@ -45,7 +45,7 @@ public class Duke {
     public static String allTasksFilePath = TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH;
     public static DividerChoice dividerChoice = DividerChoice.SPARKLY;
     public static String username = "user";
-    public static ArrayList<String> savedSettings = new ArrayList<String>(TootieConstants.NUMBER_OF_SETTINGS);
+    public static ArrayList<String> savedSettings = new ArrayList<>(TootieConstants.NUMBER_OF_SETTINGS);
 
     public static void main(String[] args) {
         run();
@@ -99,8 +99,7 @@ public class Duke {
             UserInputHandlers.echoUserInput(userInput);
             Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
-            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, allTasksFilePath, dividerChoice,
-                    numTasks, numTasksCompleted, username);
+            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, allTasksFilePath, numTasks, numTasksCompleted, username);
             // load settings if any were changed
             updateSettingsVariables(savedSettings);
             Printers.printDivider();

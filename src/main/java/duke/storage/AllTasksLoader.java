@@ -1,20 +1,33 @@
 package duke.storage;
 
+import duke.constants.TaskType;
+import duke.constants.TootieFilePaths;
+import duke.constants.TootieInputMarkers;
+import duke.constants.TootieRegex;
+import duke.constants.TootieSymbols;
+
 import duke.exceptions.FileEmptyException;
+import duke.exceptions.InvalidDateException;
+import duke.exceptions.InvalidDueDateException;
+import duke.exceptions.InvalidEndTimeException;
+import duke.exceptions.InvalidStartTimeException;
 import duke.exceptions.SavedTaskFormatWrongException;
 import duke.exceptions.TaskTypeInvalidException;
 import duke.exceptions.TotalTasksNumInvalidException;
-import duke.constants.*;
+
 import duke.parsers.Parsers;
+
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+
 import duke.ui.Printers;
 import duke.ui.UserInputHandlers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -46,7 +59,7 @@ public class AllTasksLoader {
                 System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
                 boolean isNewFilePathObtained = false;
                 while (!isNewFilePathObtained) {
-                    ArrayList<String> allTasksFilePathReturn = new ArrayList<String>(1);
+                    ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
                     isNewFilePathObtained = getNewAllTasksFilePath(SCANNER, allTasksFilePathReturn);
                     allTasksFilePath = allTasksFilePathReturn.get(1);
                     Printers.printDivider();
@@ -117,15 +130,15 @@ public class AllTasksLoader {
     // try to read the allTasks.txt file into allTasks array
     private static void readAllTasksFile(ArrayList<Task> allTasks,Scanner allTasksFileScanner, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws FileEmptyException {
             // get total number of tasks stored
-            int numTasksInList = 0;
+            int numTasksInList;
             numTasksInList = getNumTasksInList(allTasksFileScanner);
 
             SettingsLoader.readFileUntilLineContainsString("Tasks:", allTasksFileScanner);
 
             addReadTasksToAllTasks(allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
 
-            System.out.println(String.format("%1$d of %2$d tasks read successfully!",
-                    numTasks.get(), numTasksInList));
+            System.out.printf("%1$d of %2$d tasks read successfully!%n",
+                    numTasks.get(), numTasksInList);
     }
 
     // read each task and add to the allTasks arraylist
@@ -135,7 +148,16 @@ public class AllTasksLoader {
             try {
                 addTaskToAllTasksArrayList(allTasks,fileInput, numTasks, numTasksCompleted);
             } catch (TaskTypeInvalidException | SavedTaskFormatWrongException e) {
-                System.out.println(String.format("Error reading file! Error on line:" + NEWLINE + "%1$s", fileInput));
+                System.out.printf("Error reading file! Error on line:" + NEWLINE + "%1$s%n", fileInput);
+                break;
+            } catch (InvalidStartTimeException e) {
+                System.out.printf("Error reading start time from line:" + NEWLINE + "  %1$s%n", fileInput);
+                break;
+            } catch (InvalidDueDateException e) {
+                System.out.printf("Error reading due date from line:" + NEWLINE + "  %1$s%n", fileInput);
+                break;
+            } catch (InvalidEndTimeException e) {
+                System.out.printf("Error reading end time from line:" + NEWLINE + "  %1$s%n", fileInput);
                 break;
             }
         }
@@ -174,17 +196,17 @@ public class AllTasksLoader {
     }
 
     // parses lines from the allTasks.txt file and adds the corresponding task to the allTasks ArrayList
-    private static void addTaskToAllTasksArrayList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws TaskTypeInvalidException, SavedTaskFormatWrongException {
+    private static void addTaskToAllTasksArrayList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws TaskTypeInvalidException, SavedTaskFormatWrongException, InvalidDueDateException, InvalidEndTimeException, InvalidStartTimeException {
         TaskType taskType = getTaskType(fileInput);
         switch (taskType) {
         case TODO:
-            addToDoToList(allTasks,fileInput, numTasks, numTasksCompleted);
+            addToDoToList(allTasks, fileInput, numTasks, numTasksCompleted);
             break;
         case DEADLINE:
-            addDeadlineToList(allTasks,fileInput, numTasks, numTasksCompleted);
+            addDeadlineToList(allTasks, fileInput, numTasks, numTasksCompleted);
             break;
         case EVENT:
-            addEventToList(allTasks,fileInput, numTasks, numTasksCompleted);
+            addEventToList(allTasks, fileInput, numTasks, numTasksCompleted);
             break;
         default:
             throw new TaskTypeInvalidException();
@@ -193,7 +215,7 @@ public class AllTasksLoader {
 
     // adds a ToDo task read from the file to the allTasks ArrayList
     private static void addToDoToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
-        Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1]{1})\\](.*)");
+        Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1])\\](.*)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
             allTasks.add(new ToDo(matcher.group(2).trim()));
@@ -208,11 +230,16 @@ public class AllTasksLoader {
     }
 
     // adds a Deadline task read from the file to the allTasks ArrayList
-    private static void addDeadlineToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
-        Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1]{1})\\](.*)\\(by:(.*)\\)");
+    private static void addDeadlineToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidDueDateException {
+        Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1])\\](.*)\\(by:(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
-            Date dueDate = Parsers.parseSimpleDate(matcher.group(3));
+            Date dueDate;
+            try {
+                dueDate = Parsers.parseSimpleDate(matcher.group(3));
+            } catch (InvalidDateException e) {
+                throw new InvalidDueDateException();
+            }
             allTasks.add(new Deadline(matcher.group(2).trim(),dueDate));
             if(matcher.group(1).equals("1")){
                 allTasks.get(numTasks.get()).setComplete(true);
@@ -225,12 +252,22 @@ public class AllTasksLoader {
     }
 
     // adds a Event task read from the file to the allTasks ArrayList
-    private static void addEventToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
-        Pattern pattern = Pattern.compile("\\[E\\]\\[([0-1]{1})\\](.*)\\(from:(.*)to(.*)\\)");
+    private static void addEventToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidStartTimeException, InvalidEndTimeException {
+        Pattern pattern = Pattern.compile("\\[E\\]\\[([0-1])\\](.*)\\(from:(.*)to(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
-            Date startDate = Parsers.parseSimpleDate(matcher.group(3));
-            Date endDate = Parsers.parseSimpleDate(matcher.group(4));
+            Date startDate;
+            try {
+                startDate = Parsers.parseSimpleDate(matcher.group(3));
+            } catch (InvalidDateException e) {
+                throw new InvalidStartTimeException();
+            }
+            Date endDate;
+            try {
+                endDate = Parsers.parseSimpleDate(matcher.group(4));
+            } catch (InvalidDateException e) {
+                throw new InvalidEndTimeException();
+            }
             allTasks.add(new Event(matcher.group(2).trim(), startDate, endDate));
             if(matcher.group(1).equals("1")){
                 allTasks.get(numTasks.get()).setComplete(true);

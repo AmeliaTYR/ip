@@ -1,7 +1,12 @@
 package duke.ui;
 
+import duke.constants.DividerChoice;
+import duke.constants.TootieConstants;
+import duke.constants.TootieErrorMsgs;
+import duke.constants.TootieNormalMsgs;
+import duke.constants.TootieSymbols;
 import duke.exceptions.TasklistEmptyException;
-import duke.constants.*;
+
 import duke.task.Task;
 
 import java.util.ArrayList;
@@ -49,11 +54,11 @@ public class Printers {
     /**
      * Prints the personalised hello message
      *
-     * @param username
+     * @param username user input name
      */
     public static void printHelloMessage(String username) {
         printDivider();
-        System.out.print(String.format(TootieNormalMsgs.HELLO_GREETING, username));
+        System.out.printf(TootieNormalMsgs.HELLO_GREETING, username);
         printDivider();
     }
 
@@ -63,9 +68,8 @@ public class Printers {
      * @param username user indicated name
      */
     public static void printFarewellMessage(String username) {
-        System.out.print(String.format(TootieNormalMsgs.FAREWELL_GREETING, username));
+        System.out.printf(TootieNormalMsgs.FAREWELL_GREETING, username);
     }
-
 
     /**
      * Prints a randomised version of the Tootie logo
@@ -77,7 +81,7 @@ public class Printers {
         logos[2] = TootieSymbols.TRAIN_THEME_TOOTIE_LOGO;
         logos[3] = TootieSymbols.THICK_TOOTIE_LOGO;
         Random rand = new Random(System.currentTimeMillis());
-        System.out.println(String.format(TootieNormalMsgs.LOGO_PRINT_FORMAT, logos[Math.abs(rand.nextInt() % 4)]));
+        System.out.printf((TootieNormalMsgs.LOGO_PRINT_FORMAT) + "%n", logos[Math.abs(rand.nextInt() % 4)]);
     }
 
     /**
@@ -101,7 +105,7 @@ public class Printers {
      * @param allTasks          list of all Tasks
      * @param numTasks          total number of tasks in the list
      * @param numTasksCompleted total number of tasks completed
-     * @throws TasklistEmptyException
+     * @throws TasklistEmptyException cannot print empty task list
      */
     public static void printAllTasks(ArrayList<Task> allTasks, int numTasks, int numTasksCompleted) throws TasklistEmptyException {
 
@@ -109,12 +113,12 @@ public class Printers {
             throw new TasklistEmptyException();
         }
 
-        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks, (numTasks == 1? "" : "s"), numTasks - numTasksCompleted));
+        System.out.printf((TootieNormalMsgs.NUMTASKS_PRINT_FORMAT) + "%n", numTasks, (numTasks == 1? "" : "s"), numTasks - numTasksCompleted);
 
         for (int i = 0; i < numTasks; i++) {
-            System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT, (i + 1),
+            System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n", (i + 1),
                     allTasks.get(i).getTaskType(), allTasks.get(i).getCompletionIndicator(),
-                    allTasks.get(i).getTaskDescription()));
+                    allTasks.get(i).getTaskDescription());
         }
 
         if (numTasks == numTasksCompleted) {

@@ -39,8 +39,8 @@ public class fileFunctions {
 
         // make the directory
         try {
-            String directoryPath = "";
-            String txtFileName = "";
+            String directoryPath;
+            String txtFileName;
 
             // identify placements
             int endOfDirectoryName = filePath.lastIndexOf("/");

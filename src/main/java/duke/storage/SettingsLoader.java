@@ -20,7 +20,15 @@ public class SettingsLoader {
 
     public static final String NEWLINE = System.lineSeparator();
 
-    // attempt to load and store the tootieSettings.txt variables
+    /**
+     * Attempts to load and store the tootieSettings.txt variables
+     *
+     * @param savedSettings          array of saved settings
+     * @param tootieSettingsFilePath file path to the settings save file
+     * @param allTasksFilePath       file path to the save file for all tasks
+     * @param dividerChoice          divider chosen by user
+     * @param username               user input name
+     */
     public static void loadTootieSettingsFile(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                               String allTasksFilePath, DividerChoice dividerChoice, String username) {
 
@@ -39,11 +47,21 @@ public class SettingsLoader {
         }
     }
 
-    // read and parse all the settings from the tootieSettings.txt file
+    /**
+     * Read and parse all the settings from the tootieSettings.txt file
+     *
+     * @param savedSettings          array of saved settings
+     * @param tootieSettingsFile     the save file containing the saved settings
+     * @param tootieSettingsFilePath file path to the settings save file
+     * @param allTasksFilePath       file path to the save file for all tasks
+     * @param dividerChoice          divider chosen by user
+     * @param username               user input name
+     * @throws FileEmptyException the settings file is empty
+     * @throws FileNotFoundException the settings file cannot be found
+     */
     private static void readTootieSettingsFile(ArrayList<String> savedSettings, File tootieSettingsFile,
-                                                            String tootieSettingsFilePath, String allTasksFilePath,
-                                                            DividerChoice dividerChoice, String username)
-            throws FileEmptyException, FileNotFoundException {
+                                               String tootieSettingsFilePath, String allTasksFilePath,
+                                               DividerChoice dividerChoice, String username) throws FileEmptyException, FileNotFoundException {
 
         Scanner SETTINGS_FILE_SCANNER = new Scanner(tootieSettingsFile);
         String fileLine = "";
@@ -82,18 +100,18 @@ public class SettingsLoader {
             setSavedSettings(savedSettings, tootieSettingsFilePath, allTasksFilePath, dividerChoice, username);
 
         } catch (SettingObjectWrongFormatException e) {
-            System.out.println(String.format("Error reading settings file! Error on line:" + NEWLINE + "%1$s",
-                    fileLine));
+            System.out.printf("Error reading settings file! Error on line:" + NEWLINE + "%1$s%n", fileLine);
         }
     }
 
     /**
+     * Adds the default settings to saved settings array
      *
-     * @param savedSettings
-     * @param tootieSettingsFilePath
-     * @param allTasksFilePath
-     * @param dividerChoice
-     * @param username
+     * @param savedSettings          array of saved settings
+     * @param tootieSettingsFilePath file path to the settings save file
+     * @param allTasksFilePath       file path to the save file for all tasks
+     * @param dividerChoice          divider chosen by user
+     * @param username               user input name
      */
     public static void addSavedSettings(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                         String allTasksFilePath, DividerChoice dividerChoice, String username) {
@@ -103,6 +121,15 @@ public class SettingsLoader {
         savedSettings.add(username);
     }
 
+    /**
+     * Sets the default settings to saved settings array
+     *
+     * @param savedSettings          array of saved settings
+     * @param tootieSettingsFilePath file path to the settings save file
+     * @param allTasksFilePath       file path to the save file for all tasks
+     * @param dividerChoice          divider chosen by user
+     * @param username               user input name
+     */
     public static void setSavedSettings(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                         String allTasksFilePath, DividerChoice dividerChoice, String username) {
         savedSettings.set(0, Parsers.pathReplaceIllegalCharacters(tootieSettingsFilePath));
@@ -111,7 +138,13 @@ public class SettingsLoader {
         savedSettings.set(3, username);
     }
 
-    // continue reading through a file until a specific string is found
+    /**
+     * continue reading through a file until a specific string is found
+     *
+     * @param stringSearched indicator string
+     * @param fileScanner    scanner for scanning a file
+     * @return return the line the string is on
+     */
     public static String readFileUntilLineContainsString(String stringSearched, Scanner fileScanner) {
         String fileInput = "";
         // read each setting and return the variables accordingly

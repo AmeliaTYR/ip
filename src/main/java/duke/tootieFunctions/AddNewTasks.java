@@ -11,12 +11,10 @@ import duke.task.ToDo;
 import duke.parsers.Parsers;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static duke.parsers.Parsers.parseDoubleCharacterTaggedParamsFromUserInput;
 import static duke.parsers.Parsers.parseSingleCharacterTaggedParamsFromUserInput;
 
 /**
@@ -39,8 +37,8 @@ public class AddNewTasks {
      * @throws TaskNameEmptyException          the task name field is empty
      */
     public static void addEvent(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws EventInputWrongFormatException, InvalidStartTimeException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
-        Date startTime = null;
-        Date endTime = null;
+        Date startTime;
+        Date endTime;
 
         // for returning filter options parsed from the user input
         HashMap<String, String> filterOptions = new HashMap<>();
@@ -52,13 +50,13 @@ public class AddNewTasks {
             throw new EventInputWrongFormatException();
         }
 
-        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("s") || !filterOptions.containsKey("e")){
+        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("s") || !filterOptions.containsKey("e")) {
             throw new EventInputWrongFormatException();
         }
 
-        String taskName = "";
-        String startTimeUnformatted = "";
-        String endTimeUnformatted = "";
+        String taskName;
+        String startTimeUnformatted;
+        String endTimeUnformatted;
 
         taskName = filterOptions.get("t").trim();
         startTimeUnformatted = filterOptions.get("s").trim();
@@ -73,9 +71,17 @@ public class AddNewTasks {
 
         // try to parse start time
         if (isStartDateWithTime) {
-            startTime = Parsers.parseDateWithTime(startTimeUnformatted);
+            try {
+                startTime = Parsers.parseDateWithTime(startTimeUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidStartTimeException();
+            }
         } else if (isStartDateWithoutTime) {
-            startTime = Parsers.parseDateWithoutTime(startTimeUnformatted);
+            try {
+                startTime = Parsers.parseDateWithoutTime(startTimeUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidStartTimeException();
+            }
         } else {
             throw new StartTimeWrongFormatException();
         }
@@ -85,22 +91,22 @@ public class AddNewTasks {
 
         // try to parse end time
         if (isEndDateWithTime) {
-            endTime = Parsers.parseDateWithTime(endTimeUnformatted);
+            try {
+                endTime = Parsers.parseDateWithTime(endTimeUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidEndTimeException();
+            }
         } else if (isEndDateWithoutTime) {
-            endTime = Parsers.parseDateWithoutTime(endTimeUnformatted);
+            try {
+                endTime = Parsers.parseDateWithoutTime(endTimeUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidEndTimeException();
+            }
         } else {
             throw new EndTimeWrongFormatException();
         }
         if (endTime == null) {
             throw new EndTimeWrongFormatException();
-        }
-
-        // check if date entered is valid
-        if (!isValidDate(startTime)) {
-            throw new InvalidStartTimeException();
-        }
-        if (!isValidDate(endTime)) {
-            throw new InvalidEndTimeException();
         }
 
         // check if start and end time are in chronological order
@@ -114,8 +120,8 @@ public class AddNewTasks {
 
         // add event to list
         allTasks.add(new Event(taskName.trim(), startTime, endTime));
-        System.out.println(String.format(TootieNormalMsgs.ADDED_EVENT_FORMAT,
-                allTasks.get(numTasks.get()).getTaskDescription()));
+        System.out.printf((TootieNormalMsgs.ADDED_EVENT_FORMAT) + "%n",
+                allTasks.get(numTasks.get()).getTaskDescription());
         numTasks.getAndIncrement();
     }
 
@@ -128,10 +134,10 @@ public class AddNewTasks {
      * @throws DeadlineInputWrongFormatException the deadline command was wrongly formatted
      * @throws DueDateWrongFormatException       the due date is wrongly formatted
      * @throws TaskNameEmptyException            the task name field is empty
-     * @throws InvalidDueDateException           the due date entered is invalid
+     * @throws InvalidDueDateException           due date entered wrong format
      */
     public static void addDeadline(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws DeadlineInputWrongFormatException, DueDateWrongFormatException, TaskNameEmptyException, InvalidDueDateException {
-        Date dueDate = null;
+        Date dueDate;
 
         // for returning filter options parsed from the user input
         HashMap<String, String> filterOptions = new HashMap<>();
@@ -143,13 +149,13 @@ public class AddNewTasks {
             throw new DeadlineInputWrongFormatException();
         }
 
-        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("d")){
+        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("d")) {
             throw new DeadlineInputWrongFormatException();
 
         }
 
-        String taskName = "";
-        String dueDateUnformatted = "";
+        String taskName;
+        String dueDateUnformatted;
 
         taskName = filterOptions.get("t").trim();
         dueDateUnformatted = filterOptions.get("d").trim();
@@ -160,9 +166,17 @@ public class AddNewTasks {
 
         // try to parse due date
         if (isDueDateWithTime) {
-            dueDate = Parsers.parseDateWithTime(dueDateUnformatted);
+            try {
+                dueDate = Parsers.parseDateWithTime(dueDateUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidDueDateException();
+            }
         } else if (isDueDateWithoutTime) {
-            dueDate = Parsers.parseDateWithoutTime(dueDateUnformatted);
+            try {
+                dueDate = Parsers.parseDateWithoutTime(dueDateUnformatted);
+            } catch (InvalidDateException e) {
+                throw new InvalidDueDateException();
+            }
         } else {
             throw new DueDateWrongFormatException();
         }
@@ -174,30 +188,11 @@ public class AddNewTasks {
             throw new TaskNameEmptyException();
         }
 
-        // check if date entered is valid
-        if (!isValidDate(dueDate)) {
-            throw new InvalidDueDateException();
-        }
-
         // add event to list
         allTasks.add(new Deadline(taskName.trim(), dueDate));
-        System.out.println(String.format(TootieNormalMsgs.ADDED_DEADLINE_FORMAT,
-                allTasks.get(numTasks.get()).getTaskDescription()));
+        System.out.printf((TootieNormalMsgs.ADDED_DEADLINE_FORMAT) + "%n",
+                allTasks.get(numTasks.get()).getTaskDescription());
         numTasks.getAndIncrement();
-    }
-
-    // TODO fix the date validator it doesn't work properly :(
-    // check if the date entered is a valid calendar date
-    private static boolean isValidDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setLenient(false);
-        cal.setTime(date);
-        try {
-            cal.getTime();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -244,6 +239,6 @@ public class AddNewTasks {
         // add task to list
         allTasks.add(new ToDo(taskName.trim()));
         numTasks.getAndIncrement();
-        System.out.println(String.format(TootieNormalMsgs.ADDED_TODO_FORMAT, taskName.trim()));
+        System.out.printf((TootieNormalMsgs.ADDED_TODO_FORMAT) + "%n", taskName.trim());
     }
 }

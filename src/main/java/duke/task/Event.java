@@ -3,8 +3,6 @@ package duke.task;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static duke.parsers.Parsers.parseSimpleDate;
-
 public class Event extends Task {
     protected Date startTime;
     protected Date endTime;

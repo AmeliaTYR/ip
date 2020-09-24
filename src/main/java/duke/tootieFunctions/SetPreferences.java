@@ -3,8 +3,6 @@ package duke.tootieFunctions;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
 
-import static duke.ui.Printers.printDivider;
-
 /**
  * Functions for the user to set preferences such as
  */
@@ -14,12 +12,11 @@ public class SetPreferences {
      * Extracts the username from the raw user input
      *
      * @param userInput raw user input
-     * @param username  current username
      * @return updated username
-     * @throws UsernameCommandInvalidException
-     * @throws UsernameEmptyException
+     * @throws UsernameCommandInvalidException username command incorrectly formatted
+     * @throws UsernameEmptyException user name field should not be empty
      */
-    public static String setUsername(String userInput, String username) throws UsernameCommandInvalidException,
+    public static String setUsername(String userInput) throws UsernameCommandInvalidException,
             UsernameEmptyException {
 
         // identify placements
@@ -33,8 +30,6 @@ public class SetPreferences {
             throw new UsernameEmptyException();
         }
 
-        username = usernameInput;
-
-        return username;
+        return usernameInput;
     }
 }

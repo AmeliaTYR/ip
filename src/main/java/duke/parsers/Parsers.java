@@ -1,18 +1,12 @@
 package duke.parsers;
 
-import duke.exceptions.DividerNonexistantException;
-import duke.exceptions.MissingFilterOptionsException;
-import duke.exceptions.MissingParamsException;
-import duke.exceptions.SettingObjectWrongFormatException;
+import duke.exceptions.*;
 import duke.constants.DividerChoice;
-import duke.task.Task;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Parse information from user inputs and file lines
@@ -72,28 +66,28 @@ public class Parsers {
      * @param unformattedDate the string containing an unformatted date
      * @return the date object extracted from the unformatted date
      */
-    public static Date parseComplexDate(String unformattedDate) {
+    public static Date parseComplexDate(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
         SimpleDateFormat complexDateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         try {
+            complexDateFormat.setLenient(false);
             formattedDate = complexDateFormat.parse(unformattedDate.trim());
             return formattedDate;
         } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
+            throw new InvalidDateException();
         }
     }
 
     // parses the default date format and returns a Date object
-    public static Date parseSimpleDate(String unformattedDate) {
+    public static Date parseSimpleDate(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
         try {
+            simpleDateFormat.setLenient(false);
             formattedDate = simpleDateFormat.parse(unformattedDate.trim());
             return formattedDate;
         } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
+            throw new InvalidDateException();
         }
     }
 
@@ -163,15 +157,15 @@ public class Parsers {
      * @param unformattedDate a string containing date information
      * @return return the date object extracted
      */
-    public static Date parseDateWithoutTime(String unformattedDate) {
+    public static Date parseDateWithoutTime(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
         SimpleDateFormat dateWithoutTime = new SimpleDateFormat("dd-MM-yyyy");
         try {
+            dateWithoutTime.setLenient(false);
             formattedDate = dateWithoutTime.parse(unformattedDate);
             return formattedDate;
         } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
+            throw new InvalidDateException();
         }
     }
 
@@ -181,15 +175,15 @@ public class Parsers {
      * @param unformattedDate a string containing date information
      * @return return the date object extracted
      */
-    public static Date parseDateWithTime(String unformattedDate) {
+    public static Date parseDateWithTime(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
         SimpleDateFormat dateWithTime = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         try {
+            dateWithTime.setLenient(false);
             formattedDate = dateWithTime.parse(unformattedDate);
             return formattedDate;
         } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
+            throw new InvalidDateException();
         }
     }
 

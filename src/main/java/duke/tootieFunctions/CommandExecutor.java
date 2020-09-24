@@ -15,15 +15,11 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static duke.tootieFunctions.Filters.filterTasks;
-import static duke.ui.Printers.printDivider;
 
 /**
  * Contains functions that detect and execute commands
  */
 public class CommandExecutor {
-    /** Newline object specific to system used  */
-    public static final String NEWLINE = System.lineSeparator();
-
     /**
      * figure out the command type from userInput
      *
@@ -64,20 +60,16 @@ public class CommandExecutor {
 
     /**
      * Parses the user command and executes it
-     *
-     * @param savedSettings     array containing saved settings for updates
+     *  @param savedSettings     array containing saved settings for updates
      * @param commandType       command type detected
      * @param userInput         raw user input
      * @param allTasks          list of all Tasks
      * @param allTasksFilePath  file path to allTasks.txt
-     * @param dividerChoice     divider chosen by user
      * @param numTasks          total number of tasks in the list
      * @param numTasksCompleted total number of tasks completed
      * @param username          user provided name
      */
-    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput,
-                                      ArrayList<Task> allTasks, String allTasksFilePath, DividerChoice dividerChoice,
-                                      AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
+    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
         switch (commandType) {
         case HELP:
             Printers.printHelpInfo();
@@ -163,7 +155,7 @@ public class CommandExecutor {
             break;
         case CHOOSE_DIVIDER:
             try {
-                dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
+                DividerChoice dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
                 Printers.changeDivider(dividerChoice);
                 savedSettings.set(2, dividerChoice.toString());
                 System.out.println("Divider changed!" + TootieSymbols.FLOWER_SMILE_EMOTICON);
@@ -173,8 +165,8 @@ public class CommandExecutor {
             break;
         case SET_USERNAME:
             try {
-                username = SetPreferences.setUsername(userInput, username);
-                System.out.println(String.format("Hello %1$s!" + TootieSymbols.FLOWER_SMILE_EMOTICON, username));
+                username = SetPreferences.setUsername(userInput);
+                System.out.printf("Hello %1$s!" + TootieSymbols.FLOWER_SMILE_EMOTICON + "%n", username);
                 savedSettings.set(3, username);
             } catch (UsernameCommandInvalidException e) {
                 System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON);
@@ -184,7 +176,7 @@ public class CommandExecutor {
             break;
         case FILTER_TASKS:
             try {
-                filterTasks(userInput, allTasks, numTasks);
+                filterTasks(userInput, allTasks);
             } catch (MissingFilterOptionsException e) {
                 System.out.println("Filter command missing valid arguments? " + TootieSymbols.CONFUSED_EMOTICON);
             } catch (NoTasksFilteredException e) {

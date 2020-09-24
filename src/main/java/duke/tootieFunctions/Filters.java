@@ -9,8 +9,10 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static duke.parsers.Parsers.parseDoubleCharacterTaggedParamsFromUserInput;
@@ -21,11 +23,7 @@ import static duke.parsers.Parsers.parseDoubleCharacterTaggedParamsFromUserInput
 public class Filters {
 
     // parse the user input and filter out the suitable tasks
-    public static void filterTasks(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws MissingFilterOptionsException, NoTasksFilteredException {
-        // for sorting
-        int taskIndexInList = 1;
-        boolean isDoneFiltering = false;
-
+    public static void filterTasks(String userInput, ArrayList<Task> allTasks) throws MissingFilterOptionsException, NoTasksFilteredException {
         // flags for filters
         boolean hasAtLeastOneFilterOption = false;
         boolean containsSearchTerm = false;
@@ -33,7 +31,7 @@ public class Filters {
 
         ArrayList<TaskType> taskTypes = new ArrayList<>();
 
-        String componentUserInput = "";
+        String componentUserInput;
         String searchTerm = "";
 
         HashMap<Integer, Task> filteredTasks = new HashMap<>();
@@ -61,10 +59,9 @@ public class Filters {
             throw new MissingFilterOptionsException();
         }
 
-        int i = 1;
+        int i;
         HashMap<Integer, Task> numberedTasks = new HashMap<>();
         Set<Map.Entry<Integer, Task>> entries = numberedTasks.entrySet();
-        Stream<Map.Entry<Integer, Task>> tempStream;
 
         // add all the numbered tasks to a hashmap
         for (i = 1; i <= allTasks.size(); i++){
@@ -73,7 +70,6 @@ public class Filters {
 
         String finalSearchTerm = searchTerm;
 
-        /** apply filters */
         if (!taskTypeIndicated || taskTypes.contains(TaskType.TODO)){
             Stream<Map.Entry<Integer, Task>> entriesStream = entries.stream();
             // then filter for todo specifications, add to list
@@ -102,20 +98,16 @@ public class Filters {
             throw new NoTasksFilteredException();
         }
 
-        // then sort everything (or just retrieve in order
-        Set<Map.Entry<Integer, Task>> filteredEntries = filteredTasks.entrySet();
-
         // then print it out
         int tasksFound = 0;
         int tasksComplete = 0;
         for (i = 1; i <= allTasks.size(); i++){
             if (filteredTasks.containsKey(i)){
-                System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT,
+                System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n",
                         i,
                         filteredTasks.get(i).getTaskType(),
                         filteredTasks.get(i).getCompletionIndicator(),
-                        filteredTasks.get(i).getTaskDescription())
-                );
+                        filteredTasks.get(i).getTaskDescription());
                 tasksFound++;
                 if (filteredTasks.get(i).getComplete()){
                     tasksComplete++;
@@ -125,10 +117,10 @@ public class Filters {
 
         // print filter summary
         if (tasksComplete == tasksFound) {
-            System.out.println(String.format("Filtered! %1$s task%2$s found, all complete!", tasksFound, (tasksFound == 1? "" : "s")));
+            System.out.printf("Filtered! %1$s task%2$s found, all complete!%n", tasksFound, (tasksFound == 1? "" : "s"));
         } else {
-            System.out.println(String.format("Filtered! %1$s task%2$s found, %3$s incomplete.",
-                    tasksFound, (tasksFound == 1? "" : "s"), tasksFound - tasksComplete));
+            System.out.printf("Filtered! %1$s task%2$s found, %3$s incomplete.%n",
+                    tasksFound, (tasksFound == 1? "" : "s"), tasksFound - tasksComplete);
         }
 
     }
