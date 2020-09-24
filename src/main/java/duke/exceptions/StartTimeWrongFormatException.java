@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class StartTimeWrongFormatException extends Throwable {
+public class StartTimeWrongFormatException extends Exception {
 }

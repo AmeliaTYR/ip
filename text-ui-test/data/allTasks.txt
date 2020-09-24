@@ -1,5 +1,5 @@
-Total tasks: 3
-Tasks completed: 1
+Total tasks: 7
+Tasks completed: 2
 
 Task completion status:
 0 is not done([✗]), 1 is done([✓])
@@ -17,3 +17,4 @@ Tasks:
 [T][1] clean shoes
 [D][0] do project (by: Thu 30 Jan 2020 04:55 PM)
 [E][0] clean kitchen (from: Sat 12 Dec 2020 00:00 AM to Thu 31 Dec 2020 00:00 PM)
+

@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class FilePathInvalidException extends Throwable {
+public class FilePathInvalidException extends Exception {
 }

@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class SavedTaskFormatWrongException extends Throwable {
+public class SavedTaskFormatWrongException extends Exception {
 }

@@ -1,9 +1,9 @@
 package duke.task;
 
+import static duke.constants.TootieSymbols.CROSS_SYMBOL;
+import static duke.constants.TootieSymbols.TICK_SYMBOL;
+
 public abstract class Task {
-    // is complete indicator symbols
-    public static final String TICK_SYMBOL = "[\u2713]";
-    public static final String CROSS_SYMBOL = "[\u2717]";
 
     private String taskName;
     private boolean isComplete;

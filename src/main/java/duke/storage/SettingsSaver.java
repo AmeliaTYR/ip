@@ -31,8 +31,6 @@ public class SettingsSaver {
         String dividerChoiceString = dividerChoiceToString(dividerChoice);
         fileFunctions.appendsStringToFile(String.format(TootieFileMsgs.TOOTIE_SETTINGS_USER_PREFERENCES_FORMAT, dividerChoiceString,
                 username), tootieSettingsFilePath);
-
-        System.out.println("All settings saved.");
     }
 
     // convert the dividerChoice into a string to save in tootieSettings.txt

@@ -1,5 +1,8 @@
 package duke.constants;
 
+/**
+ * Types of commands
+ */
 public enum CommandType {
     START,
     HELP,

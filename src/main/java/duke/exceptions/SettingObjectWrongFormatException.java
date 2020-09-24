@@ -1,4 +1,4 @@
 package duke.exceptions;
 
-public class SettingObjectWrongFormatException extends Throwable {
+public class SettingObjectWrongFormatException extends Exception {
 }

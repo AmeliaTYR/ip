@@ -15,9 +15,26 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Add new Events, Todos or Deadlines to the list
+ */
 public class AddNewTasks {
-    // add an event task to the allTasks list
-    public static void addEvent(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws EventInputWrongFormatException, InvalidStartDateException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
+
+    /**
+     * Adds an event task to the allTasks list
+     *
+     * @param userInput raw user input
+     * @param allTasks  list of all Tasks
+     * @param numTasks  total number of tasks in the list
+     * @throws EventInputWrongFormatException  the command for adding event was wrongly formatted
+     * @throws InvalidStartTimeException       the start time entered is invalid
+     * @throws InvalidEndTimeException         the end time entered is invalid
+     * @throws StartTimeWrongFormatException   the start time entered has formatting errors
+     * @throws EndTimeWrongFormatException     the end time entered has formatting errors
+     * @throws EndTimeBeforeStartTimeException the end time entered should not be before the start time
+     * @throws TaskNameEmptyException          the task name field is empty
+     */
+    public static void addEvent(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws EventInputWrongFormatException, InvalidStartTimeException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
         Date startTime = null;
         Date endTime = null;
 
@@ -53,51 +70,62 @@ public class AddNewTasks {
         // try to parse start time
         if (isStartDateWithTime) {
             startTime = Parsers.parseDateWithTime(startTimeUnformatted);
-        } else if(isStartDateWithoutTime){
+        } else if (isStartDateWithoutTime) {
             startTime = Parsers.parseDateWithoutTime(startTimeUnformatted);
         } else {
             throw new StartTimeWrongFormatException();
         }
-        if (startTime == null){
+        if (startTime == null) {
             throw new StartTimeWrongFormatException();
         }
 
         // try to parse end time
         if (isEndDateWithTime) {
             endTime = Parsers.parseDateWithTime(endTimeUnformatted);
-        } else if(isEndDateWithoutTime){
+        } else if (isEndDateWithoutTime) {
             endTime = Parsers.parseDateWithoutTime(endTimeUnformatted);
         } else {
             throw new EndTimeWrongFormatException();
         }
-        if (endTime == null){
+        if (endTime == null) {
             throw new EndTimeWrongFormatException();
         }
 
         // check if date entered is valid
-        if(!isValidDate(startTime)){
-            throw new InvalidStartDateException();
+        if (!isValidDate(startTime)) {
+            throw new InvalidStartTimeException();
         }
-        if(!isValidDate(endTime)) {
+        if (!isValidDate(endTime)) {
             throw new InvalidEndTimeException();
         }
 
         // check if start and end time are in chronological order
-        if(startTime.after(endTime)){
+        if (startTime.after(endTime)) {
             throw new EndTimeBeforeStartTimeException();
         }
 
-        if (taskName.isBlank()){
+        if (taskName.isBlank()) {
             throw new TaskNameEmptyException();
         }
 
         // add event to list
         allTasks.add(new Event(taskName.trim(), startTime, endTime));
-        System.out.println(String.format(TootieNormalMsgs.ADDED_EVENT_FORMAT, allTasks.get(numTasks.get()).getTaskDescription()));
+        System.out.println(String.format(TootieNormalMsgs.ADDED_EVENT_FORMAT,
+                allTasks.get(numTasks.get()).getTaskDescription()));
         numTasks.getAndIncrement();
     }
 
-    // adds a deadline task to the allTasks list
+    /**
+     * Adds a deadline task to the allTasks list
+     *
+     * @param userInput raw user input
+     * @param allTasks  list of all Tasks
+     * @param numTasks  total number of tasks in the list
+     * @throws DeadlineInputWrongFormatException the deadline command was wrongly formatted
+     * @throws DueDateWrongFormatException       the due date is wrongly formatted
+     * @throws TaskNameEmptyException            the task name field is empty
+     * @throws InvalidDueDateException           the due date entered is invalid
+     */
     public static void addDeadline(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws DeadlineInputWrongFormatException, DueDateWrongFormatException, TaskNameEmptyException, InvalidDueDateException {
         Date dueDate = null;
 
@@ -127,27 +155,28 @@ public class AddNewTasks {
         // try to parse due date
         if (isDueDateWithTime) {
             dueDate = Parsers.parseDateWithTime(dueDateUnformatted);
-        } else if(isDueDateWithoutTime){
+        } else if (isDueDateWithoutTime) {
             dueDate = Parsers.parseDateWithoutTime(dueDateUnformatted);
         } else {
             throw new DueDateWrongFormatException();
         }
-        if (dueDate == null){
+        if (dueDate == null) {
             throw new DueDateWrongFormatException();
         }
 
-        if (taskName.isBlank()){
+        if (taskName.isBlank()) {
             throw new TaskNameEmptyException();
         }
 
         // check if date entered is valid
-        if(!isValidDate(dueDate)){
+        if (!isValidDate(dueDate)) {
             throw new InvalidDueDateException();
         }
 
         // add event to list
         allTasks.add(new Deadline(taskName.trim(), dueDate));
-        System.out.println(String.format(TootieNormalMsgs.ADDED_DEADLINE_FORMAT, allTasks.get(numTasks.get()).getTaskDescription()));
+        System.out.println(String.format(TootieNormalMsgs.ADDED_DEADLINE_FORMAT,
+                allTasks.get(numTasks.get()).getTaskDescription()));
         numTasks.getAndIncrement();
     }
 
@@ -165,26 +194,44 @@ public class AddNewTasks {
         return true;
     }
 
-    // check if the date entered is correctly formatted with a date but no time
+    /**
+     * /check if the date entered is correctly formatted with a date but no time
+     *
+     * @param timeUnformmated a string containing a date without the time included
+     * @return true if it matches the correct format
+     */
     private static boolean isDateWithoutTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITHOUT_TIME_REGEX);
     }
 
-    // check if the date entered is correctly formatted with a date and time
+    /**
+     * Check if the date entered is correctly formatted with a date and time
+     *
+     * @param timeUnformmated a string containing a date with the time included
+     * @return true if it matches the correct format
+     */
     private static boolean isDateWithTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITH_TIME_REGEX);
     }
 
-    // adds a toto task to the allTasks list
+    /**
+     * Adds a toto task to the allTasks list
+     *
+     * @param userInput raw user input
+     * @param allTasks  list of all Tasks
+     * @param numTasks  total number of tasks in the list
+     * @throws ToDoInputWrongFormatException the format of the todo command is incorrect
+     * @throws TaskNameEmptyException        the task name field is empty
+     */
     public static void addToDo(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws ToDoInputWrongFormatException, TaskNameEmptyException {
         // identify placements
         int taskNamePosition = userInput.indexOf(TootieInputMarkers.TASKNAME_MARKER);
-        if (taskNamePosition == -1){
+        if (taskNamePosition == -1) {
             throw new ToDoInputWrongFormatException();
         }
         String taskName = userInput.substring(taskNamePosition + 2);
 
-        if (taskName.isBlank()){
+        if (taskName.isBlank()) {
             throw new TaskNameEmptyException();
         }
 

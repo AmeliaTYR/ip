@@ -16,6 +16,9 @@ import java.util.stream.Stream;
 
 import static duke.parsers.Parsers.parseFilterOptionsFromUserInput;
 
+/**
+ * Filters the tasks in the list
+ */
 public class Filters {
 
     // parse the user input and filter out the suitable tasks

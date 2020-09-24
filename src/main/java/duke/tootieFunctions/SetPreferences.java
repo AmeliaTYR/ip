@@ -5,9 +5,22 @@ import duke.exceptions.UsernameEmptyException;
 
 import static duke.ui.Printers.printDivider;
 
+/**
+ * Functions for the user to set preferences such as
+ */
 public class SetPreferences {
-    public static void setUsername(String userInput, String username)
-            throws UsernameCommandInvalidException, UsernameEmptyException {
+
+    /**
+     * Extracts the username from the raw user input
+     *
+     * @param userInput raw user input
+     * @param username  current username
+     * @return updated username
+     * @throws UsernameCommandInvalidException
+     * @throws UsernameEmptyException
+     */
+    public static String setUsername(String userInput, String username) throws UsernameCommandInvalidException,
+            UsernameEmptyException {
 
         // identify placements
         int usernamePosition = userInput.indexOf("username");
@@ -22,7 +35,6 @@ public class SetPreferences {
 
         username = usernameInput;
 
-        System.out.println("Hello " + username);
-        printDivider();
+        return username;
     }
 }
