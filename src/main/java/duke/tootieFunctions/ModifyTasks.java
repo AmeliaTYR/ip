@@ -55,13 +55,16 @@ public class ModifyTasks {
         // try to parse task and check if it exists
         taskNum = getTaskNumFromInput(userInput, numTasks);
 
+        if (!allTasks.get(taskNum - 1).getComplete()) {
+            numTasksCompleted.getAndIncrement();
+        }
+
         allTasks.get(taskNum - 1).setComplete(true);
 
         // print response
         System.out.printf((TootieNormalMsgs.TASK_MARKED_DONE_RESPONSE_MSG) + "%n",
                 allTasks.get(taskNum - 1).getTaskType(), allTasks.get(taskNum - 1).getTaskDescription());
 
-        numTasksCompleted.getAndIncrement();
     }
 
     /**

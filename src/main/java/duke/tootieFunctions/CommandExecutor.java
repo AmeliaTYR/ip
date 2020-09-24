@@ -142,6 +142,7 @@ public class CommandExecutor {
         case SAVE:
             try {
                 AllTasksSaver.saveAllTasks(allTasks, allTasksFilePath, numTasks, numTasksCompleted);
+                System.out.println("All tasks saved!");
             } catch (IOException e) {
                 e.printStackTrace();
             }

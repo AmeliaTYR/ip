@@ -13,14 +13,14 @@ full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\tootieSettings.
 ==============================================
 Loading allTasks.txt save file...
 full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 3 of 3 tasks read successfully!
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Hello Ames! I'm Tootie!
 What can I do for you?
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 help
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Here is the list of commands I understand:
 
 help: displays a list of commands tootie understands
@@ -41,23 +41,28 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
 done: marks indicated task done (choose number from list)
+  Parameters:  done [TASK_INDEX]
   Example:  done 1
 
 undone: marks indicated task undone (choose number from list)
+  Parameters:  undone [TASK_INDEX]
   Example:  undone 1
 
 delete: deletes indicated task (choose number from list)
+  Parameters:  delete [TASK_INDEX]
   Example:  delete 1
 
 divider: select a divider for customisation
   dividers avaliable:
-1) ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-2) ----------------------------------------------
-3) *---*---*---*---*---*---*---*---*---*---*---*
-4) ==============================================
+1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+2) PLAIN ----------------------------------------------
+3) SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
+4) DOUBLE ==============================================
+  Parameters:  divider [DIVIDER_INDEX]
   Example:  divider 1
 
 username: allows user to set username
+  Parameters:  username [USERNAME]
   Example:  username Sophia
 
 list: displays the complete list of tasks entered
@@ -67,41 +72,42 @@ bye: closes the program
   Example:  bye
 
 -----
-NOTE: datetime entries can be of the format "dd-MM-yyyy HH:mm"
+NOTE: datetime entries can be of the format
+    "dd-MM-yyyy HH:mm" with time in 24-Hour format
     OR "dd-MM-yyyy"
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 blah
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Command not found? (・∧‐)ゞ
 Type "help" for a list of commands!
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 You have 3 tasks, 2 not done
-1. [T][✓] clean shoes
+1. [T][✗] clean shoes
 2. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 todo
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Check todo input formatting!
 
 todo: add a todo task to the list
   Parameters:  todo t/TASKNAME
   Example:  todo t/clean room
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 todo t/
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 todo taskname is empty? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 todo t/clean turtle tank
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added todo: clean turtle tank
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 deadline
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Check deadline input formatting!
 
 deadline: add a task with a deadline to the list
@@ -109,9 +115,9 @@ deadline: add a task with a deadline to the list
   Example:  deadline t/write essay d/31-12-2020 04:55
   Example:  deadline t/submit report d/30-10-2020
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 deadline t/
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Check deadline input formatting!
 
 deadline: add a task with a deadline to the list
@@ -119,19 +125,19 @@ deadline: add a task with a deadline to the list
   Example:  deadline t/write essay d/31-12-2020 04:55
   Example:  deadline t/submit report d/30-10-2020
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 deadline t/write essay d/31-12-2020
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added deadline:
 write essay (by: Thu 31 Dec 2020 12:00 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 deadline t/do project d/30-01-2020 04:55
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added deadline:
 do project (by: Thu 30 Jan 2020 04:55 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Check event input formatting!
 
 event: add a scheduled event task to the list
@@ -139,9 +145,9 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event t/
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Check event input formatting!
 
 event: add a scheduled event task to the list
@@ -149,269 +155,292 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event t/clean house s/31-12-2020 e/31-02-2020
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
+Invalid end date
+==============================================
+event t/clean house s/31-12-2020 e/05-02-2021
+==============================================
+added event:
+clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+==============================================
+event t/clean cupboard e/31-12-2020 s/05-02-2021
+==============================================
 Error! End time cannot be before start time!
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event t/clean kitchen s/12-12-2020 e/31-12-2020
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added event:
 clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event t/clean shoes s/01-02-2020 e/31-12-2020 05:45
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added event:
 clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 event t/clean socks s/01-02-2020 04:55 e/31-12-2020 05:45
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 added event:
 clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 8 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 9 not done
+1. [T][✗] clean shoes
 2. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✗] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 done 11
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 8 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 9 not done
+1. [T][✗] clean shoes
 2. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✗] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 done 3
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Nice! I've marked this task as done:
-    [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+    [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 7 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 9 not done
+1. [T][✗] clean shoes
 2. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✗] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 done 2
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Nice! I've marked this task as done:
     [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 6 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 8 not done
+1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✗] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 done 4
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Nice! I've marked this task as done:
     [T][✓] clean turtle tank
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 5 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 7 not done
+1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 done 0
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 5 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 7 not done
+1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 undone 11
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 5 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 7 not done
+1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 undone 5
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Aww... I've marked this task undone:
     [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 (╥﹏╥)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 5 not done
-1. [T][✓] clean shoes
+==============================================
+You have 10 tasks, 7 not done
+1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 undone 1
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Aww... I've marked this task undone:
     [T][✗] clean shoes
 (╥﹏╥)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 6 not done
+==============================================
+You have 10 tasks, 7 not done
 1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 undone 0
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 9 tasks, 6 not done
+==============================================
+You have 10 tasks, 7 not done
 1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 delete 5
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Yay! I have deleted this task:
     [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 8 tasks, 5 not done
+==============================================
+You have 9 tasks, 6 not done
 1. [T][✗] clean shoes
 2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
-3. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 4. [T][✓] clean turtle tank
 5. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+6. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+7. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+8. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+9. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 delete 2
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Yay! I have deleted this task:
     [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 7 tasks, 5 not done
+==============================================
+You have 8 tasks, 6 not done
 1. [T][✗] clean shoes
-2. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 3. [T][✓] clean turtle tank
 4. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-5. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-6. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-7. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 delete 12
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 7 tasks, 5 not done
+==============================================
+You have 8 tasks, 6 not done
 1. [T][✗] clean shoes
-2. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 3. [T][✓] clean turtle tank
 4. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-5. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-6. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-7. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 delete 0
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 No such task? (・∧‐)ゞ
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 list
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-You have 7 tasks, 5 not done
+==============================================
+You have 8 tasks, 6 not done
 1. [T][✗] clean shoes
-2. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 3. [T][✓] clean turtle tank
 4. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
-5. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-6. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-7. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
 divider 3
-─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+==============================================
 Divider changed!(◠‿◠✿)
 *---*---*---*---*---*---*---*---*---*---*---*
 divider 2
@@ -429,12 +458,13 @@ Hello Sophia!(◠‿◠✿)
 filter tt/event,todo
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 1. [T][✗] clean shoes
-2. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 3. [T][✓] clean turtle tank
-5. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-6. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-7. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-Filtered! 6 tasks found, 4 incomplete.
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+Filtered! 7 tasks found, 5 incomplete.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 filter tt/deadline
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
@@ -444,12 +474,13 @@ Filtered! 1 task found, 1 incomplete.
 filter st/clean
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 1. [T][✗] clean shoes
-2. [E][✓] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 PM)
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 3. [T][✓] clean turtle tank
-5. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
-6. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
-7. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
-Filtered! 6 tasks found, 4 incomplete.
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+Filtered! 7 tasks found, 5 incomplete.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 bye
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────

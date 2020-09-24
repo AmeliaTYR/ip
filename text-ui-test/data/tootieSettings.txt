@@ -8,7 +8,7 @@ FILE PATHS
 
 ==============================
 USER PREFERENCES
-+ Divider choice: SPARKLY
-+ Username: Sophia
++ Divider choice: DOUBLE
++ Username: Ames
 
 ==============================

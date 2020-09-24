@@ -236,7 +236,7 @@ public class AllTasksLoader {
         if (matcher.matches()) {
             Date dueDate;
             try {
-                dueDate = Parsers.parseSimpleDate(matcher.group(3));
+                dueDate = Parsers.parseSimpleDate(matcher.group(3).trim());
             } catch (InvalidDateException e) {
                 throw new InvalidDueDateException();
             }
@@ -258,13 +258,13 @@ public class AllTasksLoader {
         if (matcher.matches()) {
             Date startDate;
             try {
-                startDate = Parsers.parseSimpleDate(matcher.group(3));
+                startDate = Parsers.parseSimpleDate(matcher.group(3).trim());
             } catch (InvalidDateException e) {
                 throw new InvalidStartTimeException();
             }
             Date endDate;
             try {
-                endDate = Parsers.parseSimpleDate(matcher.group(4));
+                endDate = Parsers.parseSimpleDate(matcher.group(4).trim());
             } catch (InvalidDateException e) {
                 throw new InvalidEndTimeException();
             }
