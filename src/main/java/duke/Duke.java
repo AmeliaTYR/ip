@@ -99,7 +99,7 @@ public class Duke {
             UserInputHandlers.echoUserInput(userInput);
             Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
-            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, allTasksFilePath, numTasks, numTasksCompleted, username);
+            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, tootieSettingsFilePath, allTasksFilePath, numTasks, numTasksCompleted, username);
             // load settings if any were changed
             updateSettingsVariables(savedSettings);
             Printers.printDivider();

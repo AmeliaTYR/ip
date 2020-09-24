@@ -18,7 +18,7 @@ public enum CommandType {
     CHOOSE_DIVIDER,
     SET_USERNAME,
     FILTER_TASKS,
-    MODIFY_TASK,
-    UNRECOGNISED
+    PRINT_FILE_PATHS,
+    UNRECOGNISED;
 }
 

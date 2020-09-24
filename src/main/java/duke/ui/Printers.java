@@ -12,6 +12,8 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static duke.constants.TootieSymbols.NEWLINE;
+
 /**
  * Functions to print to the console as part of the UI
  */
@@ -124,5 +126,10 @@ public class Printers {
         if (numTasks == numTasksCompleted) {
             System.out.println(TootieNormalMsgs.TASKS_ALL_DONE_MSG);
         }
+    }
+
+    public static void printFilePaths(String tootieSettingsFilePath, String allTasksFilePath) {
+        System.out.println("The list of saved tasks can be found at:" + NEWLINE + allTasksFilePath + NEWLINE
+                + "The list of saved settings can be found at:" + NEWLINE + tootieSettingsFilePath);
     }
 }

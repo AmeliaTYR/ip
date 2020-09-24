@@ -11,7 +11,10 @@ Tootie is a task list manager program
 
 ## Features 
 
-### Bring up help guide: `help`
+### 1) Basic CLI commands
+Basic commands to use the program
+
+#### Bring up help guide: `help`
 Displays a list of commands tootie understands
 
 Format: `help`
@@ -20,16 +23,32 @@ Example of usage:
 
 `help`
 
-### List all tasks: `list`
-Displays all the tasks in the list
+#### Display file paths: `filepath` or `filepaths`
+Display file paths of save files
 
-Format: `list`
+Format: `filepath` or `filepaths`
+
+* The command can be spelled with or without the 's' at the end
 
 Example of usage: 
 
-`list`
+`filepath`
 
-### Add a todo: `todo`
+`filepaths`
+
+#### Close the program: `bye`
+Signals the end of the program use and automatically saves settings and tasks in the task list
+
+Format: `bye`
+
+Example of usage: 
+
+`bye`
+
+### 2) Add Task items
+Add a `todo`, `deadline` or`event` to the list of tasks.
+
+#### Add a todo: `todo`
 Adds a new todo task to the list of tasks.
 
 Format: `todo n/TASKNAME`
@@ -42,7 +61,7 @@ Example of usage:
 
 `todo n/Refactor the User Guide to remove passive voice`
 
-### Add a deadline: `deadline`
+#### Add a deadline: `deadline`
 Adds a new deadline task to the list of tasks.
 
 Format: `deadline t/TASKNAME d/DUE_DATE`
@@ -59,7 +78,7 @@ Example of usage:
 
 `deadline d/30-10-2020 t/submit report `
 
-### Add an event: `event`
+#### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
 
 Format: `event t/TASKNAME s/START_TIME e/END_TIME`
@@ -77,7 +96,55 @@ Example of usage:
 
 `event e/31-12-2020 t/clean room s/31-12-2020`
 
-### Filtered search: `filter`
+### 3) Modify task list
+Mark a task as `done` or `undone`, or `delete` the task from the list.
+
+#### Mark a task done: `done`
+Marks an indicated task done by index
+
+Format: `done TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`done 1`
+
+#### Mark a task undone: `undone`
+Marks an indicated task undone by index
+
+Format: `undone TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`undone 1`
+
+#### Delete a task: `delete`
+Delete a task from the task list by index
+
+Format: `delete TASK_INDEX`
+
+* The `TASK_INDEX` should be within range of tasks in the list
+
+Example of usage: 
+
+`delete 1`
+
+### 4) List view
+View all tasks in the list, or run a filtered search for specific tasks
+
+#### List all tasks: `list`
+Displays all the tasks in the list
+
+Format: `list`
+
+Example of usage: 
+
+`list`
+
+#### Filtered search: `filter`
 Filters out tasks from the list according to the parameters
 
 Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES`
@@ -108,7 +175,10 @@ Example of usage:
 
 `filter st/clean`
 
-### Change username: `username`
+### 5) Customisation
+Customise Tootie by changing your username, and the style of line divider used.
+
+#### Change username: `username`
 Change username stored in system
 
 Format: `username USERNAME`
@@ -119,40 +189,7 @@ Example of usage:
 
 `username Tootie`
 
-### Mark a task done: `done`
-Marks an indicated task done by index
-
-Format: `done TASK_INDEX`
-
-* The `TASK_INDEX` should be within range of tasks in the list
-
-Example of usage: 
-
-`done 1`
-
-### Mark a task undone: `undone`
-Marks an indicated task undone by index
-
-Format: `undone TASK_INDEX`
-
-* The `TASK_INDEX` should be within range of tasks in the list
-
-Example of usage: 
-
-`undone 1`
-
-### Delete a task: `delete`
-Delete a task from the task list by index
-
-Format: `delete TASK_INDEX`
-
-* The `TASK_INDEX` should be within range of tasks in the list
-
-Example of usage: 
-
-`delete 1`
-
-### Select a new divider: `divider`
+#### Select a new divider: `divider`
 Select a divider from the list of dividers for customisation
 
   dividers avaliable:
@@ -169,34 +206,35 @@ Example of usage:
 
 `divider 1`
 
-### Close the program: `bye`
-Signals the end of the program use and automatically saves settings and tasks in the task list
-
-Format: `bye`
-
-Example of usage: 
-
-`bye`
 
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: Copy the allTasks.txt and tootieSettings.txt files over
+**A**: Copy the allTasks.txt and specific the file path when prompted. The saved settings file is automatically generated.
+
+**Q**: How do I find the save files for allTasks.txt and tootieSettings.txt?
+
+**A**: Use the `filepath` command in the program to retrieve the absolute file paths for both files. \(Note: they may not be in the same location\)
+
+**Q**: Can I change the Tootie logo at the start of the program?
+
+**A**: No. It is randomly decided by the program.
 
 ## Command Summary
 
  Command | Purpose | Syntax
 ---------|---------|-------
-list |List all tasks|_list_
 help|Bring up help guide|_help_
+filepath|Display file paths|_filepath_ or _filepaths_ 
+bye|Close the program|_bye_ 
 todo|Add a todo|_todo n/TASKNAME_
 deadline|Add a deadline|_deadline t/TASKNAME d/DUE_DATE_
 event|Add an event|_event t/TASKNAME s/START_TIME e/END_TIME_
-filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
-username|Change username|_username Ames_
 done|Mark a task done|_done 1_
 undone|Mark a task undone|_undone_
 delete|Delete a task|_delete 1_
+list |List all tasks|_list_
+filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
+username|Change username|_username Ames_
 divider|Mark a task done|_divider_
-bye|Close the program|_bye_ 

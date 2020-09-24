@@ -53,6 +53,9 @@ public class CommandExecutor {
             return CommandType.FILTER_TASKS;
         } else if (userInput.toLowerCase().trim().startsWith("save")) {
             return CommandType.SAVE;
+        } else if (userInput.toLowerCase().trim().startsWith("filepaths") ||
+                userInput.toLowerCase().trim().startsWith("filepath")) {
+            return CommandType.PRINT_FILE_PATHS;
         } else {
             return CommandType.UNRECOGNISED;
         }
@@ -69,7 +72,7 @@ public class CommandExecutor {
      * @param numTasksCompleted total number of tasks completed
      * @param username          user provided name
      */
-    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
+    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String tootieSettingsFilePath, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
         switch (commandType) {
         case HELP:
             Printers.printHelpInfo();
@@ -183,6 +186,9 @@ public class CommandExecutor {
             } catch (NoTasksFilteredException e) {
                 System.out.println("No tasks matching parameters found? " + TootieSymbols.BEAR_EMOTICON);
             }
+            break;
+        case PRINT_FILE_PATHS:
+            Printers.printFilePaths(tootieSettingsFilePath, allTasksFilePath);
             break;
         default:
             Printers.printConfusedMessage();
