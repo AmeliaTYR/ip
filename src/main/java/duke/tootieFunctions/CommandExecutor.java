@@ -13,7 +13,6 @@ import duke.ui.Printers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import static duke.tootieFunctions.Filters.filterTasks;
 import static duke.ui.Printers.printDivider;
@@ -110,7 +109,7 @@ public class CommandExecutor {
                 AddNewTasks.addEvent(userInput, allTasks, numTasks);
             } catch (EventInputWrongFormatException e) {
                 System.out.println(TootieErrorMsgs.EVENT_WRONG_FORMAT_MSG);
-            } catch (InvalidStartDateException e) {
+            } catch (InvalidStartTimeException e) {
                 System.out.println(TootieErrorMsgs.INVALID_START_DATE_MSG);
             } catch (InvalidEndTimeException e) {
                 System.out.println(TootieErrorMsgs.INVALID_END_DATE_MSG);

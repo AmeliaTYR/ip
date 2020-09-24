@@ -26,15 +26,15 @@ public class AddNewTasks {
      * @param userInput raw user input
      * @param allTasks  list of all Tasks
      * @param numTasks  total number of tasks in the list
-     * @throws EventInputWrongFormatException
-     * @throws InvalidStartDateException
-     * @throws InvalidEndTimeException
-     * @throws StartTimeWrongFormatException
-     * @throws EndTimeWrongFormatException
-     * @throws EndTimeBeforeStartTimeException
-     * @throws TaskNameEmptyException
+     * @throws EventInputWrongFormatException  the command for adding event was wrongly formatted
+     * @throws InvalidStartTimeException       the start time entered is invalid
+     * @throws InvalidEndTimeException         the end time entered is invalid
+     * @throws StartTimeWrongFormatException   the start time entered has formatting errors
+     * @throws EndTimeWrongFormatException     the end time entered has formatting errors
+     * @throws EndTimeBeforeStartTimeException the end time entered should not be before the start time
+     * @throws TaskNameEmptyException          the task name field is empty
      */
-    public static void addEvent(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws EventInputWrongFormatException, InvalidStartDateException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
+    public static void addEvent(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws EventInputWrongFormatException, InvalidStartTimeException, InvalidEndTimeException, StartTimeWrongFormatException, EndTimeWrongFormatException, EndTimeBeforeStartTimeException, TaskNameEmptyException {
         Date startTime = null;
         Date endTime = null;
 
@@ -93,7 +93,7 @@ public class AddNewTasks {
 
         // check if date entered is valid
         if (!isValidDate(startTime)) {
-            throw new InvalidStartDateException();
+            throw new InvalidStartTimeException();
         }
         if (!isValidDate(endTime)) {
             throw new InvalidEndTimeException();
@@ -121,10 +121,10 @@ public class AddNewTasks {
      * @param userInput raw user input
      * @param allTasks  list of all Tasks
      * @param numTasks  total number of tasks in the list
-     * @throws DeadlineInputWrongFormatException
-     * @throws DueDateWrongFormatException
-     * @throws TaskNameEmptyException
-     * @throws InvalidDueDateException
+     * @throws DeadlineInputWrongFormatException the deadline command was wrongly formatted
+     * @throws DueDateWrongFormatException       the due date is wrongly formatted
+     * @throws TaskNameEmptyException            the task name field is empty
+     * @throws InvalidDueDateException           the due date entered is invalid
      */
     public static void addDeadline(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws DeadlineInputWrongFormatException, DueDateWrongFormatException, TaskNameEmptyException, InvalidDueDateException {
         Date dueDate = null;
@@ -197,8 +197,8 @@ public class AddNewTasks {
     /**
      * /check if the date entered is correctly formatted with a date but no time
      *
-     * @param timeUnformmated
-     * @return
+     * @param timeUnformmated a string containing a date without the time included
+     * @return true if it matches the correct format
      */
     private static boolean isDateWithoutTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITHOUT_TIME_REGEX);
@@ -207,8 +207,8 @@ public class AddNewTasks {
     /**
      * Check if the date entered is correctly formatted with a date and time
      *
-     * @param timeUnformmated
-     * @return
+     * @param timeUnformmated a string containing a date with the time included
+     * @return true if it matches the correct format
      */
     private static boolean isDateWithTime(String timeUnformmated) {
         return timeUnformmated.matches(TootieRegex.DATE_WITH_TIME_REGEX);
@@ -220,8 +220,8 @@ public class AddNewTasks {
      * @param userInput raw user input
      * @param allTasks  list of all Tasks
      * @param numTasks  total number of tasks in the list
-     * @throws ToDoInputWrongFormatException
-     * @throws TaskNameEmptyException
+     * @throws ToDoInputWrongFormatException the format of the todo command is incorrect
+     * @throws TaskNameEmptyException        the task name field is empty
      */
     public static void addToDo(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws ToDoInputWrongFormatException, TaskNameEmptyException {
         // identify placements

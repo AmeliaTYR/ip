@@ -16,7 +16,7 @@ public class Parsers {
      * Parse the dividerChoice enum from the string read from file
      *
      * @param dividerChoiceString file line containing saved divider choice
-     * @return
+     * @return return the DividerChoice enum from a given string
      */
     public static DividerChoice parseDividerChoice(String dividerChoiceString) {
         switch (dividerChoiceString) {
@@ -34,13 +34,12 @@ public class Parsers {
     /**
      * Extract the value string from line in settings save file
      *
-     * @param fileLine
-     * @param objectTitle
-     * @return
-     * @throws SettingObjectWrongFormatException
+     * @param fileLine a line read from the file
+     * @param objectTitle the string indicating the type of object
+     * @return returns the setting extracted from line in the settings file
+     * @throws SettingObjectWrongFormatException the linel in the settings file was wrongly formatted
      */
-    public static String parseFileObject(String fileLine, String objectTitle)
-            throws SettingObjectWrongFormatException {
+    public static String parseFileObject(String fileLine, String objectTitle) throws SettingObjectWrongFormatException {
 
         int settingTitleLength = objectTitle.length();
         String fileObject;
@@ -64,8 +63,8 @@ public class Parsers {
     /**
      * Parses the default date format and returns a Date object
      *
-     * @param unformattedDate
-     * @return
+     * @param unformattedDate the string containing an unformatted date
+     * @return the date object extracted from the unformatted date
      */
     public static Date parseComplexDate(String unformattedDate) {
         Date formattedDate;
@@ -83,8 +82,8 @@ public class Parsers {
      * Extract the desired line divider from user input command
      *
      * @param userInput raw user input command
-     * @return
-     * @throws DividerNonexistantException
+     * @return return DividerChoice extracted from the user input
+     * @throws DividerNonexistantException an invalid divider choice was indicated
      */
     public static DividerChoice parseLineDividerFromUserInput(String userInput) throws DividerNonexistantException {
         int dividerIndex;
@@ -99,7 +98,7 @@ public class Parsers {
             throw new DividerNonexistantException();
         }
 
-        switch (dividerIndex){
+        switch (dividerIndex) {
         case 1:
             newDividerChoice = DividerChoice.SPARKLY;
             break;
@@ -122,11 +121,11 @@ public class Parsers {
      * Extract the desired line divider from string
      *
      * @param fileLine raw line read from file
-     * @return
+     * @return return the DividerChoice enum extracted from the file
      */
     public static DividerChoice parseLineDividerFromString(String fileLine) {
         DividerChoice newDividerChoice;
-        switch (fileLine){
+        switch (fileLine) {
         case "PLAIN":
             newDividerChoice = DividerChoice.PLAIN;
             break;
@@ -143,7 +142,7 @@ public class Parsers {
      * parse the date if time is not included in input
      *
      * @param unformattedDate a string containing date information
-     * @return
+     * @return return the date object extracted
      */
     public static Date parseDateWithoutTime(String unformattedDate) {
         Date formattedDate;
@@ -161,7 +160,7 @@ public class Parsers {
      * Parse the date if time is included in input
      *
      * @param unformattedDate a string containing date information
-     * @return
+     * @return return the date object extracted
      */
     public static Date parseDateWithTime(String unformattedDate) {
         Date formattedDate;
@@ -179,7 +178,7 @@ public class Parsers {
      * Replace '\' with '/' characters in file paths variables
      *
      * @param path a file path with illegal characters
-     * @return
+     * @return return the path without illegal characters
      */
     public static String pathReplaceIllegalCharacters(String path) {
         return path.replace('\\', '/');
