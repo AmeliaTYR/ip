@@ -13,7 +13,6 @@ import duke.ui.Printers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import static duke.tootieFunctions.Filters.filterTasks;
 
@@ -145,20 +144,26 @@ public class CommandExecutor {
                 dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
                 Printers.changeDivider(dividerChoice);
             } catch (DividerNonexistantException e) {
-                System.out.println("Divider choice not found!" + NEWLINE);
+                System.out.println("Divider choice not found!");
             }
             break;
         case SET_USERNAME:
             try {
                 SetPreferences.setUsername(userInput, username);
             } catch (UsernameCommandInvalidException e) {
-                System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON + NEWLINE);
+                System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON);
             } catch (UsernameEmptyException e) {
-                System.out.println("Username is blank? " + TootieSymbols.CONFUSED_EMOTICON + NEWLINE);
+                System.out.println("Username is blank? " + TootieSymbols.CONFUSED_EMOTICON);
             }
             break;
         case FILTER_TASKS:
-            filterTasks(userInput, allTasks, numTasks);
+            try {
+                filterTasks(userInput, allTasks, numTasks);
+            } catch (MissingFilterOptionsException e) {
+                System.out.println("Filter command missing valid arguments? " + TootieSymbols.CONFUSED_EMOTICON);
+            } catch (NoTasksFilteredException e) {
+                System.out.println("No tasks matching parameters found? " + TootieSymbols.BEAR_EMOTICON);
+            }
             break;
         default:
             Printers.printConfusedMessage();

@@ -1,5 +1,5 @@
 Total tasks: 3
-Tasks completed: 1
+Tasks completed: 2
 
 Task completion status:
 0 is not done([✗]), 1 is done([✓])
@@ -8,12 +8,12 @@ Task types (T,D,E):
 T is to-do, D is deadline, E is event
 
 Examples:
-[T][1] clean shoes
-[D][0] do project (by: Thu 30 Jan 2020 04:55 PM)
-[E][0] clean kitchen (from: Sat 12 Dec 2020 00:00 AM to Thu 31 Dec 2020 00:00 PM)
+[T][0] taskname
+[D][1] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+[E][1] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)
 
 --------------------------------------------------------
 Tasks:
-[T][1] clean shoes
-[D][0] do project (by: Thu 30 Jan 2020 04:55 PM)
-[E][0] clean kitchen (from: Sat 12 Dec 2020 00:00 AM to Thu 31 Dec 2020 00:00 PM)
+[T][0] test project
+[D][1] do project (by: Thu Jan 30 04:55:00 SGT 2020)
+[E][1] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)

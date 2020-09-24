@@ -67,6 +67,6 @@ public class TootieNormalMsgs {
     public static final String ADDED_TODO_FORMAT = "added todo: " + "%1$s";
 
     public static final String LOGO_PRINT_FORMAT = "Hello from" + NEWLINE + "%1$s" + NEWLINE + TootieSymbols.VERSION;
-    public static final String NUMTASKS_PRINT_FORMAT = "You have %1$d tasks, %2$s not done";
+    public static final String NUMTASKS_PRINT_FORMAT = "You have %1$d task%2$s, %3$s not done";
     public static final String TASKS_ALL_DONE_MSG = "all done " + TootieSymbols.BEAR_EMOTICON;
 }
