@@ -1,12 +1,17 @@
 package duke.parsers;
 
 import duke.exceptions.DividerNonexistantException;
+import duke.exceptions.MissingFilterOptionsException;
 import duke.exceptions.SettingObjectWrongFormatException;
 import duke.constants.DividerChoice;
+import duke.task.Task;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Parsers {
     // parse the dividerChoice enum from the string
@@ -142,5 +147,43 @@ public class Parsers {
 
     public static String pathReplaceIllegalCharacters(String path) {
         return path.replace('\\', '/');
+    }
+
+    public static void parseFilterOptionsFromUserInput(String userInput, ArrayList<Task> allTasks,
+                                                       AtomicInteger numTasks, HashMap<String, String> filterOptions) throws MissingFilterOptionsException {
+
+        String parsedOption = "";
+        String optionIndicator = "";
+
+        int startPositionIndex = 0;
+        int endPositionIndex = 0;
+
+        // clear filter options
+        filterOptions.clear();
+
+        if (!userInput.contains("/")){
+            throw new MissingFilterOptionsException();
+        }
+
+        while (userInput.indexOf("/", startPositionIndex) != -1) {
+            // identify placement
+            startPositionIndex = userInput.indexOf("/", startPositionIndex + 1);
+            endPositionIndex = userInput.indexOf("/", startPositionIndex + 1);
+            // if reached end of string
+            if (endPositionIndex == -1) {
+                break;
+            }
+            // extract the option
+            parsedOption = userInput.substring(startPositionIndex + 1, endPositionIndex - 2);
+            optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
+            // store the option
+            filterOptions.put(optionIndicator, parsedOption);
+        }
+
+        // extract the option
+        parsedOption = userInput.substring(startPositionIndex + 1);
+        optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
+        // store the option
+        filterOptions.put(optionIndicator, parsedOption);
     }
 }

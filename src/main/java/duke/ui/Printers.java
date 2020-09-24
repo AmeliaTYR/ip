@@ -83,7 +83,7 @@ public class Printers {
             throw new TasklistEmptyException();
         }
 
-        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks, numTasks - numTasksCompleted));
+        System.out.println(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks, (numTasks == 1? "" : "s"), numTasks - numTasksCompleted));
         for (int i = 0; i < numTasks; i++) {
             System.out.println(String.format(TootieNormalMsgs.LIST_TASK_FORMAT,
                     (i + 1),
