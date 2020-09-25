@@ -501,11 +501,13 @@ Hello Sophia!(◠‿◠✿)
 #### Select a new divider: `divider`
 Select a divider from the list of dividers for customisation
 
+```
   dividers avaliable:
 1. SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 1. PLAIN ----------------------------------------------
 1. SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
 1. DOUBLE ==============================================
+```
 
 Format: `divider DIVIDER_INDEX`
 
@@ -521,19 +523,19 @@ Expected outcome:
 ==============================================
 divider 3
 ==============================================
-Divider changed!(◠‿◠✿)
+Divider changed! (◠‿◠✿)
 *---*---*---*---*---*---*---*---*---*---*---*
 divider 2
 *---*---*---*---*---*---*---*---*---*---*---*
-Divider changed!(◠‿◠✿)
+Divider changed! (◠‿◠✿)
 ----------------------------------------------
 divider 4
 ----------------------------------------------
-Divider changed!(◠‿◠✿)
+Divider changed! (◠‿◠✿)
 ==============================================
 divider 1
 ==============================================
-Divider changed!(◠‿◠✿)
+Divider changed! (◠‿◠✿)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
@@ -542,7 +544,7 @@ if the divider index is out of bounds this error would appear
 ```
 divider 6
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
-Divider choice not found?(・∧‐)ゞ
+Divider choice not found? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
