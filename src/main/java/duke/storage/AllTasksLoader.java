@@ -40,8 +40,16 @@ public class AllTasksLoader {
     }
 
     public static final String NEWLINE = System.lineSeparator();
-    
-    // attempt to load the all tasks file
+
+    /**
+     * Search for the allTasks.txt file and try to load it
+     *
+     * @param allTasks          list of all tasks
+     * @param SCANNER           scanner to read from the console
+     * @param allTasksFilePath  file path for the allTasks.txt file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted total number of tasks in the list completed
+     */
     public static void loadAllTasksFile(ArrayList<Task> allTasks, Scanner SCANNER, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted) {
         boolean isFileNotRead = true;
         Scanner allTasksFileScanner;
@@ -61,7 +69,7 @@ public class AllTasksLoader {
                 while (!isNewFilePathObtained) {
                     ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
                     isNewFilePathObtained = getNewAllTasksFilePath(SCANNER, allTasksFilePathReturn);
-                    allTasksFilePath = allTasksFilePathReturn.get(1);
+                    allTasksFilePath = allTasksFilePathReturn.get(0);
                     Printers.printDivider();
                 }
             } catch (FileEmptyException e) {
@@ -71,7 +79,13 @@ public class AllTasksLoader {
         }
     }
 
-    // get a new file path from user
+    /**
+     * Get a new file path from user
+     *
+     * @param SCANNER                scanner to read lines from the console
+     * @param allTasksFilePathReturn file path for the allTasks.txt file
+     * @return return true if a new file path for the allTasks.txt file was obtained
+     */
     private static boolean getNewAllTasksFilePath(Scanner SCANNER, ArrayList<String> allTasksFilePathReturn) {
         String path = "";
 
@@ -114,7 +128,7 @@ public class AllTasksLoader {
         }
 
         path = Parsers.pathReplaceIllegalCharacters(path);
-        allTasksFilePathReturn.set(0, path);
+        allTasksFilePathReturn.add(0, path);
 
         // check if the file path is valid
         File allTasksFile = fileFunctions.getFileFromFilePath(path);
@@ -127,7 +141,15 @@ public class AllTasksLoader {
         return true;
     }
 
-    // try to read the allTasks.txt file into allTasks array
+    /**
+     * Try to read the allTasks.txt file into allTasks array
+     *
+     * @param allTasks            complete list of all tasks
+     * @param allTasksFileScanner scanner to read lines from teh allTasks.txt file
+     * @param numTasks            total number of tasks in the list
+     * @param numTasksCompleted   total number of tasks in the list completed
+     * @throws FileEmptyException file found was empty
+     */
     private static void readAllTasksFile(ArrayList<Task> allTasks,Scanner allTasksFileScanner, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws FileEmptyException {
             // get total number of tasks stored
             int numTasksInList;
@@ -141,7 +163,14 @@ public class AllTasksLoader {
                     numTasks.get(), numTasksInList);
     }
 
-    // read each task and add to the allTasks arraylist
+    /**
+     * Read each task and add to the allTasks arraylist
+     *
+     * @param allTasks          list of all takss
+     * @param FILE_SCANNER      scanner to read lines from the file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted number of tasks in the list completed
+     */
     private static void addReadTasksToAllTasks(ArrayList<Task> allTasks, Scanner FILE_SCANNER, AtomicInteger numTasks, AtomicInteger numTasksCompleted) {
         while (FILE_SCANNER.hasNext()) {
             String fileInput = getFileNextLine(FILE_SCANNER);
@@ -163,14 +192,20 @@ public class AllTasksLoader {
         }
     }
 
-    // gets the number of tasks recorded in the allTasks.txt file from the header
+    /**
+     * Gets the number of tasks recorded in the allTasks.txt file from the header
+     *
+     * @param FILE_SCANNER scanner to read lines from the file
+     * @return number of tasks in the list as read from the file
+     * @throws FileEmptyException file found was empty
+     */
     private static int getNumTasksInList(Scanner FILE_SCANNER) throws FileEmptyException {
         int numTasksInList = 0;
 
         if (FILE_SCANNER.hasNext()) {
             String totalTasks = getFileNextLine(FILE_SCANNER);
             try {
-                numTasksInList = getNumTasks(totalTasks);
+                numTasksInList = Parsers.getNumTasks(totalTasks);
             } catch (TotalTasksNumInvalidException e) {
                 System.out.println("File header invalid!");
             }
@@ -180,24 +215,21 @@ public class AllTasksLoader {
         return numTasksInList;
     }
 
-    // parses the string to return number of tasks as an int
-    private static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
-        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
-        Matcher matcher = pattern.matcher(totalTasks);
-        if (matcher.matches()) {
-            try {
-                return Integer.parseInt(matcher.group(1));
-            } catch (NumberFormatException exception) {
-                throw new TotalTasksNumInvalidException();
-            }
-        } else {
-            throw new TotalTasksNumInvalidException();
-        }
-    }
-
-    // parses lines from the allTasks.txt file and adds the corresponding task to the allTasks ArrayList
+    /**
+     * Parses lines from the allTasks.txt file and adds the corresponding task to the allTasks ArrayList
+     *
+     * @param allTasks          complete list of all tasks
+     * @param fileInput         line read from the file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted number of tasks in the list completed
+     * @throws TaskTypeInvalidException      task saved in the save file has an invalid Task type
+     * @throws SavedTaskFormatWrongException task saved in the save file was wrongly formatted
+     * @throws InvalidDueDateException       due date of a deadline task was invalid
+     * @throws InvalidEndTimeException       end time of an event task is invalid
+     * @throws InvalidStartTimeException     start time of an event task is invalid
+     */
     private static void addTaskToAllTasksArrayList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws TaskTypeInvalidException, SavedTaskFormatWrongException, InvalidDueDateException, InvalidEndTimeException, InvalidStartTimeException {
-        TaskType taskType = getTaskType(fileInput);
+        TaskType taskType = Parsers.getTaskType(fileInput);
         switch (taskType) {
         case TODO:
             addToDoToList(allTasks, fileInput, numTasks, numTasksCompleted);
@@ -213,7 +245,15 @@ public class AllTasksLoader {
         }
     }
 
-    // adds a ToDo task read from the file to the allTasks ArrayList
+    /**
+     * Adds a ToDo task read from the file to the allTasks ArrayList
+     *
+     * @param allTasks          list of all tasks
+     * @param fileInput         line read from the file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted number of tasks completed
+     * @throws SavedTaskFormatWrongException due date of a deadline task was invalid
+     */
     private static void addToDoToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
         Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1])\\](.*)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -229,7 +269,16 @@ public class AllTasksLoader {
         }
     }
 
-    // adds a Deadline task read from the file to the allTasks ArrayList
+    /**
+     * Adds a Deadline task read from the file to the allTasks ArrayList
+     *
+     * @param allTasks          list of all tasks
+     * @param fileInput         line read from the file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted number of tasks completed
+     * @throws SavedTaskFormatWrongException saved task in the list is of the wrong format
+     * @throws InvalidDueDateException       due date of deadline task was wrong format
+     */
     private static void addDeadlineToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidDueDateException {
         Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1])\\](.*)\\(by:(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -251,7 +300,17 @@ public class AllTasksLoader {
         }
     }
 
-    // adds a Event task read from the file to the allTasks ArrayList
+    /**
+     * Adds a Event task read from the file to the allTasks ArrayList
+     *
+     * @param allTasks          list of all tasks
+     * @param fileInput         line read from the file
+     * @param numTasks          total number of tasks in the list
+     * @param numTasksCompleted number of tasks completed
+     * @throws SavedTaskFormatWrongException saved task in the list is of the wrong format
+     * @throws InvalidStartTimeException     start time of an event task is invalid
+     * @throws InvalidEndTimeException       end time of an event task is invalid
+     */
     private static void addEventToList(ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidStartTimeException, InvalidEndTimeException {
         Pattern pattern = Pattern.compile("\\[E\\]\\[([0-1])\\](.*)\\(from:(.*)to(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
@@ -279,20 +338,12 @@ public class AllTasksLoader {
         }
     }
 
-    // checks the task type for each task in the allTasks.txt file
-    private static TaskType getTaskType(String fileInput) {
-        if (fileInput.trim().startsWith("[T]")){
-            return TaskType.TODO;
-        } else if (fileInput.trim().startsWith("[D]")){
-            return TaskType.DEADLINE;
-        } else if (fileInput.trim().startsWith("[E]")){
-            return TaskType.EVENT;
-        } else {
-            return TaskType.INVALID;
-        }
-    }
-
-    // read non-blank lines of the file
+    /**
+     * Read non-blank lines of the file
+     *
+     * @param FILE_SCANNER scanner to read through lines in the file
+     * @return return a non blank line read from the file
+     */
     public static String getFileNextLine(Scanner FILE_SCANNER) {
         String fileInput;
         do {

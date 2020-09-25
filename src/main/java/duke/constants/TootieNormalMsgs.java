@@ -75,11 +75,11 @@ public class TootieNormalMsgs {
             "Bye %1$s! Hope to see you again soon! " + TootieSymbols.FLOWER_SMILE_EMOTICON + NEWLINE;
     public static final String HELLO_GREETING = "Hello %1$s! I'm Tootie!" + NEWLINE + "What can I do for you?" + NEWLINE;
 
+    /** Task modification response messages */
     public static final String TASK_MARKED_DONE_RESPONSE_MSG = "Nice! I've marked this task as done:" + NEWLINE +
             "    %1$s" + TootieSymbols.TICK_SYMBOL + " %2$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;
     public static final String TASK_MARKED_UNDONE_RESPONSE_MSG = "Aww... I've marked this task undone:" + NEWLINE +
             "    %1$s" + TootieSymbols.CROSS_SYMBOL + " %2$s" + NEWLINE + TootieSymbols.SAD_EMOTICON;
-
     public static final String TASK_DELETED_RESPONSE_MSG = "Yay! I have deleted this task:" + NEWLINE +
             "    " + "%1$s%2$s %3$s" + NEWLINE + TootieSymbols.SPARKLY_EMOTICON;
 
@@ -88,7 +88,6 @@ public class TootieNormalMsgs {
     public static final String ADDED_EVENT_FORMAT = "added event:" + NEWLINE + "%1$s";
     public static final String ADDED_DEADLINE_FORMAT = "added deadline:" + NEWLINE + "%1$s";
     public static final String ADDED_TODO_FORMAT = "added todo: " + "%1$s";
-
     public static final String LOGO_PRINT_FORMAT = "Hello from" + NEWLINE + "%1$s" + NEWLINE + TootieSymbols.VERSION;
     public static final String NUMTASKS_PRINT_FORMAT = "You have %1$d task%2$s, %3$s not done";
     public static final String TASKS_ALL_DONE_MSG = "all done " + TootieSymbols.BEAR_EMOTICON;

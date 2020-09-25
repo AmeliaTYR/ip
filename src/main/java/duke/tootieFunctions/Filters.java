@@ -2,14 +2,23 @@ package duke.tootieFunctions;
 
 import duke.constants.TaskType;
 import duke.constants.TootieNormalMsgs;
-import duke.exceptions.*;
+import duke.exceptions.DateAfterPreceedsDateBefore;
+import duke.exceptions.DateBeforeMatchesAfterException;
+import duke.exceptions.InvalidDateException;
+import duke.exceptions.MissingFilterOptionsException;
+import duke.exceptions.NoTasksFilteredException;
 import duke.parsers.Parsers;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
+import duke.ui.Printers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static duke.constants.TootieSymbols.NEWLINE;
@@ -22,7 +31,14 @@ import static duke.tootieFunctions.AddNewTasks.isDateWithoutTime;
  */
 public class Filters {
 
-    // parse the user input and filter out the suitable tasks
+    /**
+     * Parse the user input and filter out the suitable tasks
+     *
+     * @param userInput user input strings
+     * @param allTasks  list of all tasks
+     * @throws MissingFilterOptionsException the filter command has no parameters
+     * @throws NoTasksFilteredException      the filter returned no tasks with desired parameters
+     */
     public static void filterTasks(String userInput, ArrayList<Task> allTasks) throws MissingFilterOptionsException,
             NoTasksFilteredException {
         // flags for filters
@@ -37,6 +53,7 @@ public class Filters {
         boolean containsDueDateAfterParam = false;
         boolean dateWronglyFormatted = false;
 
+        // dates for any of the indicators
         Date dueDateBefore = null;
         Date dueDateAfter = null;
         Date startTimeBefore = null;
@@ -44,7 +61,7 @@ public class Filters {
         Date endTimeBefore = null;
         Date endTimeAfter = null;
 
-        ArrayList<TaskType> taskTypes = new ArrayList<>();
+        ArrayList<TaskType> taskTypes = new ArrayList<>(2);
 
         String componentUserInput;
         String searchTerm = "";
@@ -136,17 +153,19 @@ public class Filters {
             }
         }
 
-        if (containsDueDateAfterParam && containsDueDateBeforeParam) {
-            if (dueDateBefore.compareTo(dueDateAfter) < 0) {
-                System.out.println("Date for \"due date before\" is before date for \"due date after\"." + NEWLINE +
-                        "Automatically swapping the two...");
-                Date temp = dueDateAfter;
-                dueDateAfter = dueDateBefore;
-                dueDateBefore = temp;
-            }
-            if (dueDateBefore.compareTo(dueDateAfter) == 0) {
-                System.out.println("Warning: date for \"due date before\" is the same as date for \"due date after\".");
-            }
+        // compare dates before and after
+        try {
+            checkIfDateAfterPreceedsBefore(containsDueDateBeforeParam, containsDueDateAfterParam, dueDateBefore,
+                    dueDateAfter);
+            checkIfBeforeAndAfterDatesMatch(containsDueDateBeforeParam, containsDueDateAfterParam, dueDateBefore,
+                    dueDateAfter);
+        } catch (DateBeforeMatchesAfterException e) {
+            System.out.println("Warning: date for \"due date before\" is the same as date for \"due date after\".");
+        } catch (DateAfterPreceedsDateBefore dateAfterPreceedsDateBefore) {
+            System.out.println("Date for \"due date before\" is before date for \"due date after\"." + NEWLINE + "Automatically swapping the two...");
+            Date temp = dueDateAfter;
+            dueDateAfter = dueDateBefore;
+            dueDateBefore = temp;
         }
 
         if (filterOptions.containsKey("sb")) {
@@ -215,17 +234,20 @@ public class Filters {
             }
         }
 
-        if (containsStartTimeAfterParam && containsStartTimeBeforeParam) {
-            if (startTimeBefore.compareTo(startTimeAfter) < 0) {
-                System.out.println("Date for \"start time before\" is before date for \"start time after\"." + NEWLINE +
-                        "Automatically swapping the two...");
-                Date temp = startTimeAfter;
-                startTimeAfter = startTimeBefore;
-                startTimeBefore = temp;
-            }
-            if (startTimeBefore.compareTo(startTimeAfter) == 0) {
-                System.out.println("Warning: date for \"start time before\" is the same as date for \"start time after\".");
-            }
+        // compare dates before and after
+        try {
+            checkIfDateAfterPreceedsBefore(containsStartTimeBeforeParam, containsStartTimeAfterParam, startTimeBefore,
+                    startTimeAfter);
+            checkIfBeforeAndAfterDatesMatch(containsStartTimeBeforeParam, containsStartTimeAfterParam, startTimeBefore,
+                    startTimeAfter);
+        } catch (DateBeforeMatchesAfterException e) {
+            System.out.println("Warning: date for \"start time before\" is the same as date for \"start time after\".");
+        } catch (DateAfterPreceedsDateBefore dateAfterPreceedsDateBefore) {
+            System.out.println("Date for \"start time before\" is before date for \"start time after\"." + NEWLINE +
+                    "Automatically swapping the two...");
+            Date temp = startTimeAfter;
+            startTimeAfter = startTimeBefore;
+            startTimeBefore = temp;
         }
 
         if (filterOptions.containsKey("eb")) {
@@ -294,17 +316,20 @@ public class Filters {
             }
         }
 
-        if (containsEndTimeAfterParam && containsEndTimeBeforeParam) {
-            if (endTimeBefore.compareTo(endTimeAfter) < 0) {
-                System.out.println("Date for \"end time before\" is before date for \"end time after\"." + NEWLINE +
-                        "Automatically swapping the two...");
-                Date temp = endTimeAfter;
-                endTimeAfter = endTimeBefore;
-                endTimeBefore = temp;
-            }
-            if (endTimeBefore.compareTo(endTimeAfter) == 0) {
-                System.out.println("Warning: date for \"end time before\" is the same as date for \"end time after\".");
-            }
+        // compare dates before and after
+        try {
+            checkIfDateAfterPreceedsBefore(containsEndTimeBeforeParam, containsEndTimeAfterParam, endTimeBefore,
+                    endTimeAfter);
+            checkIfBeforeAndAfterDatesMatch(containsEndTimeBeforeParam, containsEndTimeAfterParam, endTimeBefore,
+                    endTimeAfter);
+        } catch (DateBeforeMatchesAfterException e) {
+            System.out.println("Warning: date for \"end time before\" is the same as date for \"end time after\".");
+        } catch (DateAfterPreceedsDateBefore dateAfterPreceedsDateBefore) {
+            System.out.println("Date for \"end time before\" is before date for \"end time after\"." + NEWLINE +
+                    "Automatically swapping the two...");
+            Date temp = endTimeAfter;
+            endTimeAfter = endTimeBefore;
+            endTimeBefore = temp;
         }
 
         if (!hasAtLeastOneFilterOption) {
@@ -329,17 +354,17 @@ public class Filters {
         Date finalEndTimeBefore = endTimeBefore;
         Date finalEndTimeAfter = endTimeAfter;
 
+        // then filter for todo specifications, add to list
         if (!taskTypeIndicated || taskTypes.contains(TaskType.TODO)) {
             Stream<Map.Entry<Integer, Task>> entriesStream = entries.stream();
-            // then filter for todo specifications, add to list
             entriesStream.filter(entry -> entry.getValue() instanceof ToDo).filter(containsSearchTerm ?
                             entry -> entry.getValue().getTaskName().contains(finalSearchTerm) : entry -> true)
                     .forEach(entry -> filteredTasks.put(entry.getKey(), entry.getValue()));
         }
 
+        // then filter for deadline specifications, add to list
         if (!taskTypeIndicated || taskTypes.contains(TaskType.DEADLINE)) {
             Stream<Map.Entry<Integer, Task>> entriesStream = entries.stream();
-            // then filter for deadline specifications, add to list
             entriesStream.filter(entry -> entry.getValue() instanceof Deadline).filter(containsSearchTerm ?
                             entry -> entry.getValue().getTaskName().contains(finalSearchTerm) : entry -> true)
                     .filter(containsDueDateBeforeParam ? entry -> ((Deadline) entry.getValue()).getDueDate()
@@ -349,9 +374,9 @@ public class Filters {
                     .forEach(entry -> filteredTasks.put(entry.getKey(), entry.getValue()));
         }
 
+        // then filter for event specifications, add to list
         if (!taskTypeIndicated || taskTypes.contains(TaskType.EVENT)) {
             Stream<Map.Entry<Integer, Task>> entriesStream = entries.stream();
-            // then filter for event specifications, add to list
             entriesStream.filter(entry -> entry.getValue() instanceof Event).filter(containsSearchTerm ?
                             entry -> entry.getValue().getTaskName().contains(finalSearchTerm) : entry -> true)
                     .filter(containsStartTimeBeforeParam ? entry -> ((Event) entry.getValue()).getStartTime()
@@ -369,10 +394,21 @@ public class Filters {
             throw new NoTasksFilteredException();
         }
 
-        // then print it out
+        printFilteredTasks(allTasks.size(), filteredTasks);
+
+    }
+
+    /**
+     * Print the list of filtered tasks
+     *
+     * @param numTasks      total number of tasks in
+     * @param filteredTasks list of filtered tasks
+     */
+    private static void printFilteredTasks(int numTasks, HashMap<Integer, Task> filteredTasks) {
+        int i;
         int tasksFound = 0;
         int tasksComplete = 0;
-        for (i = 1; i <= allTasks.size(); i++) {
+        for (i = 1; i <= numTasks; i++) {
             if (filteredTasks.containsKey(i)) {
                 System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n", i, filteredTasks.get(i).getTaskType(),
                         filteredTasks.get(i).getCompletionIndicator(), filteredTasks.get(i).getTaskDescription());
@@ -383,17 +419,54 @@ public class Filters {
             }
         }
 
-        // print filter summary
-        if (tasksComplete == tasksFound) {
-            System.out.printf("Filtered! %1$s task%2$s found, all complete!%n", tasksFound, (tasksFound == 1 ? "" :
-                    "s"));
-        } else {
-            System.out.printf("Filtered! %1$s task%2$s found, %3$s incomplete.%n", tasksFound, (tasksFound == 1 ? ""
-                    : "s"), tasksFound - tasksComplete);
-        }
 
+        Printers.printFilterSummary(tasksFound, tasksComplete);
     }
 
+    /**
+     * Check if the date after comes before the date before
+     *
+     * @param containsDateBeforeParam the date for before was detected in the command
+     * @param containsDateAfterParam  the date for after was detected in the command
+     * @param dateBefore              the date for before
+     * @param dateAfter               the date for after
+     * @throws DateAfterPreceedsDateBefore the date for after comes before the date for before
+     */
+    private static void checkIfDateAfterPreceedsBefore(boolean containsDateBeforeParam,
+                                                       boolean containsDateAfterParam, Date dateBefore, Date dateAfter)
+            throws DateAfterPreceedsDateBefore {
+        if (containsDateAfterParam && containsDateBeforeParam) {
+            if (dateBefore.compareTo(dateAfter) < 0) {
+                throw new DateAfterPreceedsDateBefore();
+            }
+        }
+    }
+
+    /**
+     * Check if the Date for Before is the same Date as the date for after
+     *
+     * @param containsDateBeforeParam the date for before was found
+     * @param containsDateAfterParam  the date for after was found
+     * @param dateBefore              the date for before
+     * @param dateAfter               the date for after
+     * @throws DateBeforeMatchesAfterException the date for before is the same as the date for after
+     */
+    private static void checkIfBeforeAndAfterDatesMatch(boolean containsDateBeforeParam,
+                                                        boolean containsDateAfterParam, Date dateBefore, Date dateAfter)
+            throws DateBeforeMatchesAfterException {
+        if (containsDateAfterParam && containsDateBeforeParam) {
+            if (dateBefore.compareTo(dateAfter) == 0) {
+                throw new DateBeforeMatchesAfterException();
+            }
+        }
+    }
+
+    /**
+     * Parse the task types from the task type param
+     *
+     * @param taskTypesUserInput the user input for the parameter task types
+     * @param taskTypes          the list of task types detected
+     */
     private static void parseTaskTypes(String taskTypesUserInput, ArrayList<TaskType> taskTypes) {
         String userInputLowerCase = taskTypesUserInput.toLowerCase();
         if (userInputLowerCase.contains("event")) {

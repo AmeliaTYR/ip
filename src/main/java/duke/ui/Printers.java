@@ -128,8 +128,30 @@ public class Printers {
         }
     }
 
+    /**
+     * Print out the file paths for the allTasks.txt file and tootieSettings.txt file
+     *
+     * @param tootieSettingsFilePath file path to the tootieSettings.txt file
+     * @param allTasksFilePath       file path to the allTasks.txt file
+     */
     public static void printFilePaths(String tootieSettingsFilePath, String allTasksFilePath) {
         System.out.println("The list of saved tasks can be found at:" + NEWLINE + allTasksFilePath + NEWLINE
                 + "The list of saved settings can be found at:" + NEWLINE + tootieSettingsFilePath);
+    }
+
+    /**
+     * Print filter summary
+     *
+     * @param tasksFound    number of tasks filtered in total
+     * @param tasksComplete number of tasks filtered that were complete
+     */
+    public static void printFilterSummary(int tasksFound, int tasksComplete) {
+        if (tasksComplete == tasksFound) {
+            System.out.printf("Filtered! %1$s task%2$s found, all complete!%n", tasksFound, (tasksFound == 1 ? "" :
+                    "s"));
+        } else {
+            System.out.printf("Filtered! %1$s task%2$s found, %3$s incomplete.%n", tasksFound, (tasksFound == 1 ? ""
+                    : "s"), tasksFound - tasksComplete);
+        }
     }
 }

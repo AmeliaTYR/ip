@@ -1,5 +1,6 @@
 package duke.parsers;
 
+import duke.constants.TaskType;
 import duke.exceptions.*;
 import duke.constants.DividerChoice;
 
@@ -7,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parse information from user inputs and file lines
@@ -78,7 +81,13 @@ public class Parsers {
         }
     }
 
-    // parses the default date format and returns a Date object
+    /**
+     * Parses the default date format and returns a Date object
+     *
+     * @param unformattedDate a string containing a date object
+     * @return date object parsed from the string
+     * @throws InvalidDateException date detected was invalid
+     */
     public static Date parseSimpleDate(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
@@ -120,9 +129,6 @@ public class Parsers {
             break;
         case 3:
             newDividerChoice = DividerChoice.SIMPLE;
-            break;
-        case 4:
-            newDividerChoice = DividerChoice.DOUBLE;
             break;
         default:
             newDividerChoice = DividerChoice.DOUBLE;
@@ -201,8 +207,8 @@ public class Parsers {
                                                                      HashMap<String, String> filterOptions)
             throws MissingFilterOptionsException {
 
-        String parsedOption = "";
-        String optionIndicator = "";
+        String parsedOption;
+        String optionIndicator;
 
         int startPositionIndex = 0;
         int endPositionIndex = 0;
@@ -236,12 +242,19 @@ public class Parsers {
         filterOptions.put(optionIndicator, parsedOption);
     }
 
+    /**
+     * Parse parameters
+     *
+     * @param userInput    line read from the console
+     * @param parsedParams parameters parsed from the line
+     * @throws MissingParamsException line has no missing parameters
+     */
     public static void parseSingleCharacterTaggedParamsFromUserInput(String userInput,
                                                                      HashMap<String, String> parsedParams)
             throws MissingParamsException {
 
-        String parsedOption = "";
-        String optionIndicator = "";
+        String parsedOption;
+        String optionIndicator;
 
         int startPositionIndex = 0;
         int endPositionIndex = 0;
@@ -273,5 +286,44 @@ public class Parsers {
         optionIndicator = userInput.substring(startPositionIndex - 1, startPositionIndex);
         // store the option
         parsedParams.put(optionIndicator, parsedOption);
+    }
+
+    /**
+     * Parses the string to return number of tasks as an int
+     *
+     * @param totalTasks line containing total tasks in the save file
+     * @return number of tasks in the save file
+     * @throws TotalTasksNumInvalidException number of tasks cannot be parsed
+     */
+    public static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
+        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
+        Matcher matcher = pattern.matcher(totalTasks);
+        if (matcher.matches()) {
+            try {
+                return Integer.parseInt(matcher.group(1));
+            } catch (NumberFormatException exception) {
+                throw new TotalTasksNumInvalidException();
+            }
+        } else {
+            throw new TotalTasksNumInvalidException();
+        }
+    }
+
+    /**
+     * Checks the task type for each task in the allTasks.txt file
+     *
+     * @param fileInput line read from the file containing a saved task
+     * @return task type detected
+     */
+    public static TaskType getTaskType(String fileInput) {
+        if (fileInput.trim().startsWith("[T]")){
+            return TaskType.TODO;
+        } else if (fileInput.trim().startsWith("[D]")){
+            return TaskType.DEADLINE;
+        } else if (fileInput.trim().startsWith("[E]")){
+            return TaskType.EVENT;
+        } else {
+            return TaskType.INVALID;
+        }
     }
 }

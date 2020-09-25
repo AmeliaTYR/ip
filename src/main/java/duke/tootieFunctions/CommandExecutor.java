@@ -1,7 +1,24 @@
 package duke.tootieFunctions;
 
 import duke.constants.TootieSymbols;
-import duke.exceptions.*;
+import duke.exceptions.DeadlineInputWrongFormatException;
+import duke.exceptions.DividerNonexistantException;
+import duke.exceptions.DueDateWrongFormatException;
+import duke.exceptions.EndTimeBeforeStartTimeException;
+import duke.exceptions.EndTimeWrongFormatException;
+import duke.exceptions.EventInputWrongFormatException;
+import duke.exceptions.InvalidDueDateException;
+import duke.exceptions.InvalidEndTimeException;
+import duke.exceptions.InvalidStartTimeException;
+import duke.exceptions.MissingFilterOptionsException;
+import duke.exceptions.NoTasksFilteredException;
+import duke.exceptions.StartTimeWrongFormatException;
+import duke.exceptions.TaskNameEmptyException;
+import duke.exceptions.TaskNonexistantException;
+import duke.exceptions.TasklistEmptyException;
+import duke.exceptions.ToDoInputWrongFormatException;
+import duke.exceptions.UsernameCommandInvalidException;
+import duke.exceptions.UsernameEmptyException;
 import duke.storage.AllTasksSaver;
 import duke.constants.CommandType;
 import duke.constants.DividerChoice;
@@ -162,15 +179,15 @@ public class CommandExecutor {
                 DividerChoice dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
                 Printers.changeDivider(dividerChoice);
                 savedSettings.set(2, dividerChoice.toString());
-                System.out.println("Divider changed!" + TootieSymbols.FLOWER_SMILE_EMOTICON);
+                System.out.println("Divider changed! " + TootieSymbols.FLOWER_SMILE_EMOTICON);
             } catch (DividerNonexistantException e) {
-                System.out.println("Divider choice not found?" + TootieSymbols.CONFUSED_EMOTICON);
+                System.out.println("Divider choice not found? " + TootieSymbols.CONFUSED_EMOTICON);
             }
             break;
         case SET_USERNAME:
             try {
                 username = SetPreferences.setUsername(userInput);
-                System.out.printf("Hello %1$s!" + TootieSymbols.FLOWER_SMILE_EMOTICON + "%n", username);
+                System.out.println(String.format("Hello %1$s! " + TootieSymbols.FLOWER_SMILE_EMOTICON, username));
                 savedSettings.set(3, username);
             } catch (UsernameCommandInvalidException e) {
                 System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON);
