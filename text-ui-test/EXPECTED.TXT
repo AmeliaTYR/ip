@@ -26,6 +26,17 @@ Here is the list of commands I understand:
 help: displays a list of commands tootie understands
   Example:  help
 
+filepath: Display file paths of save files
+  Example:  filepath
+  Example:  filepaths
+  Note: The command can be spelled with or without the 's' at the end
+
+save: manually save the list of tasks without closing the program
+  Example:  save
+
+bye: closes the program
+  Example:  bye
+
 todo: add a todo task to the list
   Parameters:  todo t/TASKNAME
   Example:  todo t/clean room
@@ -52,6 +63,21 @@ delete: deletes indicated task (choose number from list)
   Parameters:  delete TASK_INDEX
   Example:  delete 1
 
+list: displays the complete list of tasks entered
+  Example:  list
+
+filter: filters out tasks from the list according to the parameters
+  Parameters:  filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE
+        ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES
+  Example:  filter tt/event sb/13-01-2019 ea/31-01-2020
+  Example:  filter tt/event todo st/homework
+  Example:  filter tt/deadline,todo db/14-04-2020 16:40
+  Note: Check user guide for more verbose description
+
+username: allows user to set username
+  Parameters:  username USERNAME
+  Example:  username Sophia
+
 divider: select a divider for customisation
   dividers avaliable:
 1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
@@ -60,16 +86,6 @@ divider: select a divider for customisation
 4) DOUBLE ==============================================
   Parameters:  divider [DIVIDER_INDEX]
   Example:  divider 1
-
-username: allows user to set username
-  Parameters:  username USERNAME
-  Example:  username Sophia
-
-list: displays the complete list of tasks entered
-  Example:  list
-
-bye: closes the program
-  Example:  bye
 
 -----
 NOTE: datetime entries can be of the format

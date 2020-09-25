@@ -1,8 +1,6 @@
 # automatically create new allTasks.txt file
 # test help function
 help
-# test save function
-save
 # test unrecognised command
 blah
 list

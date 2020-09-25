@@ -13,8 +13,8 @@ public class TootieFileMsgs {
     public static final String TASK_TYPE_INSTRUCTION = "Task types (T,D,E):" + NEWLINE +
             "T is to-do, D is deadline, E is event" + NEWLINE;
     public static final String EXAMPLE_INSTRUCTION = "Examples:" + NEWLINE + "[T][0] clean shoes" + NEWLINE +
-            "[D][1] do project (by: Thu Jan 30 04:55:00 SGT 2020)" + NEWLINE + "" +
-            "[E][1] clean kitchen (from: Sat Dec 12 00:00:00 SGT 2020 to Thu Dec 31 00:00:00 SGT 2020)" + NEWLINE;
+            "[D][0] do project (by: Thu 30 Jan 2020 04:55 PM)" + NEWLINE + "" +
+            "[E][1] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)" + NEWLINE;
     public static final String TASK_LIST_START = "--------------------------------------------------------" +
             NEWLINE+ "Tasks:" + NEWLINE;
     public static final String ALL_TASKS_FILE_INSTRUCTIONS_HEADER = INDICATOR_INSTRUCTION + NEWLINE +
