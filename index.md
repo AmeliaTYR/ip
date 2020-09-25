@@ -7,18 +7,25 @@ Tootie is a task list manager program
 ## Quick Start
 
 1. Ensure that you have Java 11 or above installed.
-1. Down the latest version of `Duke` from [here](http://link.to/duke).
+1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
+  1. The current version is v1.1-alpha
 
 Notes:
 * All comments starting with # will be ignored.
 * Change your console font to one which supports Unicode for the optimal user experience.
+  * For Windows, the instructions are as follows: 
+    * run "chcp 65001" to change to UTF-8
+    * right click the bar above your command line app to open properties
+    * change the font to NSimSun
+    * java -Dfile.encoding=UTF-8 -jar <absolute ip.jar file path>
+
 
 ## Features 
 
 ### 1) Basic CLI commands
 Basic commands to use the program
 
-#### Bring up help guide: `help`
+### Bring up help guide: `help`
 Displays a list of commands tootie understands
 
 Format: `help`
@@ -106,7 +113,7 @@ NOTE: datetime entries can be of the format
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-#### Display file paths: `filepath` or `filepaths`
+### Display file paths: `filepath` or `filepaths`
 Display file paths of save files
 
 Format: `filepath` or `filepaths`
@@ -141,7 +148,7 @@ C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-#### Manually save all tasks: `save`
+### Manually save all tasks: `save`
 Allows user to manually save all tasks in the list to the save file
 
 Format: `save`
@@ -161,7 +168,7 @@ All tasks saved!
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-#### Close the program: `bye`
+### Close the program: `bye`
 Signals the end of the program use and automatically saves settings and tasks in the task list
 
 Format: `bye`
@@ -185,7 +192,7 @@ All settings saved.
 ### 2) Add Task items
 Add a `todo`, `deadline` or`event` to the list of tasks.
 
-#### Add a todo: `todo`
+### Add a todo: `todo`
 Adds a new todo task to the list of tasks.
 
 Format: `todo n/TASKNAME`
@@ -226,7 +233,7 @@ todo taskname is empty? (・∧‐)ゞ
 ==============================================
 ```
 
-#### Add a deadline: `deadline`
+### Add a deadline: `deadline`
 Adds a new deadline task to the list of tasks.
 
 Format: `deadline t/TASKNAME d/DUE_DATE`
@@ -263,7 +270,7 @@ do project (by: Thu 30 Jan 2020 04:55 AM)
 ==============================================
 ```
 
-#### Add an event: `event`
+### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
 
 Format: `event t/TASKNAME s/START_TIME e/END_TIME`
@@ -304,7 +311,7 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ### 3) Modify task list
 Mark a task as `done` or `undone`, or `delete` the task from the list.
 
-#### Mark a task done: `done`
+### Mark a task done: `done`
 Marks an indicated task done by index
 
 Format: `done TASK_INDEX`
@@ -334,7 +341,7 @@ No such task? (・∧‐)ゞ
 ==============================================
 ```
 
-#### Mark a task undone: `undone`
+### Mark a task undone: `undone`
 Marks an indicated task undone by index
 
 Format: `undone TASK_INDEX`
@@ -365,7 +372,7 @@ No such task? (・∧‐)ゞ
 ==============================================
 ```
 
-#### Delete a task: `delete`
+### Delete a task: `delete`
 Delete a task from the task list by index
 
 Format: `delete TASK_INDEX`
@@ -399,7 +406,7 @@ No such task? (・∧‐)ゞ
 ### 4) List view
 View all tasks in the list, or run a filtered search for specific tasks
 
-#### List all tasks: `list`
+### List all tasks: `list`
 Displays all the tasks in the list
 
 Format: `list`
@@ -427,7 +434,7 @@ You have 10 tasks, 9 not done
 ==============================================
 ```
 
-#### Filtered search: `filter`
+### Filtered search: `filter`
 Filters out tasks from the list according to the parameters
 
 Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES`
@@ -478,7 +485,7 @@ Filtered! 7 tasks found, 5 incomplete.
 ### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
 
-#### Change username: `username`
+### Change username: `username`
 Change username stored in system
 
 Format: `username USERNAME`
@@ -498,16 +505,27 @@ Hello Sophia!(◠‿◠✿)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-#### Select a new divider: `divider`
-Select a divider from the list of dividers for customisation
+Also the greeting and farewell will change accordingly
 
 ```
+Hello Ames! I'm Tootie!
+What can I do for you?
+==============================================
+```
+
+```
+Bye Sophia! Hope to see you again soon! (◠‿◠✿)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+
+### Select a new divider: `divider`
+Select a divider from the list of dividers for customisation
+
   dividers avaliable:
 1. SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 1. PLAIN ----------------------------------------------
 1. SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
 1. DOUBLE ==============================================
-```
 
 Format: `divider DIVIDER_INDEX`
 
@@ -551,7 +569,7 @@ Divider choice not found? (・∧‐)ゞ
 ### 6) Basic error handling
 If an unrecognised command is used, Tootie will feedback to the user.
 
-#### Unrecognised commands
+### Unrecognised commands
 Expected outcome:
 
 ```
@@ -565,13 +583,13 @@ Type "help" for a list of commands!
 ### 7) Set up file paths
 Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt save locations
 
-#### Ask user for allTasks.txt absolute path
+### Ask user for allTasks.txt absolute path
 
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: Copy the allTasks.txt into a data folder and state the file path when prompted. The saved settings file is automatically generated.
+**A**: Copy the allTasks.txt into a folder labelled "data" and state the absolute file path when prompted. The saved settings file is automatically generated.
 
 **Q**: How do I find the save files for allTasks.txt and tootieSettings.txt?
 
@@ -580,6 +598,10 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 **Q**: Can I change the Tootie logo at the start of the program?
 
 **A**: No. It is randomly decided by the program.
+
+**Q**: Can I modify the saved list of tasks directly?
+
+**A**: Yes, but ensure number of tasks and number of tasks complete at the top of the file is updated as well.
 
 ## Command Summary
 
