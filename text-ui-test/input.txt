@@ -64,6 +64,9 @@ filter tt/event,todo
 filter tt/deadline
 filter st/clean
 filter tt/event sb/13-01-2019 ea/31-01-2020
+# test filepath function
+filepath
+filepaths
 # test save function
 save
 # test bye function

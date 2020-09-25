@@ -506,6 +506,20 @@ filter tt/event sb/13-01-2019 ea/31-01-2020
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 No tasks matching parameters found? ʕ•ᴥ•ʔ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+filepath
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+The list of saved tasks can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/allTasks.txt
+The list of saved settings can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+filepaths
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+The list of saved tasks can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/allTasks.txt
+The list of saved settings can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 save
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 All tasks saved!
