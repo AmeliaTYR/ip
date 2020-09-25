@@ -9,6 +9,10 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Duke` from [here](http://link.to/duke).
 
+Notes:
+* All comments starting with # will be ignored.
+* Change your console font to one which supports Unicode for the optimal user experience.
+
 ## Features 
 
 ### 1) Basic CLI commands
@@ -23,6 +27,10 @@ Example of usage:
 
 `help`
 
+Expected outcome:
+
+```no```
+
 #### Display file paths: `filepath` or `filepaths`
 Display file paths of save files
 
@@ -36,6 +44,30 @@ Example of usage:
 
 `filepaths`
 
+Expected outcome:
+
+```no```
+
+#### Manually save all tasks: `save`
+Allows user to manually save all tasks in the list to the save file
+
+Format: `save`
+
+* It is not necessary to use this function as the list is automatically saved at the end of the program, but the user may do so anyway in case the program was closed accidentally.
+
+Example of usage: 
+
+`save`
+
+Expected outcome:
+
+```
+save
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+All tasks saved!
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+
 #### Close the program: `bye`
 Signals the end of the program use and automatically saves settings and tasks in the task list
 
@@ -44,6 +76,18 @@ Format: `bye`
 Example of usage: 
 
 `bye`
+
+Expected outcome:
+
+```
+bye
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Bye Sophia! Hope to see you again soon! (◠‿◠✿)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+All tasks saved.
+All settings saved.
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 ### 2) Add Task items
 Add a `todo`, `deadline` or`event` to the list of tasks.
@@ -61,6 +105,34 @@ Example of usage:
 
 `todo n/Refactor the User Guide to remove passive voice`
 
+Expected outcome:
+
+```
+todo t/clean turtle tank
+==============================================
+added todo: clean turtle tank
+=============================================
+```
+Formatting errors caught:
+```
+todo
+==============================================
+Check todo input formatting!
+
+todo: add a todo task to the list
+  Parameters:  todo t/TASKNAME
+  Example:  todo t/clean room
+
+==============================================
+```
+
+```
+todo t/
+==============================================
+todo taskname is empty? (・∧‐)ゞ
+==============================================
+```
+
 #### Add a deadline: `deadline`
 Adds a new deadline task to the list of tasks.
 
@@ -68,6 +140,7 @@ Format: `deadline t/TASKNAME d/DUE_DATE`
 
 * The `TASKNAME` cannot contain slashes.  
 * The `DUE_DATE` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
+* The `DUE_DATE` must be a valid calendar date. 
 * The parameters can be in any order
 
 Example of usage: 
@@ -77,6 +150,10 @@ Example of usage:
 `deadline t/submit report d/30-10-2020`
 
 `deadline d/30-10-2020 t/submit report `
+
+Expected outcome:
+
+```no```
 
 #### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
@@ -96,6 +173,11 @@ Example of usage:
 
 `event e/31-12-2020 t/clean room s/31-12-2020`
 
+Expected outcome:
+
+```no```
+
+
 ### 3) Modify task list
 Mark a task as `done` or `undone`, or `delete` the task from the list.
 
@@ -110,6 +192,25 @@ Example of usage:
 
 `done 1`
 
+Expected outcome:
+
+```
+done 3
+==============================================
+Nice! I've marked this task as done:
+    [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+==============================================
+```
+if the task index is out of bounds this error would appear
+
+```
+done 0
+==============================================
+No such task? (・∧‐)ゞ
+==============================================
+```
+
 #### Mark a task undone: `undone`
 Marks an indicated task undone by index
 
@@ -120,6 +221,26 @@ Format: `undone TASK_INDEX`
 Example of usage: 
 
 `undone 1`
+
+Expected outcome:
+
+```
+undone 5
+==============================================
+Aww... I've marked this task undone:
+    [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
+(╥﹏╥)
+==============================================
+```
+
+if the task index is out of bounds this error would appear
+
+```
+undone 0
+==============================================
+No such task? (・∧‐)ゞ
+==============================================
+```
 
 #### Delete a task: `delete`
 Delete a task from the task list by index
@@ -132,6 +253,26 @@ Example of usage:
 
 `delete 1`
 
+Expected outcome:
+
+```
+delete 2
+==============================================
+Yay! I have deleted this task:
+    [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+==============================================
+```
+
+if the task index is out of bounds this error would appear
+
+```
+delete 0
+==============================================
+No such task? (・∧‐)ゞ
+==============================================
+```
+
 ### 4) List view
 View all tasks in the list, or run a filtered search for specific tasks
 
@@ -143,6 +284,25 @@ Format: `list`
 Example of usage: 
 
 `list`
+
+Expected outcome:
+
+```
+list
+==============================================
+You have 10 tasks, 9 not done
+1. [T][✗] clean shoes
+2. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
+3. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+4. [T][✗] clean turtle tank
+5. [D][✗] write essay (by: Thu 31 Dec 2020 12:00 AM)
+6. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
+7. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+8. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+9. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+10. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
+```
 
 #### Filtered search: `filter`
 Filters out tasks from the list according to the parameters
@@ -175,6 +335,11 @@ Example of usage:
 
 `filter st/clean`
 
+Expected outcome:
+
+```no```
+
+
 ### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
 
@@ -188,6 +353,15 @@ Format: `username USERNAME`
 Example of usage: 
 
 `username Tootie`
+
+Expected outcome:
+
+```
+username Sophia
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Hello Sophia!(◠‿◠✿)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 #### Select a new divider: `divider`
 Select a divider from the list of dividers for customisation
@@ -205,6 +379,56 @@ Format: `divider DIVIDER_INDEX`
 Example of usage: 
 
 `divider 1`
+
+Expected outcome:
+
+```
+==============================================
+divider 3
+==============================================
+Divider changed!(◠‿◠✿)
+*---*---*---*---*---*---*---*---*---*---*---*
+divider 2
+*---*---*---*---*---*---*---*---*---*---*---*
+Divider changed!(◠‿◠✿)
+----------------------------------------------
+divider 4
+----------------------------------------------
+Divider changed!(◠‿◠✿)
+==============================================
+divider 1
+==============================================
+Divider changed!(◠‿◠✿)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+
+if the divider index is out of bounds this error would appear
+
+```
+divider 6
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Divider choice not found?(・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+
+### 6) Basic error handling
+If an unrecognised command is used, Tootie will feedback to the user.
+
+#### Unrecognised commands
+Expected outcome:
+
+```
+blah
+==============================================
+Command not found? (・∧‐)ゞ
+Type "help" for a list of commands!
+==============================================
+```
+
+### 7) Set up file paths
+Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt save locations
+
+#### Ask user for allTasks.txt absolute path
 
 
 ## FAQ
@@ -227,12 +451,13 @@ Example of usage:
 ---------|---------|-------
 help|Bring up help guide|_help_
 filepath|Display file paths|_filepath_ or _filepaths_ 
+save|Save all tasks|_save_
 bye|Close the program|_bye_ 
 todo|Add a todo|_todo n/TASKNAME_
 deadline|Add a deadline|_deadline t/TASKNAME d/DUE_DATE_
 event|Add an event|_event t/TASKNAME s/START_TIME e/END_TIME_
 done|Mark a task done|_done 1_
-undone|Mark a task undone|_undone_
+undone|Mark a task undone|_undone 1_
 delete|Delete a task|_delete 1_
 list |List all tasks|_list_
 filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
