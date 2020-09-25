@@ -33,8 +33,6 @@ public class TootieNormalMsgs {
             "  " + "Parameters:  todo t/TASKNAME" + NEWLINE + "  Example:  todo t/clean room" + NEWLINE;
     public static final String HELP_COMMAND_DESCRIPTION =
             "help: displays a list of commands tootie understands" + NEWLINE + "  Example:  help" + NEWLINE;
-    public static final String SAVE_COMMAND_DESCRIPTION =
-            "save: manually save the list of tasks without closing the program" + NEWLINE + "  Example:  save" + NEWLINE;
     public static final String USERNAME_COMMAND_DESCRIPTION =
             "username: allows user to set username" + NEWLINE + "  Parameters:  username USERNAME" + NEWLINE  + "  Example:  username Sophia" + NEWLINE;
     public static final String DIVIDER_COMMAND_DESCRIPTION =
@@ -45,27 +43,12 @@ public class TootieNormalMsgs {
                     + "4) DOUBLE " + TootieSymbols.DOUBLE_TEXT_DIVIDER + NEWLINE
                     + "  Parameters:  divider [DIVIDER_INDEX]" + NEWLINE
                     + "  Example:  divider 1" + NEWLINE;
-    private static final String FILTER_COMMAND_DESCRIPTION =
-            "filter: filters out tasks from the list according to the parameters" + NEWLINE
-                    + "  Parameters:  filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE " + NEWLINE
-                    + "        ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES" + NEWLINE
-                    + "  Example:  filter tt/event sb/13-01-2019 ea/31-01-2020" + NEWLINE
-                    + "  Example:  filter tt/event todo st/homework" + NEWLINE
-                    + "  Example:  filter tt/deadline,todo db/14-04-2020 16:40" + NEWLINE
-                    + "  Note: Check user guide for more verbose description" + NEWLINE;
-    private static final String FILEPATH_COMMAND_DESCRIPTION = "filepath: Display file paths of save files" + NEWLINE
-            + "  Example:  filepath" + NEWLINE
-            + "  Example:  filepaths" + NEWLINE
-            + "  Note: The command can be spelled with or without the \'s\' at the end" + NEWLINE;
     public static final String HELP_COMMAND_TEXT =
-            HELP_COMMAND_DESCRIPTION + NEWLINE + FILEPATH_COMMAND_DESCRIPTION + NEWLINE
-                    + BYE_COMMAND_DESCRIPTION + NEWLINE + SAVE_COMMAND_DESCRIPTION + NEWLINE
-                    + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
+            HELP_COMMAND_DESCRIPTION + NEWLINE + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION
                     + NEWLINE + EVENT_COMMAND_DESCRIPTION + NEWLINE + DONE_COMMAND_DESCRIPTION + NEWLINE
                     + UNDONE_COMMAND_DESCRIPTION + NEWLINE + DELETE_COMMAND_DESCRIPTION+ NEWLINE
-                    + LIST_COMMAND_DESCRIPTION + NEWLINE + FILTER_COMMAND_DESCRIPTION + NEWLINE
-                    + USERNAME_COMMAND_DESCRIPTION + NEWLINE + DIVIDER_COMMAND_DESCRIPTION + NEWLINE
-                    +  "-----"
+                    + DIVIDER_COMMAND_DESCRIPTION + NEWLINE + USERNAME_COMMAND_DESCRIPTION + NEWLINE
+                    + LIST_COMMAND_DESCRIPTION + NEWLINE + BYE_COMMAND_DESCRIPTION + NEWLINE + "-----"
                     + NEWLINE + DATE_FORMAT_MESSAGE + NEWLINE;
     public static final String HELP_INFO_MSG = "Here is the list of commands I understand:" + NEWLINE + NEWLINE
             + HELP_COMMAND_TEXT;
