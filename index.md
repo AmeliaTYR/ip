@@ -29,7 +29,82 @@ Example of usage:
 
 Expected outcome:
 
-```no```
+```
+help
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Here is the list of commands I understand:
+
+help: displays a list of commands tootie understands
+  Example:  help
+
+filepath: Display file paths of save files
+  Example:  filepath
+  Example:  filepaths
+  Note: The command can be spelled with or without the 's' at the end
+
+save: manually save the list of tasks without closing the program
+  Example:  save
+
+bye: closes the program
+  Example:  bye
+
+todo: add a todo task to the list
+  Parameters:  todo t/TASKNAME
+  Example:  todo t/clean room
+
+deadline: add a task with a deadline to the list
+  Parameters:  deadline t/TASKNAME d/DUE_DATE
+  Example:  deadline t/write essay d/31-12-2020 04:55
+  Example:  deadline t/submit report d/30-10-2020
+
+event: add a scheduled event task to the list
+  Parameters:  event t/TASKNAME s/START_TIME e/END_TIME
+  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
+  Example:  event t/clean room s/31-12-2020 e/31-12-2020
+
+done: marks indicated task done (choose number from list)
+  Parameters:  done TASK_INDEX
+  Example:  done 1
+
+undone: marks indicated task undone (choose number from list)
+  Parameters:  undone TASK_INDEX
+  Example:  undone 1
+
+delete: deletes indicated task (choose number from list)
+  Parameters:  delete TASK_INDEX
+  Example:  delete 1
+
+list: displays the complete list of tasks entered
+  Example:  list
+
+filter: filters out tasks from the list according to the parameters
+  Parameters:  filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE
+        ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES
+  Example:  filter tt/event sb/13-01-2019 ea/31-01-2020
+  Example:  filter tt/event todo st/homework
+  Example:  filter tt/deadline,todo db/14-04-2020 16:40
+  Note: Check user guide for more verbose description
+
+username: allows user to set username
+  Parameters:  username USERNAME
+  Example:  username Sophia
+
+divider: select a divider for customisation
+  dividers avaliable:
+1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+2) PLAIN ----------------------------------------------
+3) SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
+4) DOUBLE ==============================================
+  Parameters:  divider [DIVIDER_INDEX]
+  Example:  divider 1
+
+-----
+NOTE: datetime entries can be of the format
+    "dd-MM-yyyy HH:mm" with time in 24-Hour format
+    OR "dd-MM-yyyy"
+
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 #### Display file paths: `filepath` or `filepaths`
 Display file paths of save files
@@ -46,7 +121,25 @@ Example of usage:
 
 Expected outcome:
 
-```no```
+```
+filepath
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+The list of saved tasks can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/allTasks.txt
+The list of saved settings can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+OR
+```
+filepaths
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+The list of saved tasks can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/allTasks.txt
+The list of saved settings can be found at:
+C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 #### Manually save all tasks: `save`
 Allows user to manually save all tasks in the list to the save file
@@ -153,7 +246,22 @@ Example of usage:
 
 Expected outcome:
 
-```no```
+if no time is added the time defaults to 12:00AM
+```
+deadline t/write essay d/31-12-2020
+==============================================
+added deadline:
+write essay (by: Thu 31 Dec 2020 12:00 AM)
+==============================================
+```
+time entered should be in 24-Hr format
+```
+deadline t/do project d/30-01-2020 04:55
+==============================================
+added deadline:
+do project (by: Thu 30 Jan 2020 04:55 AM)
+==============================================
+```
 
 #### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
@@ -175,7 +283,22 @@ Example of usage:
 
 Expected outcome:
 
-```no```
+if no time is added the time defaults to 12:00AM
+```
+event t/clean kitchen s/12-12-2020 e/31-12-2020
+==============================================
+added event:
+clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+==============================================
+```
+time entered should be in 24-Hr format
+```
+event t/clean shoes s/01-02-2020 e/31-12-2020 05:45
+==============================================
+added event:
+clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+==============================================
+```
 
 
 ### 3) Modify task list
@@ -337,7 +460,19 @@ Example of usage:
 
 Expected outcome:
 
-```no```
+```
+filter tt/event,todo
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+3. [T][✓] clean turtle tank
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+Filtered! 7 tasks found, 5 incomplete.
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 
 ### 5) Customisation
@@ -430,12 +565,11 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 
 #### Ask user for allTasks.txt absolute path
 
-
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: Copy the allTasks.txt and specific the file path when prompted. The saved settings file is automatically generated.
+**A**: Copy the allTasks.txt into a data folder and state the file path when prompted. The saved settings file is automatically generated.
 
 **Q**: How do I find the save files for allTasks.txt and tootieSettings.txt?
 
