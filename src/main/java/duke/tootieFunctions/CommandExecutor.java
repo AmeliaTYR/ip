@@ -203,14 +203,15 @@ public class CommandExecutor {
             } catch (MissingFilterOptionsException e) {
                 System.out.println("Filter command missing valid arguments? " + TootieSymbols.CONFUSED_EMOTICON);
             } catch (NoTasksFilteredException e) {
-                System.out.println("No tasks matching parameters found? " + TootieSymbols.BEAR_EMOTICON);
+                System.out.println("No tasks matching parameters found? " + TootieSymbols.CONFUSED_EMOTICON);
             }
             break;
         case PRINT_FILE_PATHS:
             Printers.printFilePaths(tootieSettingsFilePath, allTasksFilePath);
             break;
         case LOAD_MORE_TASKS:
-            AllTasksLoader.loadAllTasksFile(true, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
+            ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
+            AllTasksLoader.loadAllTasksFile(true, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted, allTasksFilePathReturn);
             break;
         default:
             Printers.printConfusedMessage();

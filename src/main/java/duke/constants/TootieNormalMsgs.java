@@ -1,5 +1,7 @@
 package duke.constants;
 
+import java.util.concurrent.atomic.*;
+
 /**
  * Messages printed to console
  */
@@ -57,11 +59,14 @@ public class TootieNormalMsgs {
     private static final String SAVE_COMMAND_DESCRIPTION =
             "save: manually save the list of tasks without closing the program" + NEWLINE
                     + "  Example:  save"  + NEWLINE;
+    private static final String LOAD_COMMAND_DESCRIPTION =
+            "load: add tasks from existing file" + NEWLINE
+                    + "  Example:  load"  + NEWLINE;
     public static final String HELP_COMMAND_TEXT =
             HELP_COMMAND_DESCRIPTION + NEWLINE + FILEPATH_COMMAND_DESCRIPTION + NEWLINE
                     + SAVE_COMMAND_DESCRIPTION + NEWLINE + BYE_COMMAND_DESCRIPTION + NEWLINE
                     + TODO_COMMAND_DESCRIPTION + NEWLINE + DEADLINE_COMMAND_DESCRIPTION + NEWLINE
-                    + EVENT_COMMAND_DESCRIPTION + NEWLINE
+                    + EVENT_COMMAND_DESCRIPTION + NEWLINE + LOAD_COMMAND_DESCRIPTION + NEWLINE
                     + DONE_COMMAND_DESCRIPTION + NEWLINE + UNDONE_COMMAND_DESCRIPTION + NEWLINE
                     + DELETE_COMMAND_DESCRIPTION+ NEWLINE
                     + LIST_COMMAND_DESCRIPTION + NEWLINE + FILTER_COMMAND_DESCRIPTION + NEWLINE
@@ -90,5 +95,5 @@ public class TootieNormalMsgs {
     public static final String ADDED_TODO_FORMAT = "added todo: " + "%1$s";
     public static final String LOGO_PRINT_FORMAT = "Hello from" + NEWLINE + "%1$s" + NEWLINE + TootieSymbols.VERSION;
     public static final String NUMTASKS_PRINT_FORMAT = "You have %1$d task%2$s, %3$s not done";
-    public static final String TASKS_ALL_DONE_MSG = "all done " + TootieSymbols.BEAR_EMOTICON;
+    public static final String TASKS_ALL_DONE_MSG = "all done " + TootieSymbols.HAPPY_EMOTICON;
 }

@@ -55,7 +55,6 @@ public class TootieSymbols {
     public static final String FLOWER_SMILE_EMOTICON = "(\u25e0\u203f\u25e0\u273f)";
     public static final String ANGRY_EMOTICON = "\u005b\u25cb\uff65\uff40\u0414\u00b4\uff65\u25cb\u005d";
     public static final String SAD_EMOTICON = "\u0028\u2565\ufe4f\u2565\u0029";
-    public static final String BEAR_EMOTICON = "\u0295\u2022\u1d25\u2022\u0294";
 
     /** Line divider options  */
     public static final String SPARKLY_TEXT_DIVIDER = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500 "

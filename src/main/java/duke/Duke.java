@@ -74,7 +74,8 @@ public class Duke {
                 allTasksFilePath, dividerChoice, username);
         updateSettingsVariables(savedSettings);
         Printers.printDivider();
-        AllTasksLoader.loadAllTasksFile(false, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
+        ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
+        AllTasksLoader.loadAllTasksFile(false, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted, allTasksFilePathReturn);
     }
 
     /**

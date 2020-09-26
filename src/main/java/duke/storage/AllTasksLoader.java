@@ -28,6 +28,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static duke.storage.fileFunctions.autoCreateNewFile;
+
 public class AllTasksLoader {
     public AllTasksLoader() {
     }
@@ -43,37 +45,38 @@ public class AllTasksLoader {
      * @param numTasks          total number of tasks in the list
      * @param numTasksCompleted total number of tasks in the list completed
      */
-    public static void loadAllTasksFile(Boolean loadMore, ArrayList<Task> allTasks, Scanner SCANNER, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted) {
+    public static void loadAllTasksFile(Boolean inLoadMoreMode, ArrayList<Task> allTasks, Scanner SCANNER,
+                                        String allTasksFilePath, AtomicInteger numTasks,
+                                        AtomicInteger numTasksCompleted, ArrayList<String> allTasksFilePathReturn) {
         boolean isFileNotRead = true;
         boolean isNewFilePathObtained = true;
         Scanner allTasksFileScanner;
 
-        if (loadMore){
+        if (inLoadMoreMode) {
             isNewFilePathObtained = false;
         }
 
         System.out.println("Loading allTasks.txt save file...");
 
-        while (isFileNotRead){
-            try{
+        while (isFileNotRead) {
+            try {
                 if (isNewFilePathObtained) {
                     File allTasksFile = fileFunctions.getFileFromFilePath(allTasksFilePath);
                     fileFunctions.checkFileExists(allTasksFile);
                     allTasksFileScanner = new Scanner(allTasksFile);
-                    readAllTasksFile(loadMore, allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
+                    readAllTasksFile(inLoadMoreMode, allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
                     isFileNotRead = false;
                 } else {
                     throw new FileNotFoundException();
                 }
             } catch (FileNotFoundException e) {
-                if (!loadMore){
+                if (!inLoadMoreMode) {
                     System.out.println("Save file not found? " + TootieSymbols.CONFUSED_EMOTICON);
                 }
                 isNewFilePathObtained = false;
                 while (!isNewFilePathObtained) {
-                    ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
                     try {
-                        isNewFilePathObtained = getNewAllTasksFilePath(loadMore, SCANNER, allTasksFilePathReturn);
+                        isNewFilePathObtained = getNewAllTasksFilePath(inLoadMoreMode, SCANNER, allTasksFilePathReturn);
                     } catch (CancelLoadSavedTasksException cancelLoadSavedTasksException) {
                         System.out.println("Cancelled \"load save file\" operation");
                         return;
@@ -95,51 +98,33 @@ public class AllTasksLoader {
      * @param allTasksFilePathReturn file path for the allTasks.txt file
      * @return return true if a new file path for the allTasks.txt file was obtained
      */
-    private static boolean getNewAllTasksFilePath(boolean loadMore, Scanner SCANNER, ArrayList<String> allTasksFilePathReturn) throws CancelLoadSavedTasksException {
+    private static boolean getNewAllTasksFilePath(boolean loadMore, Scanner SCANNER,
+                                                  ArrayList<String> allTasksFilePathReturn)
+            throws CancelLoadSavedTasksException {
         String path = "";
         String response = "";
 
         if (!loadMore) {
-            System.out.println("Options:" + NEWLINE + "(1)Find existing file" + NEWLINE + "(2)Manually create directory for file" + NEWLINE + "(3)Automatically create directory and file" + NEWLINE + "(type \"1\" \"2\" or \"3\")");
+            System.out.println("Options:" + NEWLINE + "(1)Find existing file" + NEWLINE + "(2)Automatically create " +
+                    "directory and file" + NEWLINE + "(type \"1\" or \"2\")");
             response = UserInputHandlers.getUserInput(SCANNER);
             UserInputHandlers.echoUserInput(response);
         }
 
-        if (loadMore || response.trim().equals("1")){
-            if (loadMore){
+        if (loadMore || response.trim().equals("1")) {
+            if (loadMore) {
                 System.out.println("Enter the full path to existing file (type \"cancel\" to cancel):");
                 path = UserInputHandlers.getUserInput(SCANNER);
-                if (path.trim().toLowerCase().equals("cancel")){
+                if (path.trim().toLowerCase().equals("cancel")) {
                     throw new CancelLoadSavedTasksException();
                 }
             } else {
                 System.out.println("Enter the full path to existing file: ");
                 path = UserInputHandlers.getUserInput(SCANNER);
             }
-
-        } else if (response.equals("2")){
-            // make new file
-            System.out.println("Enter the path to new directory location: ");
-            path = UserInputHandlers.getUserInput(SCANNER);
-            if (path.endsWith("/")) {
-                path = path + "data";
-            } else {
-                path = path + "/data";
-            }
-            //Creating a File object
-            File file = new File(path);
-            //Creating the directory
-            boolean isFileCreated = file.mkdir();
-            if(isFileCreated){
-                System.out.println("Directory created successfully " + TootieSymbols.HAPPY_EMOTICON);
-                path = path + "/allTasks.txt";
-            }else{
-                System.out.println("Sorry, could not create specified directory");
-                return false;
-            }
-        } else if (response.equals("3")){
+        } else if (response.equals("2")) {
             System.out.println("Automatically creating directory and file");
-            path = fileFunctions.autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
+            path = autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
             System.out.println(path + TootieSymbols.CONFUSED_EMOTICON);
         } else {
             System.out.println("Response not recognised? " + TootieSymbols.CONFUSED_EMOTICON);
@@ -160,7 +145,6 @@ public class AllTasksLoader {
     }
 
 
-
     /**
      * Try to read the allTasks.txt file into allTasks array
      *
@@ -170,23 +154,24 @@ public class AllTasksLoader {
      * @param numTasksCompleted   total number of tasks in the list completed
      * @throws FileEmptyException file found was empty
      */
-    private static void readAllTasksFile(boolean loadMore, ArrayList<Task> allTasks,Scanner allTasksFileScanner, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws FileEmptyException {
-            // get total number of tasks stored
-            int numTasksInList;
-            AtomicInteger newTasksRead = new AtomicInteger(0);
-            numTasksInList = getNumTasksInList(allTasksFileScanner);
+    private static void readAllTasksFile(boolean inLoadMoreMode, ArrayList<Task> allTasks,
+                                         Scanner allTasksFileScanner, AtomicInteger numTasks,
+                                         AtomicInteger numTasksCompleted) throws FileEmptyException {
+        // get total number of tasks stored
+        int numTasksInList;
+        AtomicInteger newTasksRead = new AtomicInteger(0);
+        numTasksInList = getNumTasksInList(allTasksFileScanner);
 
-            System.out.println(String.format("%1$s task%2$s expected from file.",
-                    numTasksInList,
-                    (numTasksInList == 1 ? "" : "s")));
+        System.out.println(String.format("%1$s task%2$s expected from file.", numTasksInList, (numTasksInList == 1 ?
+                "" : "s")));
 
-            SettingsLoader.readFileUntilLineContainsString("Tasks:", allTasksFileScanner);
+        SettingsLoader.readFileUntilLineContainsString("Tasks:", allTasksFileScanner);
 
-            addReadTasksToAllTasks(newTasksRead, allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
+        addReadTasksToAllTasks(newTasksRead, allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
 
         System.out.printf(String.format("%1$d task%2$s read successfully!" + NEWLINE, newTasksRead.get(),
                 (newTasksRead.get() == 1 ? "" : "s")));
-        if (loadMore){
+        if (inLoadMoreMode) {
             System.out.printf(String.format("Total task%2$s in list: %1$d" + NEWLINE, numTasks.get(),
                     (numTasks.get() == 1 ? "" : "s")));
         }
@@ -200,11 +185,13 @@ public class AllTasksLoader {
      * @param numTasks          total number of tasks in the list
      * @param numTasksCompleted number of tasks in the list completed
      */
-    private static void addReadTasksToAllTasks(AtomicInteger newTasksRead, ArrayList<Task> allTasks, Scanner FILE_SCANNER, AtomicInteger numTasks, AtomicInteger numTasksCompleted) {
+    private static void addReadTasksToAllTasks(AtomicInteger newTasksRead, ArrayList<Task> allTasks,
+                                               Scanner FILE_SCANNER, AtomicInteger numTasks,
+                                               AtomicInteger numTasksCompleted) {
         while (FILE_SCANNER.hasNext()) {
             String fileInput = getFileNextLine(FILE_SCANNER);
             try {
-                addTaskToAllTasksArrayList(newTasksRead, allTasks,fileInput, numTasks, numTasksCompleted);
+                addTaskToAllTasksArrayList(newTasksRead, allTasks, fileInput, numTasks, numTasksCompleted);
             } catch (TaskTypeInvalidException | SavedTaskFormatWrongException e) {
                 System.out.printf("Error reading file! Error on line:" + NEWLINE + "%1$s%n", fileInput);
                 break;
@@ -257,7 +244,10 @@ public class AllTasksLoader {
      * @throws InvalidEndTimeException       end time of an event task is invalid
      * @throws InvalidStartTimeException     start time of an event task is invalid
      */
-    private static void addTaskToAllTasksArrayList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws TaskTypeInvalidException, SavedTaskFormatWrongException, InvalidDueDateException, InvalidEndTimeException, InvalidStartTimeException {
+    private static void addTaskToAllTasksArrayList(AtomicInteger newTasksRead, ArrayList<Task> allTasks,
+                                                   String fileInput, AtomicInteger numTasks,
+                                                   AtomicInteger numTasksCompleted) throws TaskTypeInvalidException,
+            SavedTaskFormatWrongException, InvalidDueDateException, InvalidEndTimeException, InvalidStartTimeException {
         TaskType taskType = Parsers.getTaskType(fileInput);
         switch (taskType) {
         case TODO:
@@ -283,12 +273,13 @@ public class AllTasksLoader {
      * @param numTasksCompleted number of tasks completed
      * @throws SavedTaskFormatWrongException due date of a deadline task was invalid
      */
-    private static void addToDoToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
+    private static void addToDoToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput,
+                                      AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException {
         Pattern pattern = Pattern.compile("\\[T\\]\\[([0-1])\\](.*)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
             allTasks.add(new ToDo(matcher.group(2).trim()));
-            if(matcher.group(1).equals("1")){
+            if (matcher.group(1).equals("1")) {
                 allTasks.get(numTasks.get()).setComplete(true);
                 numTasksCompleted.getAndIncrement();
             }
@@ -309,7 +300,8 @@ public class AllTasksLoader {
      * @throws SavedTaskFormatWrongException saved task in the list is of the wrong format
      * @throws InvalidDueDateException       due date of deadline task was wrong format
      */
-    private static void addDeadlineToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidDueDateException {
+    private static void addDeadlineToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput,
+                                          AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidDueDateException {
         Pattern pattern = Pattern.compile("\\[D\\]\\[([0-1])\\](.*)\\(by:(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
@@ -319,8 +311,8 @@ public class AllTasksLoader {
             } catch (InvalidDateException e) {
                 throw new InvalidDueDateException();
             }
-            allTasks.add(new Deadline(matcher.group(2).trim(),dueDate));
-            if(matcher.group(1).equals("1")){
+            allTasks.add(new Deadline(matcher.group(2).trim(), dueDate));
+            if (matcher.group(1).equals("1")) {
                 allTasks.get(numTasks.get()).setComplete(true);
                 numTasksCompleted.getAndIncrement();
             }
@@ -342,7 +334,8 @@ public class AllTasksLoader {
      * @throws InvalidStartTimeException     start time of an event task is invalid
      * @throws InvalidEndTimeException       end time of an event task is invalid
      */
-    private static void addEventToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput, AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidStartTimeException, InvalidEndTimeException {
+    private static void addEventToList(AtomicInteger newTasksRead, ArrayList<Task> allTasks, String fileInput,
+                                       AtomicInteger numTasks, AtomicInteger numTasksCompleted) throws SavedTaskFormatWrongException, InvalidStartTimeException, InvalidEndTimeException {
         Pattern pattern = Pattern.compile("\\[E\\]\\[([0-1])\\](.*)\\(from:(.*)to(.*)\\)");
         Matcher matcher = pattern.matcher(fileInput);
         if (matcher.matches()) {
@@ -359,7 +352,7 @@ public class AllTasksLoader {
                 throw new InvalidEndTimeException();
             }
             allTasks.add(new Event(matcher.group(2).trim(), startDate, endDate));
-            if(matcher.group(1).equals("1")){
+            if (matcher.group(1).equals("1")) {
                 allTasks.get(numTasks.get()).setComplete(true);
                 numTasksCompleted.getAndIncrement();
             }
@@ -380,8 +373,7 @@ public class AllTasksLoader {
         String fileInput;
         do {
             fileInput = FILE_SCANNER.nextLine();
-        } while (fileInput.matches(TootieRegex.BLANK_STRING_REGEX)
-                || fileInput.startsWith(TootieInputMarkers.INPUT_COMMENT_MARKER));
+        } while (fileInput.matches(TootieRegex.BLANK_STRING_REGEX) || fileInput.startsWith(TootieInputMarkers.INPUT_COMMENT_MARKER));
         return fileInput;
     }
 }
