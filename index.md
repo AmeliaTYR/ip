@@ -14,11 +14,13 @@ Notes:
 * All comments starting with # will be ignored.
 * Change your console font to one which supports Unicode for the optimal user experience.
   * For Windows, the instructions are as follows: 
-    * open the command line in the folder the ip.jar is saved in 
+    * save the ip.jar file to your desired folder
+    * open the command line in the folder that the ip.jar is in 
+        * you may do this by typing "cmd" in the location bar of Windows Explorer and pressing the Enter key
     * run "chcp 65001" to change to UTF-8
     * right click the bar above your command line app to open properties
     * change the font to NSimSun
-    * java -Dfile.encoding=UTF-8 -jar ip.jar
+    * run "java -Dfile.encoding=UTF-8 -jar ip.jar"
 
 
 ## Features 
@@ -70,6 +72,9 @@ event: add a scheduled event task to the list
   Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
   Example:  event t/clean room s/31-12-2020 e/31-12-2020
 
+load: add tasks from existing file
+  Example:  load
+
 done: marks indicated task done (choose number from list)
   Parameters:  done TASK_INDEX
   Example:  done 1
@@ -98,12 +103,12 @@ username: allows user to set username
   Example:  username Sophia
 
 divider: select a divider for customisation
-  dividers avaliable:
+  dividers available:
 1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 2) PLAIN ----------------------------------------------
 3) SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
 4) DOUBLE ==============================================
-  Parameters:  divider [DIVIDER_INDEX]
+  Parameters:  divider DIVIDER_INDEX
   Example:  divider 1
 
 -----
@@ -112,6 +117,7 @@ NOTE: datetime entries can be of the format
     OR "dd-MM-yyyy"
 
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+
 ```
 
 ### Display file paths: `filepath` or `filepaths`
@@ -308,6 +314,41 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ==============================================
 ```
 
+### Add tasks from existing file: `load`
+Load tasks from an existing allTasks.txt file and add them to the list of tasks in the current session.
+
+Format: `load`
+
+* The user will be prompted to indicate the full file path of the existing file. 
+* The user may cancel the operation by typing `cancel` instead of the file path when prompted.
+
+Example of usage: 
+
+`load`
+
+Expected outcome:
+```
+load
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Loading allTasks.txt save file...
+Enter the full path to existing file (type "cancel" to cancel):
+C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+3 tasks expected from file.
+3 tasks read successfully!
+Total tasks in list: 11
+```
+
+It is possible to cancel the operation.
+```
+load
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Loading allTasks.txt save file...
+Enter the full path to existing file (type "cancel" to cancel):
+cancel
+Cancelled "load save file" operation
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 ### 3) Modify task list
 Mark a task as `done` or `undone`, or `delete` the task from the list.
@@ -482,7 +523,6 @@ Filtered! 7 tasks found, 5 incomplete.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-
 ### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
 
@@ -602,7 +642,7 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 
 **Q**: Can I modify the saved list of tasks directly?
 
-**A**: Yes, but ensure number of tasks and number of tasks complete at the top of the file is updated as well.
+**A**: Yes, follow the format indicated in the file header for tasks to be read correctly
 
 ## Command Summary
 
@@ -615,6 +655,7 @@ bye|Close the program|_bye_
 todo|Add a todo|_todo n/TASKNAME_
 deadline|Add a deadline|_deadline t/TASKNAME d/DUE_DATE_
 event|Add an event|_event t/TASKNAME s/START_TIME e/END_TIME_
+load|Add tasks from existing file|_load_
 done|Mark a task done|_done 1_
 undone|Mark a task undone|_undone 1_
 delete|Delete a task|_delete 1_
