@@ -14,10 +14,11 @@ Notes:
 * All comments starting with # will be ignored.
 * Change your console font to one which supports Unicode for the optimal user experience.
   * For Windows, the instructions are as follows: 
+    * open the command line in the folder the ip.jar is saved in 
     * run "chcp 65001" to change to UTF-8
     * right click the bar above your command line app to open properties
     * change the font to NSimSun
-    * java -Dfile.encoding=UTF-8 -jar <absolute ip.jar file path>
+    * java -Dfile.encoding=UTF-8 -jar ip.jar
 
 
 ## Features 
