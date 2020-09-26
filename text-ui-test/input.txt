@@ -64,6 +64,13 @@ filter tt/event,todo
 filter tt/deadline
 filter st/clean
 filter tt/event sb/13-01-2019 ea/31-01-2020
+# test load function
+load
+C:\Users\Amelia\Documents\GitHub\ip\data\allTasksTemplate.txt
+list
+load
+cancel
+list
 # test filepath function
 filepath
 filepaths

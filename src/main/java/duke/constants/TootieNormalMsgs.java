@@ -36,7 +36,7 @@ public class TootieNormalMsgs {
     public static final String USERNAME_COMMAND_DESCRIPTION =
             "username: allows user to set username" + NEWLINE + "  Parameters:  username USERNAME" + NEWLINE  + "  Example:  username Sophia" + NEWLINE;
     public static final String DIVIDER_COMMAND_DESCRIPTION =
-            "divider: select a divider for customisation" + NEWLINE + "  dividers avaliable:" + NEWLINE
+            "divider: select a divider for customisation" + NEWLINE + "  dividers available:" + NEWLINE
                     + "1) SPARKLY " + TootieSymbols.SPARKLY_TEXT_DIVIDER + NEWLINE
                     + "2) PLAIN " + TootieSymbols.PLAIN_TEXT_DIVIDER + NEWLINE
                     + "3) SIMPLE " + TootieSymbols.SIMPLE_TEXT_DIVIDER + NEWLINE

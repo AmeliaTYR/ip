@@ -2,11 +2,7 @@ package duke.tootieFunctions;
 
 import duke.constants.TaskType;
 import duke.constants.TootieNormalMsgs;
-import duke.exceptions.DateAfterPreceedsDateBefore;
-import duke.exceptions.DateBeforeMatchesAfterException;
-import duke.exceptions.InvalidDateException;
-import duke.exceptions.MissingFilterOptionsException;
-import duke.exceptions.NoTasksFilteredException;
+import duke.exceptions.*;
 import duke.parsers.Parsers;
 import duke.task.Deadline;
 import duke.task.Event;
@@ -72,7 +68,11 @@ public class Filters {
         HashMap<String, String> filterOptions = new HashMap<>();
 
         // parse filter command into segments
-        parseDoubleCharacterTaggedParamsFromUserInput(userInput, filterOptions);
+        try {
+            parseDoubleCharacterTaggedParamsFromUserInput(userInput, filterOptions);
+        } catch (MissingParamsException e) {
+            throw new MissingFilterOptionsException();
+        }
 
         if (filterOptions.containsKey("tt")) {
             componentUserInput = filterOptions.get("tt");

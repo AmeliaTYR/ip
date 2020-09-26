@@ -73,7 +73,8 @@ public class Duke {
         SettingsLoader.loadTootieSettingsFile(savedSettings, tootieSettingsFilePath,
                 allTasksFilePath, dividerChoice, username);
         updateSettingsVariables(savedSettings);
-        AllTasksLoader.loadAllTasksFile(allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
+        Printers.printDivider();
+        AllTasksLoader.loadAllTasksFile(false, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
     }
 
     /**
@@ -99,7 +100,7 @@ public class Duke {
             UserInputHandlers.echoUserInput(userInput);
             Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
-            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, tootieSettingsFilePath, allTasksFilePath, numTasks, numTasksCompleted, username);
+            CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, tootieSettingsFilePath, allTasksFilePath, numTasks, numTasksCompleted, username, SCANNER);
             // load settings if any were changed
             updateSettingsVariables(savedSettings);
             Printers.printDivider();

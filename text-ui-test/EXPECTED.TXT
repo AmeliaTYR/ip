@@ -9,12 +9,10 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 Tootie - Version 1.5
 ==============================================
 Loading tootieSettings.txt save file...
-full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\tootieSettings.txt
 ==============================================
 Loading allTasks.txt save file...
-full path: C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
-==============================================
-3 of 3 tasks read successfully!
+3 tasks expected from file.
+3 tasks read successfully!
 ==============================================
 Hello Ames! I'm Tootie!
 What can I do for you?
@@ -79,7 +77,7 @@ username: allows user to set username
   Example:  username Sophia
 
 divider: select a divider for customisation
-  dividers avaliable:
+  dividers available:
 1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 2) PLAIN ----------------------------------------------
 3) SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
@@ -505,6 +503,51 @@ Filtered! 7 tasks found, 5 incomplete.
 filter tt/event sb/13-01-2019 ea/31-01-2020
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 No tasks matching parameters found? ʕ•ᴥ•ʔ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+load
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Loading allTasks.txt save file...
+Enter the full path to existing file (type "cancel" to cancel):
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+3 tasks expected from file.
+3 tasks read successfully!
+Total tasks in list: 11
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 11 tasks, 8 not done
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+3. [T][✓] clean turtle tank
+4. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+9. [T][✗] clean shoes
+10. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
+11. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+load
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Loading allTasks.txt save file...
+Enter the full path to existing file (type "cancel" to cancel):
+Cancelled "load save file" operation
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+list
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+You have 11 tasks, 8 not done
+1. [T][✗] clean shoes
+2. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+3. [T][✓] clean turtle tank
+4. [D][✗] do project (by: Thu 30 Jan 2020 04:55 AM)
+5. [E][✗] clean house (from: Thu 31 Dec 2020 12:00 AM to Fri 5 Feb 2021 12:00 AM)
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Thu 31 Dec 2020 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+9. [T][✗] clean shoes
+10. [D][✗] do project (by: Thu 30 Jan 2020 04:55 PM)
+11. [E][✓] clean kitchen (from: Thu 31 Dec 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 filepath
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────

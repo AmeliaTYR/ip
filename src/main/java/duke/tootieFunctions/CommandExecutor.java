@@ -19,7 +19,7 @@ import duke.exceptions.TasklistEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
-import duke.storage.AllTasksSaver;
+import duke.storage.*;
 import duke.constants.CommandType;
 import duke.constants.DividerChoice;
 import duke.constants.TootieErrorMsgs;
@@ -28,9 +28,10 @@ import duke.task.Task;
 import duke.ui.Printers;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static duke.storage.AllTasksLoader.loadAllTasksFile;
 import static duke.tootieFunctions.Filters.filterTasks;
 
 /**
@@ -70,9 +71,10 @@ public class CommandExecutor {
             return CommandType.FILTER_TASKS;
         } else if (userInput.toLowerCase().trim().startsWith("save")) {
             return CommandType.SAVE;
-        } else if (userInput.toLowerCase().trim().startsWith("filepaths") ||
-                userInput.toLowerCase().trim().startsWith("filepath")) {
+        } else if (userInput.toLowerCase().trim().startsWith("filepath")) {
             return CommandType.PRINT_FILE_PATHS;
+        } else if (userInput.toLowerCase().trim().startsWith("load")) {
+            return CommandType.LOAD_MORE_TASKS;
         } else {
             return CommandType.UNRECOGNISED;
         }
@@ -89,7 +91,7 @@ public class CommandExecutor {
      * @param numTasksCompleted total number of tasks completed
      * @param username          user provided name
      */
-    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String tootieSettingsFilePath, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username) {
+    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String tootieSettingsFilePath, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username, Scanner SCANNER) {
         switch (commandType) {
         case HELP:
             Printers.printHelpInfo();
@@ -206,6 +208,9 @@ public class CommandExecutor {
             break;
         case PRINT_FILE_PATHS:
             Printers.printFilePaths(tootieSettingsFilePath, allTasksFilePath);
+            break;
+        case LOAD_MORE_TASKS:
+            AllTasksLoader.loadAllTasksFile(true, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted);
             break;
         default:
             Printers.printConfusedMessage();

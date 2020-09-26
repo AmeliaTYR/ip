@@ -19,6 +19,7 @@ public enum CommandType {
     SET_USERNAME,
     FILTER_TASKS,
     PRINT_FILE_PATHS,
-    UNRECOGNISED;
+    LOAD_MORE_TASKS,
+    UNRECOGNISED
 }
 

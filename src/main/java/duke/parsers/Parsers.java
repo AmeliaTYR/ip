@@ -22,15 +22,14 @@ public class Parsers {
      * @return return the DividerChoice enum from a given string
      */
     public static DividerChoice parseDividerChoice(String dividerChoiceString) {
-        switch (dividerChoiceString) {
-        case "SPARKLY":
+        if (dividerChoiceString.trim().toLowerCase().equals("sparkly")){
             return DividerChoice.SPARKLY;
-        case "SIMPLE":
+        } else if (dividerChoiceString.trim().toLowerCase().equals("simple")){
             return DividerChoice.SIMPLE;
-        case "DOUBLE":
-            return DividerChoice.DOUBLE;
-        default:
+        } else if (dividerChoiceString.trim().toLowerCase().equals("plain")){
             return DividerChoice.PLAIN;
+        } else {
+            return DividerChoice.DOUBLE;
         }
     }
 
@@ -144,15 +143,15 @@ public class Parsers {
      */
     public static DividerChoice parseLineDividerFromString(String fileLine) {
         DividerChoice newDividerChoice;
-        switch (fileLine) {
-        case "PLAIN":
-            newDividerChoice = DividerChoice.PLAIN;
-            break;
-        case "SIMPLE":
-            newDividerChoice = DividerChoice.SIMPLE;
-            break;
-        default:
+
+        if (fileLine.trim().toLowerCase().equals("sparkly")){
             newDividerChoice = DividerChoice.SPARKLY;
+        } else if (fileLine.trim().toLowerCase().equals("simple")){
+            newDividerChoice = DividerChoice.SIMPLE;
+        } else if (fileLine.trim().toLowerCase().equals("plain")){
+            newDividerChoice = DividerChoice.PLAIN;
+        } else {
+            newDividerChoice = DividerChoice.DOUBLE;
         }
         return newDividerChoice;
     }
@@ -203,9 +202,16 @@ public class Parsers {
         return path.replace('\\', '/');
     }
 
+    /**
+     * Parse parameters for double letter tags
+     *
+     * @param userInput    line read from the console
+     * @param parsedParams parameters parsed from the line with the tag as key and argument as value
+     * @throws MissingParamsException line has no missing parameters
+     */
     public static void parseDoubleCharacterTaggedParamsFromUserInput(String userInput,
-                                                                     HashMap<String, String> filterOptions)
-            throws MissingFilterOptionsException {
+                                                                     HashMap<String, String> parsedParams)
+            throws MissingParamsException {
 
         String parsedOption;
         String optionIndicator;
@@ -214,10 +220,10 @@ public class Parsers {
         int endPositionIndex = 0;
 
         // clear filter options
-        filterOptions.clear();
+        parsedParams.clear();
 
         if (!userInput.contains("/")) {
-            throw new MissingFilterOptionsException();
+            throw new MissingParamsException();
         }
 
         while (userInput.indexOf("/", startPositionIndex) != -1) {
@@ -232,21 +238,21 @@ public class Parsers {
             parsedOption = userInput.substring(startPositionIndex + 1, endPositionIndex - 2);
             optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
             // store the option
-            filterOptions.put(optionIndicator, parsedOption);
+            parsedParams.put(optionIndicator, parsedOption);
         }
 
         // extract the option
         parsedOption = userInput.substring(startPositionIndex + 1);
         optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
         // store the option
-        filterOptions.put(optionIndicator, parsedOption);
+        parsedParams.put(optionIndicator, parsedOption);
     }
 
     /**
-     * Parse parameters
+     * Parse parameters for single letter tags
      *
      * @param userInput    line read from the console
-     * @param parsedParams parameters parsed from the line
+     * @param parsedParams parameters parsed from the line with the tag as key and argument as value
      * @throws MissingParamsException line has no missing parameters
      */
     public static void parseSingleCharacterTaggedParamsFromUserInput(String userInput,

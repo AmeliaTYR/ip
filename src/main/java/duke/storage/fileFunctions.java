@@ -93,8 +93,6 @@ public class fileFunctions {
     // Checks if the file with the given file path exists
     public static File getFileFromFilePath(String filePath) {
         File allTasksFile = new File(filePath);
-        System.out.println("full path: " + allTasksFile.getAbsolutePath());
-        Printers.printDivider();
         return allTasksFile;
     }
 
