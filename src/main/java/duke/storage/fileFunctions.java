@@ -19,6 +19,9 @@ import static duke.constants.TootieNormalMsgs.NEW_FILE_CREATED_MSG_FORMAT;
 
 import static duke.parsers.Checks.pathReplaceIllegalCharacters;
 
+/**
+ * Functions to modify and create files to write to
+ */
 public class fileFunctions {
 
     public static final String NEWLINE = System.lineSeparator();

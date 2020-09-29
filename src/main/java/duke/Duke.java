@@ -117,7 +117,6 @@ public class Duke {
         // process commands
         while (commandType != CommandType.BYE) {
             userInput = UserInputHandlers.getUserInput(SCANNER);
-            UserInputHandlers.echoUserInput(userInput);
             Printers.printDivider();
             commandType = CommandExecutor.extractCommandType(userInput);
             CommandExecutor.executeCommand(savedSettings, commandType, userInput, allTasks, tootieSettingsFilePath,

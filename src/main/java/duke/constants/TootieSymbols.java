@@ -66,5 +66,5 @@ public class TootieSymbols {
     public static final String SIMPLE_TEXT_DIVIDER = "*---*---*---*---*---*---*---*---*---*---*---*";
 
     /** Version info of the program. */
-    public static final String VERSION = "Tootie - Version 1.6";
+    public static final String VERSION = "Tootie - Version 2.0";
 }

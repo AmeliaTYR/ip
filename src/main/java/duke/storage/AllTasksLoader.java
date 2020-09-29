@@ -132,7 +132,6 @@ public class AllTasksLoader {
         if (!loadMore) {
             System.out.println(ALL_TASKS_LOAD_OPTIONS_MSG);
             response = UserInputHandlers.getUserInput(SCANNER);
-            UserInputHandlers.echoUserInput(response);
         }
 
         if (loadMore || response.trim().equals(LOAD_OPTION_1)) {

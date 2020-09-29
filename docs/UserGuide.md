@@ -1,4 +1,4 @@
-# User Guide
+# Tootie User Guide
 
 ## Introduction
 
@@ -9,9 +9,20 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
   1. The current version is v1.1-alpha
+1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam
+1. You should be prompted to either load an existing save file or create a new file. 
+  1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
+  1. If you see this segment, Tootie has successfully been set up.
+     ```
+     Hello user! I'm Tootie!
+     What can I do for you?
+     ==============================================
+     ```
+  1. You may then begin entering commands. 
+  1. Enjoy!
 
 Notes:
-* All comments starting with # will be ignored.
+* All commands starting with # will be ignored.
 * Change your console font to one which supports Unicode for the optimal user experience.
   * For Windows, the instructions are as follows: 
     * save the ip.jar file to your desired folder
@@ -21,8 +32,7 @@ Notes:
     * right click the bar above your command line app to open properties
     * change the font to NSimSun
     * run `java -Dfile.encoding=UTF-8 -jar ip.jar`
-
-
+    
 ## Features 
 
 ### 1) Basic CLI commands
@@ -385,7 +395,7 @@ load
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Loading allTasks.txt save file...
 Enter the full path to existing file (type "cancel" to cancel):
-C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
+C:\Users\Sophie\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 3 tasks expected from file.
 3 tasks read successfully!
@@ -538,8 +548,8 @@ Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/E
 * The command should contain at least one search parameter.
 * The `SEARCH_TERM` cannot contain slashes and is case-sensitive.  
 * The `TASK_TYPES` should not contain slashes, and should contain desired task types, which are `todo`, `deadline` and`event`.
-  * If no `TASK_TYPES` parameter is specified, the function will filter for all 3 types.
-* The `TASK_TYPES` can be separated by any delimiter of your choice, and may be in any order, and is not case-sensitive. 
+  * If no `TASK_TYPES` parameter is specified, the function will filter for all 3 types, regardless of other filter parameters.
+* The `TASK_TYPES` can be separated by any delimiter of your choice other than a `/`, and may be in any order, and is not case-sensitive. 
   * For example, `tt/event todo`, `tt/TODO,deadline` and `tt/eventdeadline` are all valid.
 * The `START_BEFORE`, `START_AFTER`, `END_BEFORE`, `END_AFTER`, `DUE_BEFORE`, `DUE_AFTER`, are dates and can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
   *  `START_BEFORE` applies to `Event` tasks and filters for events which start time is before this date.
