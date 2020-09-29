@@ -1,4 +1,4 @@
-# User Guide
+# Tootie User Guide
 
 ## Introduction
 
@@ -9,43 +9,64 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
   1. The current version is v1.1-alpha
+1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam
+1. You should be prompted to either load an existing save file or create a new file. 
+  1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
+  1. If you see this segment, Tootie has successfully been set up.
+     ```
+     Hello user! I'm Tootie!
+     What can I do for you?
+     ==============================================
+     ```
+  1. You may then begin entering commands. 
+  1. Enjoy!
 
 Notes:
-* All comments starting with # will be ignored.
+* All commands starting with # will be ignored.
 * Change your console font to one which supports Unicode for the optimal user experience.
   * For Windows, the instructions are as follows: 
     * save the ip.jar file to your desired folder
     * open the command line in the folder that the ip.jar is in 
-        * you may do this by typing "cmd" in the location bar of Windows Explorer and pressing the Enter key
-    * run "chcp 65001" to change to UTF-8
+        * you may do this by typing `cmd` in the location bar of Windows Explorer and pressing the Enter key
+    * run `chcp 65001` to change to UTF-8
     * right click the bar above your command line app to open properties
     * change the font to NSimSun
-    * run "java -Dfile.encoding=UTF-8 -jar ip.jar"
-
-
+    * run `java -Dfile.encoding=UTF-8 -jar ip.jar`
+    
 ## Features 
 
 ### 1) Basic CLI commands
 Basic commands to use the program
 
 ### Bring up help guide: `help`
-Displays a list of commands tootie understands
+Displays a list of commands tootie understands, or search for a specific command for the command description
 
-Format: `help`
+Format: `help [COMMAND]`
+
+* `COMMAND` is a command the user may specifically search for. If no command matching the search command is found an error message will be displayed.
+* The command can have no arguments, and will print the full list of commands
 
 Example of usage: 
 
 `help`
 
+`help full`
+
+`help list`
+
 Expected outcome:
 
+for the full list of commands
 ```
-help
+help full
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Here is the list of commands I understand:
 
 help: displays a list of commands tootie understands
+  or search for a specific command for the command description
+  Parameters:  help [COMMAND]
   Example:  help
+  Example:  help filter
 
 filepath: Display file paths of save files
   Example:  filepath
@@ -92,7 +113,7 @@ list: displays the complete list of tasks entered
 
 filter: filters out tasks from the list according to the parameters
   Parameters:  filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE
-        ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES
+        ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES cs/COMPLETION_STATUS
   Example:  filter tt/event sb/13-01-2019 ea/31-01-2020
   Example:  filter tt/event todo st/homework
   Example:  filter tt/deadline,todo db/14-04-2020 16:40
@@ -117,7 +138,49 @@ NOTE: datetime entries can be of the format
     OR "dd-MM-yyyy"
 
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+for the shortened list of commands
 
+```
+help
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Here is the list of commands I understand:
+
+help: displays a list of commands tootie understands
+filepath: Display file paths of save files
+save: manually save the list of tasks without closing
+bye: closes the program
+todo: add a todo task to the list
+deadline: add a task with a deadline to the list
+event: add a scheduled event task to the list
+load: add tasks from existing file
+done: marks indicated task done (choose number from list)
+undone: marks indicated task undone (choose number from list)
+delete: deletes indicated task (choose number from list)
+list: displays the complete list of tasks entered
+filter: filters out tasks from the list according to the parameters
+username: allows user to set username
+divider: select a divider for customisation
+
+-----
+  NOTE: search for a specific definition by typing help [COMMAND]
+    Example: help filter  
+  NOTE: type "full" as the argument for a full list of commands
+    Example: help full
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+searching for a specific command
+```
+help divider
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+divider: select a divider for customisation
+  dividers available:
+1) SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+2) PLAIN ----------------------------------------------
+3) SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
+4) DOUBLE ==============================================
+  Parameters:  divider DIVIDER_INDEX
+  Example:  divider 1
 ```
 
 ### Display file paths: `filepath` or `filepaths`
@@ -332,7 +395,7 @@ load
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Loading allTasks.txt save file...
 Enter the full path to existing file (type "cancel" to cancel):
-C:\Users\Amelia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
+C:\Users\Sophie\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 3 tasks expected from file.
 3 tasks read successfully!
@@ -479,14 +542,14 @@ You have 10 tasks, 9 not done
 ### Filtered search: `filter`
 Filters out tasks from the list according to the parameters
 
-Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES`
+Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES cs/COMPLETION_STATUS`
 
 * The parameters can be in any order.
 * The command should contain at least one search parameter.
 * The `SEARCH_TERM` cannot contain slashes and is case-sensitive.  
 * The `TASK_TYPES` should not contain slashes, and should contain desired task types, which are `todo`, `deadline` and`event`.
-  * If no `TASK_TYPES` parameter is specified, the function will filter for all 3 types.
-* The `TASK_TYPES` can be separated by any delimiter of your choice, and may be in any order, and is not case-sensitive. 
+  * If no `TASK_TYPES` parameter is specified, the function will filter for all 3 types, regardless of other filter parameters.
+* The `TASK_TYPES` can be separated by any delimiter of your choice other than a `/`, and may be in any order, and is not case-sensitive. 
   * For example, `tt/event todo`, `tt/TODO,deadline` and `tt/eventdeadline` are all valid.
 * The `START_BEFORE`, `START_AFTER`, `END_BEFORE`, `END_AFTER`, `DUE_BEFORE`, `DUE_AFTER`, are dates and can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
   *  `START_BEFORE` applies to `Event` tasks and filters for events which start time is before this date.
@@ -496,6 +559,7 @@ Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/E
   *  `DUE_BEFORE` applies to `Deadline` tasks and filters for deadlines which due date is before this date.
   *  `DUE_AFTER` applies to `Deadline` and filters for deadlines which due date is after this date.
 * If the "before" dates are after the "after" dates, they will be automatically swapped.
+* For the `COMPLETION_STATUS`, passing the argument `done` filters for tasks that are done, while passing `undone` filters for arguments that are not done.
 
 Example of usage: 
 
@@ -506,6 +570,8 @@ Example of usage:
 `filter tt/deadline,todo`
 
 `filter st/clean`
+
+`filter cs/done`
 
 Expected outcome:
 
@@ -648,7 +714,7 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 
  Command | Purpose | Syntax
 ---------|---------|-------
-help|Bring up help guide|_help_
+help|Bring up help guide|_help \[COMMAND\]_
 filepath|Display file paths|_filepath_ or _filepaths_ 
 save|Save all tasks|_save_
 bye|Close the program|_bye_ 
