@@ -71,7 +71,7 @@ public class fileFunctions {
             } else {
                 try {
                     directoryPath = filePath.substring(0, endOfDirectoryName);
-                    txtFileName = filePath.substring(endOfDirectoryName + 2, endOfFileName).trim();
+                    txtFileName = filePath.substring(endOfDirectoryName + 1, endOfFileName).trim();
                 } catch (StringIndexOutOfBoundsException exception) {
                     throw new FilePathInvalidException();
                 }

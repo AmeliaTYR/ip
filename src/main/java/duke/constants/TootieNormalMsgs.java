@@ -210,7 +210,7 @@ public class TootieNormalMsgs {
     /**
      * File creator msg
      */
-    public static final String NEW_FILE_CREATED_MSG_FORMAT = "New file created: %s";
+    public static final String NEW_FILE_CREATED_MSG_FORMAT = "New file created: %1$s";
     public static final String IO_ERROR_WHEN_MAKING_FILE_MSG = "IO error when making file!";
     public static final String FILE_ALREADY_EXISTS_MSG = "File already exists.";
     public static final String FILE_CREATED_PATH_MSG = "File created: ";
@@ -219,7 +219,7 @@ public class TootieNormalMsgs {
     public static final String COULD_NOT_CREATE_DIRECTORY_MSG = "Sorry, could not create specified directory";
     public static final String FILE_PATH_TO_DIRECTORY_INVALID_MSG = "File path to directory invalid!";
     public static final String FILE_NOT_FOUND_MSG = "File does not exist.";
-    public static final String FILE_AUTO_CREATED_MSG = "Auto creating new file using path: %1Ss";
+    public static final String FILE_AUTO_CREATED_MSG = "Auto creating new file using path: %1$s";
 
     /**
      * Settings loader messages
