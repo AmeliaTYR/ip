@@ -9,15 +9,17 @@ import duke.exceptions.TasklistEmptyException;
 
 import duke.task.Task;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
-import static duke.constants.TootieSymbols.NEWLINE;
+import static duke.constants.TootieNormalMsgs.ALL_FILTERED_TASKS_COMPLETE_MSG_FORMAT;
+import static duke.constants.TootieNormalMsgs.FILEPATH_PRINTER_FORMAT;
+import static duke.constants.TootieNormalMsgs.FILTERED_TASKS_COUNT_MSG_FORMAT;
 
 /**
  * Functions to print to the console as part of the UI
  */
 public class Printers {
+
     /**
      * Line divider set to default before settings are loaded
      */
@@ -83,7 +85,7 @@ public class Printers {
         logos[2] = TootieSymbols.TRAIN_THEME_TOOTIE_LOGO;
         logos[3] = TootieSymbols.THICK_TOOTIE_LOGO;
         Random rand = new Random(System.currentTimeMillis());
-        System.out.printf((TootieNormalMsgs.LOGO_PRINT_FORMAT) + "%n", logos[Math.abs(rand.nextInt() % 4)]);
+        System.out.println(String.format(TootieNormalMsgs.LOGO_PRINT_FORMAT, logos[Math.abs(rand.nextInt() % 4)]));
     }
 
     /**
@@ -109,18 +111,19 @@ public class Printers {
      * @param numTasksCompleted total number of tasks completed
      * @throws TasklistEmptyException cannot print empty task list
      */
-    public static void printAllTasks(ArrayList<Task> allTasks, int numTasks, int numTasksCompleted) throws TasklistEmptyException {
+    public static void printAllTasks(ArrayList<Task> allTasks, int numTasks, int numTasksCompleted)
+            throws TasklistEmptyException {
 
         if (numTasks == 0) {
             throw new TasklistEmptyException();
         }
 
-        System.out.printf((TootieNormalMsgs.NUMTASKS_PRINT_FORMAT) + "%n", numTasks, (numTasks == 1? "" : "s"), numTasks - numTasksCompleted);
+        System.out.printf(String.format(TootieNormalMsgs.NUMTASKS_PRINT_FORMAT, numTasks, (numTasks == 1 ? "" : "s"),
+                numTasks - numTasksCompleted));
 
         for (int i = 0; i < numTasks; i++) {
-            System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n", (i + 1),
-                    allTasks.get(i).getTaskType(), allTasks.get(i).getCompletionIndicator(),
-                    allTasks.get(i).getTaskDescription());
+            System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n", (i + 1), allTasks.get(i).getTaskType(),
+                    allTasks.get(i).getCompletionIndicator(), allTasks.get(i).getTaskDescription());
         }
 
         if (numTasks == numTasksCompleted) {
@@ -135,8 +138,7 @@ public class Printers {
      * @param allTasksFilePath       file path to the allTasks.txt file
      */
     public static void printFilePaths(String tootieSettingsFilePath, String allTasksFilePath) {
-        System.out.println("The list of saved tasks can be found at:" + NEWLINE + allTasksFilePath + NEWLINE
-                + "The list of saved settings can be found at:" + NEWLINE + tootieSettingsFilePath);
+        System.out.println(String.format(FILEPATH_PRINTER_FORMAT, allTasksFilePath, tootieSettingsFilePath));
     }
 
     /**
@@ -147,11 +149,38 @@ public class Printers {
      */
     public static void printFilterSummary(int tasksFound, int tasksComplete) {
         if (tasksComplete == tasksFound) {
-            System.out.printf("Filtered! %1$s task%2$s found, all complete!%n", tasksFound, (tasksFound == 1 ? "" :
-                    "s"));
+            System.out.printf(String.format(ALL_FILTERED_TASKS_COMPLETE_MSG_FORMAT,
+                    tasksFound, (tasksFound == 1 ? "" : "s")));
         } else {
-            System.out.printf("Filtered! %1$s task%2$s found, %3$s incomplete.%n", tasksFound, (tasksFound == 1 ? ""
-                    : "s"), tasksFound - tasksComplete);
+            System.out.printf(String.format(FILTERED_TASKS_COUNT_MSG_FORMAT,
+                    tasksFound,
+                    (tasksFound == 1 ? "" : "s"),
+                    tasksFound - tasksComplete));
         }
+    }
+
+    /**
+     * Print the list of filtered tasks
+     *
+     * @param numTasks      total number of tasks in
+     * @param filteredTasks list of filtered tasks
+     */
+    public static void printFilteredTasks(int numTasks, HashMap<Integer, Task> filteredTasks) {
+        int i;
+        int tasksFound = 0;
+        int tasksComplete = 0;
+        for (i = 1; i <= numTasks; i++) {
+            if (filteredTasks.containsKey(i)) {
+                System.out.printf((TootieNormalMsgs.LIST_TASK_FORMAT) + "%n", i, filteredTasks.get(i).getTaskType(),
+                        filteredTasks.get(i).getCompletionIndicator(), filteredTasks.get(i).getTaskDescription());
+                tasksFound++;
+                if (filteredTasks.get(i).getComplete()) {
+                    tasksComplete++;
+                }
+            }
+        }
+
+
+        printFilterSummary(tasksFound, tasksComplete);
     }
 }

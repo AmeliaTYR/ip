@@ -4,21 +4,26 @@ import duke.exceptions.FileEmptyException;
 import duke.exceptions.SettingObjectWrongFormatException;
 import duke.constants.DividerChoice;
 import duke.constants.TootieFilePaths;
-import duke.parsers.Parsers;
+import duke.parsers.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static duke.constants.Tags.ALL_TASKS_FILEPATH_TAG;
+import static duke.constants.Tags.DIVIDER_CHOICE_TAG;
+import static duke.constants.Tags.LOADING_SETTINGS_MSG;
+import static duke.constants.Tags.TOOTIE_SETTINGS_FILEPATH_TAG;
+import static duke.constants.Tags.USERNAME_TAG;
+
+import static duke.constants.TootieNormalMsgs.ERROR_READING_FILE_ON_LINE_MSG_FORMAT;
+import static duke.constants.TootieNormalMsgs.SETTINGS_FILE_EMPTY_MSG;
+import static duke.constants.TootieNormalMsgs.SETTINGS_FILE_NOT_FOUND_MSG;
 import static duke.storage.AllTasksLoader.getFileNextLine;
 import static duke.ui.Printers.changeDivider;
 
 public class SettingsLoader {
-    public SettingsLoader() {
-    }
-
-    public static final String NEWLINE = System.lineSeparator();
 
     /**
      * Attempts to load and store the tootieSettings.txt variables
@@ -32,7 +37,7 @@ public class SettingsLoader {
     public static void loadTootieSettingsFile(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                               String allTasksFilePath, DividerChoice dividerChoice, String username) {
 
-        System.out.println("Loading tootieSettings.txt save file...");
+        System.out.println(LOADING_SETTINGS_MSG);
 
         try {
             File tootieSettingsFile = fileFunctions.getFileFromFilePath(tootieSettingsFilePath);
@@ -40,10 +45,10 @@ public class SettingsLoader {
             readTootieSettingsFile(savedSettings, tootieSettingsFile, tootieSettingsFilePath, allTasksFilePath,
                     dividerChoice, username);
         } catch (FileNotFoundException e) {
-            System.out.println("tootieSettings.txt save file not found" + NEWLINE + "Creating new file...");
+            System.out.println(SETTINGS_FILE_NOT_FOUND_MSG);
             tootieSettingsFilePath = fileFunctions.autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
         } catch (FileEmptyException e) {
-            System.out.println("tootieSettings.txt save file empty" + NEWLINE + "No previous settings loaded");
+            System.out.println(SETTINGS_FILE_EMPTY_MSG);
         }
     }
 
@@ -74,25 +79,25 @@ public class SettingsLoader {
         try {
             String parsedString;
 
-            fileLine = readFileUntilLineContainsString("+ Tootie settings:", SETTINGS_FILE_SCANNER);
-            parsedString = Parsers.parseFileObject(fileLine, "+ Tootie settings:");
+            fileLine = readFileUntilLineContainsString(TOOTIE_SETTINGS_FILEPATH_TAG, SETTINGS_FILE_SCANNER);
+            parsedString = Parsers.parseFileObject(fileLine, TOOTIE_SETTINGS_FILEPATH_TAG);
             if (!parsedString.isBlank()) {
                 tootieSettingsFilePath = parsedString;
             }
 
-            fileLine = readFileUntilLineContainsString("+ All Tasks:", SETTINGS_FILE_SCANNER);
-            parsedString = Parsers.parseFileObject(fileLine, "+ All Tasks:");
+            fileLine = readFileUntilLineContainsString(ALL_TASKS_FILEPATH_TAG, SETTINGS_FILE_SCANNER);
+            parsedString = Parsers.parseFileObject(fileLine, ALL_TASKS_FILEPATH_TAG);
             if (!parsedString.isBlank()) {
                 allTasksFilePath = parsedString;
             }
 
-            fileLine = readFileUntilLineContainsString("+ Divider choice:", SETTINGS_FILE_SCANNER);
-            parsedString = Parsers.parseFileObject(fileLine, "+ Divider choice:");
+            fileLine = readFileUntilLineContainsString(DIVIDER_CHOICE_TAG, SETTINGS_FILE_SCANNER);
+            parsedString = Parsers.parseFileObject(fileLine, DIVIDER_CHOICE_TAG);
             dividerChoice = Parsers.parseDividerChoice(parsedString);
             changeDivider(dividerChoice);
 
-            fileLine = readFileUntilLineContainsString("+ Username:", SETTINGS_FILE_SCANNER);
-            parsedString = Parsers.parseFileObject(fileLine, "+ Username:");
+            fileLine = readFileUntilLineContainsString(USERNAME_TAG, SETTINGS_FILE_SCANNER);
+            parsedString = Parsers.parseFileObject(fileLine, USERNAME_TAG);
             if (!parsedString.isBlank()) {
                 username = parsedString;
             }
@@ -100,7 +105,7 @@ public class SettingsLoader {
             setSavedSettings(savedSettings, tootieSettingsFilePath, allTasksFilePath, dividerChoice, username);
 
         } catch (SettingObjectWrongFormatException e) {
-            System.out.printf("Error reading settings file! Error on line:" + NEWLINE + "%1$s%n", fileLine);
+            System.out.printf(ERROR_READING_FILE_ON_LINE_MSG_FORMAT, fileLine);
         }
     }
 
@@ -115,8 +120,8 @@ public class SettingsLoader {
      */
     public static void addSavedSettings(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                         String allTasksFilePath, DividerChoice dividerChoice, String username) {
-        savedSettings.add(Parsers.pathReplaceIllegalCharacters(tootieSettingsFilePath));
-        savedSettings.add(Parsers.pathReplaceIllegalCharacters(allTasksFilePath));
+        savedSettings.add(Checks.pathReplaceIllegalCharacters(tootieSettingsFilePath));
+        savedSettings.add(Checks.pathReplaceIllegalCharacters(allTasksFilePath));
         savedSettings.add(dividerChoice.toString());
         savedSettings.add(username);
     }
@@ -132,8 +137,8 @@ public class SettingsLoader {
      */
     public static void setSavedSettings(ArrayList<String> savedSettings, String tootieSettingsFilePath,
                                         String allTasksFilePath, DividerChoice dividerChoice, String username) {
-        savedSettings.set(0, Parsers.pathReplaceIllegalCharacters(tootieSettingsFilePath));
-        savedSettings.set(1, Parsers.pathReplaceIllegalCharacters(allTasksFilePath));
+        savedSettings.set(0, Checks.pathReplaceIllegalCharacters(tootieSettingsFilePath));
+        savedSettings.set(1, Checks.pathReplaceIllegalCharacters(allTasksFilePath));
         savedSettings.set(2, dividerChoice.toString());
         savedSettings.set(3, username);
     }

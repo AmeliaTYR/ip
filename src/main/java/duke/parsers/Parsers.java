@@ -6,10 +6,13 @@ import duke.constants.DividerChoice;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static duke.constants.CommandKeywords.*;
+import static duke.parsers.Checks.isDateWithTime;
+import static duke.parsers.Checks.isDateWithoutTime;
 
 /**
  * Parse information from user inputs and file lines
@@ -193,16 +196,6 @@ public class Parsers {
     }
 
     /**
-     * Replace '\' with '/' characters in file paths variables
-     *
-     * @param path a file path with illegal characters
-     * @return return the path without illegal characters
-     */
-    public static String pathReplaceIllegalCharacters(String path) {
-        return path.replace('\\', '/');
-    }
-
-    /**
      * Parse parameters for double letter tags
      *
      * @param userInput    line read from the console
@@ -245,7 +238,7 @@ public class Parsers {
         parsedOption = userInput.substring(startPositionIndex + 1);
         optionIndicator = userInput.substring(startPositionIndex - 2, startPositionIndex);
         // store the option
-        parsedParams.put(optionIndicator, parsedOption);
+        parsedParams.put(optionIndicator.toLowerCase(), parsedOption);
     }
 
     /**
@@ -291,7 +284,7 @@ public class Parsers {
         parsedOption = userInput.substring(startPositionIndex + 1);
         optionIndicator = userInput.substring(startPositionIndex - 1, startPositionIndex);
         // store the option
-        parsedParams.put(optionIndicator, parsedOption);
+        parsedParams.put(optionIndicator.toLowerCase(), parsedOption);
     }
 
     /**
@@ -331,5 +324,86 @@ public class Parsers {
         } else {
             return TaskType.INVALID;
         }
+    }
+
+    /**
+     * convert the dividerChoice into a string to save in tootieSettings.txt
+     *
+     * @param dividerChoice          divider chosen by user
+     * @return return the divider choice as a string
+     */
+    public static String dividerChoiceToString(DividerChoice dividerChoice) {
+        switch (dividerChoice){
+        case SIMPLE:
+            return "SIMPLE";
+        case SPARKLY:
+            return "SPARKLY";
+        case DOUBLE:
+            return "DOUBLE";
+        default:
+            return "PLAIN";
+        }
+    }
+
+    /**
+     * Parse the task types from the task type param
+     *
+     * @param taskTypesUserInput the user input for the parameter task types
+     * @param taskTypes          the list of task types detected
+     */
+    public static void parseTaskTypes(String taskTypesUserInput, ArrayList<TaskType> taskTypes) {
+        String userInputLowerCase = taskTypesUserInput.toLowerCase();
+        if (userInputLowerCase.contains(EVENT_COMMAND_KEYWORD)) {
+            taskTypes.add(TaskType.EVENT);
+        }
+        if (userInputLowerCase.contains(DEADLINE_COMMAND_KEYWORD)) {
+            taskTypes.add(TaskType.DEADLINE);
+        }
+        if (userInputLowerCase.contains(TODO_COMMAND_KEYWORD)) {
+            taskTypes.add(TaskType.TODO);
+        }
+    }
+
+    /**
+     * Check if the param argument is done or undone
+     *
+     * @param componentUserInput component of the user input that contains the argument
+     * @return true if it contains done, and false if it contains undone
+     * @throws CompletionStatusInvalidException the completion status in the user input is invalid
+     */
+    public static boolean parseCompletionStatusOption(String componentUserInput)
+            throws CompletionStatusInvalidException {
+        if (componentUserInput.toLowerCase().trim().equals("done")){
+            return true;
+        } else if (componentUserInput.toLowerCase().trim().equals("undone")){
+            return false;
+        }
+        throw new CompletionStatusInvalidException();
+    }
+
+    /**
+     * Check the date format and try to parse it
+     *
+     * @param dateUnformatted string containing the date
+     * @return parsed Date object
+     * @throws DateWronglyFormattedError the string does not contain a correctly formatted date
+     */
+    public static Date parseDateIfExists(String dateUnformatted) throws DateWronglyFormattedError, InvalidDateException {
+        Date dateObj;
+
+        // check format of date
+        boolean isDateWithTimeBool = isDateWithTime(dateUnformatted);
+        boolean isDateWithoutTimeBool = isDateWithoutTime(dateUnformatted);
+
+        // try to parse date
+        if (isDateWithTimeBool) {
+            dateObj = parseDateWithTime(dateUnformatted);
+        } else if (isDateWithoutTimeBool) {
+            dateObj = parseDateWithoutTime(dateUnformatted);
+        } else {
+            throw new DateWronglyFormattedError();
+        }
+
+        return dateObj;
     }
 }

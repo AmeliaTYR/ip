@@ -1,40 +1,56 @@
 package duke.storage;
 
-import duke.constants.TootieSymbols;
 import duke.exceptions.FilePathInvalidException;
-import duke.ui.Printers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static duke.parsers.Parsers.pathReplaceIllegalCharacters;
+import static duke.constants.TootieNormalMsgs.COULD_NOT_CREATE_DIRECTORY_MSG;
+import static duke.constants.TootieNormalMsgs.DIRECTORY_CREATED_SUCCESSFULLY_MSG;
+import static duke.constants.TootieNormalMsgs.FILE_ALREADY_EXISTS_MSG;
+import static duke.constants.TootieNormalMsgs.FILE_AUTO_CREATED_MSG;
+import static duke.constants.TootieNormalMsgs.FILE_CREATED_PATH_MSG;
+import static duke.constants.TootieNormalMsgs.FILE_NOT_FOUND_MSG;
+import static duke.constants.TootieNormalMsgs.FILE_PATH_TO_DIRECTORY_INVALID_MSG;
+import static duke.constants.TootieNormalMsgs.IO_ERROR_WHEN_MAKING_FILE_MSG;
+import static duke.constants.TootieNormalMsgs.NEW_FILE_CREATED_MSG_FORMAT;
+
+import static duke.parsers.Checks.pathReplaceIllegalCharacters;
 
 public class fileFunctions {
-    public fileFunctions() {
-    }
 
     public static final String NEWLINE = System.lineSeparator();
 
-    // check if a file exists
+    /**
+     * check if a file exists
+     *
+     * @param file a given file to check
+     * @throws FileNotFoundException the file to check was not found
+     */
     public static void checkFileExists(File file) throws FileNotFoundException {
         if (!file.exists()){
             throw new FileNotFoundException();
         }
     }
 
-    // create a new file at the specified file path
+    /**
+     * create a new file at the specified file path
+     *
+     * @param filePath specified file path
+     * @return absolute path of the new path
+     */
     public static String autoCreateNewFile(String filePath) {
         File newFile = new File(filePath);
-        System.out.println("Auto creating new file using path: " + newFile.getAbsolutePath());
+        System.out.println(String.format(FILE_AUTO_CREATED_MSG, newFile.getAbsolutePath()));
 
         filePath = pathReplaceIllegalCharacters(filePath);
 
         try {
             checkFileExists(newFile);
         } catch (FileNotFoundException e) {
-            System.out.println("File not exists.");
+            System.out.println(FILE_NOT_FOUND_MSG);
         }
 
         // make the directory
@@ -63,13 +79,13 @@ public class fileFunctions {
             //Creating the directory
             boolean isFileCreated = file.mkdir();
             if(isFileCreated){
-                System.out.println("Directory created successfully " + TootieSymbols.HAPPY_EMOTICON);
+                System.out.println(DIRECTORY_CREATED_SUCCESSFULLY_MSG);
                 filePath = filePath + "/" + txtFileName + ".txt";
             }else{
-                System.out.println("Sorry, could not create specified directory");
+                System.out.println(COULD_NOT_CREATE_DIRECTORY_MSG);
             }
         } catch (FilePathInvalidException e) {
-            System.out.println("Error when making directory!");
+            System.out.println(FILE_PATH_TO_DIRECTORY_INVALID_MSG);
         }
 
         newFile = new File(filePath);
@@ -77,32 +93,48 @@ public class fileFunctions {
         // make the file
         try {
             if (newFile.createNewFile()){
-                System.out.println("File created: " + newFile.getAbsolutePath());
+                System.out.println(String.format(FILE_CREATED_PATH_MSG, newFile.getAbsolutePath()));
             } else {
-                System.out.println("File already exists.");
+                System.out.println(FILE_ALREADY_EXISTS_MSG);
             }
         } catch (IOException e) {
-            System.out.println("IO error when making file!");
+            System.out.println(IO_ERROR_WHEN_MAKING_FILE_MSG);
         }
 
-        System.out.println("Wow! New file at: " + filePath);
+        System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, filePath));
 
         return newFile.getAbsolutePath();
     }
 
-    // Checks if the file with the given file path exists
+    /**
+     * Checks if the file with the given file path exists
+     *
+     * @param filePath given file path
+     * @return file object retrieved from the given file path
+     */
     public static File getFileFromFilePath(String filePath) {
         File allTasksFile = new File(filePath);
         return allTasksFile;
     }
 
-    // writes a double new line to the file to create one blank line of space
+    /**
+     * writes a double new line to the file to create one blank line of space
+     *
+     * @param filePath given file path
+     * @throws IOException unable to write to file
+     */
     public static void writeDoubleNewlineToFile(String filePath) throws IOException {
         appendsStringToFile(NEWLINE, filePath);
         appendsStringToFile(NEWLINE, filePath);
     }
 
-    // appends the string to the given file specified by filePath
+    /**
+     * appends the string to the given file specified by filePath
+     *
+     * @param textToAppend string to be appended to the file
+     * @param filePath filepath to the file
+     * @throws IOException unable to write to file
+     */
     public static void appendsStringToFile(String textToAppend, String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);

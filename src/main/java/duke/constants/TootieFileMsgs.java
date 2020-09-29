@@ -19,8 +19,10 @@ public class TootieFileMsgs {
             NEWLINE+ "Tasks:" + NEWLINE;
     public static final String ALL_TASKS_FILE_INSTRUCTIONS_HEADER = INDICATOR_INSTRUCTION + NEWLINE +
             TASK_TYPE_INSTRUCTION + NEWLINE + EXAMPLE_INSTRUCTION + NEWLINE + TASK_LIST_START;
+    public static final String TOTAL_TASKS_FILE_LINE = "Total tasks: %1$d";
+    public static final String TASKS_COMPLETED_FILE_LINE = "Tasks completed: %1$d";
 
-    /** Instructions header for settomgs save file  */
+    /** Instructions header for settings save file  */
     public static final String TOOTIE_SETTINGS_FILE_DIVIDER = "==============================";
     public static final String TOOTIE_SETTINGS_FILE_INSTRUCTIONS_HEADER = "INFORMATION" + NEWLINE
             + TootieSymbols.VERSION + NEWLINE + NEWLINE + TOOTIE_SETTINGS_FILE_DIVIDER;
@@ -29,4 +31,6 @@ public class TootieFileMsgs {
     public static final String TOOTIE_SETTINGS_USER_PREFERENCES_FORMAT = "USER PREFERENCES" + NEWLINE
             + "+ Divider choice: %1$s" + NEWLINE + "+ Username: %2$s" + NEWLINE + NEWLINE
             + TOOTIE_SETTINGS_FILE_DIVIDER;
+
+
 }

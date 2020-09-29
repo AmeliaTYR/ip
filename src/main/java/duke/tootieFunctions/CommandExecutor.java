@@ -1,6 +1,6 @@
 package duke.tootieFunctions;
 
-import duke.constants.TootieSymbols;
+import duke.constants.*;
 import duke.exceptions.DeadlineInputWrongFormatException;
 import duke.exceptions.DividerNonexistantException;
 import duke.exceptions.DueDateWrongFormatException;
@@ -19,17 +19,42 @@ import duke.exceptions.TasklistEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
-import duke.storage.*;
-import duke.constants.CommandType;
-import duke.constants.DividerChoice;
-import duke.constants.TootieErrorMsgs;
 import duke.parsers.Parsers;
+import duke.storage.AllTasksSaver;
 import duke.task.Task;
 import duke.ui.Printers;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static duke.constants.CommandKeywords.BYE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.DEADLINE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.DELETE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.DIVIDER_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.DONE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.EVENT_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.FILEPATH_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.FILTER_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.HELP_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.LIST_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.LOAD_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.SAVE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.TODO_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.UNDONE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.USERNAME_COMMAND_KEYWORD;
+
+import static duke.constants.TootieConstants.NUMBER_OF_FILE_PATHS;
+import static duke.constants.TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG;
+import static duke.constants.TootieNormalMsgs.ALL_TASKS_SAVED_MSG;
+import static duke.constants.TootieNormalMsgs.DIVIDER_CHANGED_MSG;
+import static duke.constants.TootieNormalMsgs.DIVIDER_CHOICE_NOT_FOUND_MSG;
+import static duke.constants.TootieNormalMsgs.FILTER_COMMAND_MISSING_ARGS_MSG;
+import static duke.constants.TootieNormalMsgs.FILTER_COMMAND_PARAMS_UNMATCHED_MSG;
+import static duke.constants.TootieNormalMsgs.HELLO_NAME_FORMAT;
+import static duke.constants.TootieNormalMsgs.USERNAME_BLANK_MSG;
+import static duke.constants.TootieNormalMsgs.USERNAME_COMMAND_INVALID_MSG;
 
 import static duke.storage.AllTasksLoader.loadAllTasksFile;
 import static duke.tootieFunctions.Filters.filterTasks;
@@ -45,35 +70,35 @@ public class CommandExecutor {
      * @return command type object
      */
     public static CommandType extractCommandType(String userInput) {
-        if (userInput.toLowerCase().trim().startsWith("help")) {
+        if (userInput.toLowerCase().trim().startsWith(HELP_COMMAND_KEYWORD)) {
             return CommandType.HELP;
-        } else if (userInput.toLowerCase().trim().startsWith("todo")) {
+        } else if (userInput.toLowerCase().trim().startsWith(TODO_COMMAND_KEYWORD)) {
             return CommandType.ADD_TODO;
-        } else if (userInput.toLowerCase().trim().startsWith("deadline")) {
+        } else if (userInput.toLowerCase().trim().startsWith(DEADLINE_COMMAND_KEYWORD)) {
             return CommandType.ADD_DEADLINE;
-        } else if (userInput.toLowerCase().trim().startsWith("event")) {
+        } else if (userInput.toLowerCase().trim().startsWith(EVENT_COMMAND_KEYWORD)) {
             return CommandType.ADD_EVENT;
-        } else if (userInput.toLowerCase().trim().startsWith("list")) {
+        } else if (userInput.toLowerCase().trim().startsWith(LIST_COMMAND_KEYWORD)) {
             return CommandType.LIST;
-        } else if (userInput.toLowerCase().trim().startsWith("done")) {
+        } else if (userInput.toLowerCase().trim().startsWith(DONE_COMMAND_KEYWORD)) {
             return CommandType.MARK_TASK_DONE;
-        } else if (userInput.toLowerCase().trim().startsWith("bye")) {
+        } else if (userInput.toLowerCase().trim().startsWith(BYE_COMMAND_KEYWORD)) {
             return CommandType.BYE;
-        } else if (userInput.toLowerCase().trim().startsWith("delete")) {
+        } else if (userInput.toLowerCase().trim().startsWith(DELETE_COMMAND_KEYWORD)) {
             return CommandType.DELETE_TASK;
-        } else if (userInput.toLowerCase().trim().startsWith("undone")) {
+        } else if (userInput.toLowerCase().trim().startsWith(UNDONE_COMMAND_KEYWORD)) {
             return CommandType.MARK_TASK_UNDONE;
-        } else if (userInput.toLowerCase().trim().startsWith("divider")) {
+        } else if (userInput.toLowerCase().trim().startsWith(DIVIDER_COMMAND_KEYWORD)) {
             return CommandType.CHOOSE_DIVIDER;
-        } else if (userInput.toLowerCase().trim().startsWith("username")) {
+        } else if (userInput.toLowerCase().trim().startsWith(USERNAME_COMMAND_KEYWORD)) {
             return CommandType.SET_USERNAME;
-        } else if (userInput.toLowerCase().trim().startsWith("filter")) {
+        } else if (userInput.toLowerCase().trim().startsWith(FILTER_COMMAND_KEYWORD)) {
             return CommandType.FILTER_TASKS;
-        } else if (userInput.toLowerCase().trim().startsWith("save")) {
+        } else if (userInput.toLowerCase().trim().startsWith(SAVE_COMMAND_KEYWORD)) {
             return CommandType.SAVE;
-        } else if (userInput.toLowerCase().trim().startsWith("filepath")) {
+        } else if (userInput.toLowerCase().trim().startsWith(FILEPATH_COMMAND_KEYWORD)) {
             return CommandType.PRINT_FILE_PATHS;
-        } else if (userInput.toLowerCase().trim().startsWith("load")) {
+        } else if (userInput.toLowerCase().trim().startsWith(LOAD_COMMAND_KEYWORD)) {
             return CommandType.LOAD_MORE_TASKS;
         } else {
             return CommandType.UNRECOGNISED;
@@ -82,7 +107,8 @@ public class CommandExecutor {
 
     /**
      * Parses the user command and executes it
-     *  @param savedSettings     array containing saved settings for updates
+     *
+     * @param savedSettings     array containing saved settings for updates
      * @param commandType       command type detected
      * @param userInput         raw user input
      * @param allTasks          list of all Tasks
@@ -91,10 +117,13 @@ public class CommandExecutor {
      * @param numTasksCompleted total number of tasks completed
      * @param username          user provided name
      */
-    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput, ArrayList<Task> allTasks, String tootieSettingsFilePath, String allTasksFilePath, AtomicInteger numTasks, AtomicInteger numTasksCompleted, String username, Scanner SCANNER) {
+    public static void executeCommand(ArrayList<String> savedSettings, CommandType commandType, String userInput,
+                                      ArrayList<Task> allTasks, String tootieSettingsFilePath,
+                                      String allTasksFilePath, AtomicInteger numTasks,
+                                      AtomicInteger numTasksCompleted, String username, Scanner SCANNER) {
         switch (commandType) {
         case HELP:
-            Printers.printHelpInfo();
+            GetHelp.getHelp(userInput);
             break;
         case ADD_TODO:
             try {
@@ -148,14 +177,14 @@ public class CommandExecutor {
             try {
                 ModifyTasks.markTaskComplete(userInput, allTasks, numTasksCompleted, numTasks);
             } catch (TaskNonexistantException e) {
-                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
+                System.out.println(TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case MARK_TASK_UNDONE:
             try {
                 ModifyTasks.markTaskIncomplete(userInput, allTasks, numTasksCompleted, numTasks);
             } catch (TaskNonexistantException e) {
-                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
+                System.out.println(TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case BYE:
@@ -164,7 +193,7 @@ public class CommandExecutor {
         case SAVE:
             try {
                 AllTasksSaver.saveAllTasks(allTasks, allTasksFilePath, numTasks, numTasksCompleted);
-                System.out.println("All tasks saved!");
+                System.out.println(ALL_TASKS_SAVED_MSG);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -173,7 +202,7 @@ public class CommandExecutor {
             try {
                 ModifyTasks.deleteTask(userInput, allTasks, numTasks, numTasksCompleted);
             } catch (TaskNonexistantException e) {
-                System.out.println(TootieErrorMsgs.TASK_NOT_FOUND_ERROR_MSG);
+                System.out.println(TASK_NOT_FOUND_ERROR_MSG);
             }
             break;
         case CHOOSE_DIVIDER:
@@ -181,37 +210,38 @@ public class CommandExecutor {
                 DividerChoice dividerChoice = Parsers.parseLineDividerFromUserInput(userInput);
                 Printers.changeDivider(dividerChoice);
                 savedSettings.set(2, dividerChoice.toString());
-                System.out.println("Divider changed! " + TootieSymbols.FLOWER_SMILE_EMOTICON);
+                System.out.println(DIVIDER_CHANGED_MSG);
             } catch (DividerNonexistantException e) {
-                System.out.println("Divider choice not found? " + TootieSymbols.CONFUSED_EMOTICON);
+                System.out.println(DIVIDER_CHOICE_NOT_FOUND_MSG);
             }
             break;
         case SET_USERNAME:
             try {
                 username = SetPreferences.setUsername(userInput);
-                System.out.println(String.format("Hello %1$s! " + TootieSymbols.FLOWER_SMILE_EMOTICON, username));
+                System.out.println(String.format(HELLO_NAME_FORMAT, username));
                 savedSettings.set(3, username);
             } catch (UsernameCommandInvalidException e) {
-                System.out.println("Username command invalid! " + TootieSymbols.ANGRY_EMOTICON);
+                System.out.println(USERNAME_COMMAND_INVALID_MSG);
             } catch (UsernameEmptyException e) {
-                System.out.println("Username is blank? " + TootieSymbols.CONFUSED_EMOTICON);
+                System.out.println(USERNAME_BLANK_MSG);
             }
             break;
         case FILTER_TASKS:
             try {
                 filterTasks(userInput, allTasks);
             } catch (MissingFilterOptionsException e) {
-                System.out.println("Filter command missing valid arguments? " + TootieSymbols.CONFUSED_EMOTICON);
+                System.out.println(FILTER_COMMAND_MISSING_ARGS_MSG);
             } catch (NoTasksFilteredException e) {
-                System.out.println("No tasks matching parameters found? " + TootieSymbols.CONFUSED_EMOTICON);
+                System.out.println(FILTER_COMMAND_PARAMS_UNMATCHED_MSG);
             }
             break;
         case PRINT_FILE_PATHS:
             Printers.printFilePaths(tootieSettingsFilePath, allTasksFilePath);
             break;
         case LOAD_MORE_TASKS:
-            ArrayList<String> allTasksFilePathReturn = new ArrayList<>(1);
-            AllTasksLoader.loadAllTasksFile(true, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted, allTasksFilePathReturn);
+            ArrayList<String> allTasksFilePathReturn = new ArrayList<>(NUMBER_OF_FILE_PATHS);
+            loadAllTasksFile(true, allTasks, SCANNER, allTasksFilePath, numTasks, numTasksCompleted,
+                    allTasksFilePathReturn);
             break;
         default:
             Printers.printConfusedMessage();

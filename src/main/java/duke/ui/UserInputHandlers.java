@@ -19,7 +19,8 @@ public class UserInputHandlers {
         String userInput;
         do {
             userInput = SCANNER.nextLine();
-        } while (userInput.matches(TootieRegex.BLANK_STRING_REGEX) || userInput.startsWith(TootieInputMarkers.INPUT_COMMENT_MARKER));
+        } while (userInput.matches(TootieRegex.BLANK_STRING_REGEX)
+                || userInput.startsWith(TootieInputMarkers.INPUT_COMMENT_MARKER));
         return userInput;
     }
 

@@ -5,6 +5,9 @@ package duke.task;
  */
 public class ToDo extends Task {
 
+    /**
+     * Constructs Todo task
+     */
     public ToDo(String taskName) {
         super(taskName, false);
     }

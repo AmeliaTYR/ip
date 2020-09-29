@@ -8,7 +8,7 @@ import duke.constants.TootieSymbols;
 
 import duke.exceptions.*;
 
-import duke.parsers.Parsers;
+import duke.parsers.*;
 
 import duke.task.Deadline;
 import duke.task.Event;
@@ -130,7 +130,7 @@ public class AllTasksLoader {
             System.out.println("Response not recognised? " + TootieSymbols.CONFUSED_EMOTICON);
         }
 
-        path = Parsers.pathReplaceIllegalCharacters(path);
+        path = Checks.pathReplaceIllegalCharacters(path);
         allTasksFilePathReturn.add(0, path);
 
         // check if the file path is valid

@@ -3,6 +3,8 @@ package duke.tootieFunctions;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
 
+import static duke.constants.CommandKeywords.USERNAME_COMMAND_KEYWORD;
+
 /**
  * Functions for the user to set preferences such as
  */
@@ -20,11 +22,11 @@ public class SetPreferences {
             UsernameEmptyException {
 
         // identify placements
-        int usernamePosition = userInput.indexOf("username");
+        int usernamePosition = userInput.indexOf(USERNAME_COMMAND_KEYWORD);
         if (usernamePosition == -1) {
             throw new UsernameCommandInvalidException();
         }
-        String usernameInput = userInput.substring(usernamePosition + 8).trim();
+        String usernameInput = userInput.substring(usernamePosition + USERNAME_COMMAND_KEYWORD.length()).trim();
 
         if (usernameInput.isBlank()) {
             throw new UsernameEmptyException();

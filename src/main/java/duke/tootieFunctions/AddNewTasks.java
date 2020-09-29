@@ -3,6 +3,8 @@ package duke.tootieFunctions;
 import duke.constants.TootieInputMarkers;
 import duke.constants.TootieNormalMsgs;
 import duke.constants.TootieRegex;
+
+import duke.exceptions.DateWronglyFormattedError;
 import duke.exceptions.DeadlineInputWrongFormatException;
 import duke.exceptions.DueDateWrongFormatException;
 import duke.exceptions.EndTimeBeforeStartTimeException;
@@ -16,17 +18,23 @@ import duke.exceptions.MissingParamsException;
 import duke.exceptions.StartTimeWrongFormatException;
 import duke.exceptions.TaskNameEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
+
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
-import duke.parsers.Parsers;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static duke.constants.CommandKeywords.DUEDATE_TAG;
+import static duke.constants.CommandKeywords.ENDTIME_TAG;
+import static duke.constants.CommandKeywords.STARTTIME_TAG;
+import static duke.constants.CommandKeywords.TASKNAME_TAG;
+
+import duke.parsers.Parsers;
 import static duke.parsers.Parsers.parseSingleCharacterTaggedParamsFromUserInput;
 
 /**
@@ -62,7 +70,10 @@ public class AddNewTasks {
             throw new EventInputWrongFormatException();
         }
 
-        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("s") || !filterOptions.containsKey("e")) {
+        // check that it has all necessary arguments
+        if (!filterOptions.containsKey(TASKNAME_TAG) ||
+                !filterOptions.containsKey(STARTTIME_TAG) ||
+                !filterOptions.containsKey(ENDTIME_TAG)) {
             throw new EventInputWrongFormatException();
         }
 
@@ -70,53 +81,30 @@ public class AddNewTasks {
         String startTimeUnformatted;
         String endTimeUnformatted;
 
-        taskName = filterOptions.get("t").trim();
-        startTimeUnformatted = filterOptions.get("s").trim();
-        endTimeUnformatted = filterOptions.get("e").trim();
+        taskName = filterOptions.get(TASKNAME_TAG).trim();
+        startTimeUnformatted = filterOptions.get(STARTTIME_TAG).trim();
+        endTimeUnformatted = filterOptions.get(ENDTIME_TAG).trim();
 
-        // check format start time
-        boolean isStartDateWithTime = isDateWithTime(startTimeUnformatted);
-        boolean isStartDateWithoutTime = isDateWithoutTime(startTimeUnformatted);
-        // check format end time
-        boolean isEndDateWithTime = isDateWithTime(endTimeUnformatted);
-        boolean isEndDateWithoutTime = isDateWithoutTime(endTimeUnformatted);
-
-        // try to parse start time
-        if (isStartDateWithTime) {
-            try {
-                startTime = Parsers.parseDateWithTime(startTimeUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidStartTimeException();
-            }
-        } else if (isStartDateWithoutTime) {
-            try {
-                startTime = Parsers.parseDateWithoutTime(startTimeUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidStartTimeException();
-            }
-        } else {
+        try {
+            startTime = Parsers.parseDateIfExists(startTimeUnformatted);
+        } catch (DateWronglyFormattedError e) {
             throw new StartTimeWrongFormatException();
+        } catch (InvalidDateException e) {
+            throw new InvalidStartTimeException();
         }
+
         if (startTime == null) {
             throw new StartTimeWrongFormatException();
         }
 
-        // try to parse end time
-        if (isEndDateWithTime) {
-            try {
-                endTime = Parsers.parseDateWithTime(endTimeUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidEndTimeException();
-            }
-        } else if (isEndDateWithoutTime) {
-            try {
-                endTime = Parsers.parseDateWithoutTime(endTimeUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidEndTimeException();
-            }
-        } else {
-            throw new EndTimeWrongFormatException();
+        try {
+            endTime = Parsers.parseDateIfExists(endTimeUnformatted);
+        } catch (DateWronglyFormattedError e) {
+            throw new StartTimeWrongFormatException();
+        } catch (InvalidDateException e) {
+            throw new InvalidEndTimeException();
         }
+
         if (endTime == null) {
             throw new EndTimeWrongFormatException();
         }
@@ -161,7 +149,7 @@ public class AddNewTasks {
             throw new DeadlineInputWrongFormatException();
         }
 
-        if (!filterOptions.containsKey("t") || !filterOptions.containsKey("d")) {
+        if (!filterOptions.containsKey(TASKNAME_TAG) || !filterOptions.containsKey(DUEDATE_TAG)) {
             throw new DeadlineInputWrongFormatException();
 
         }
@@ -169,29 +157,17 @@ public class AddNewTasks {
         String taskName;
         String dueDateUnformatted;
 
-        taskName = filterOptions.get("t").trim();
-        dueDateUnformatted = filterOptions.get("d").trim();
+        taskName = filterOptions.get(TASKNAME_TAG).trim();
+        dueDateUnformatted = filterOptions.get(DUEDATE_TAG).trim();
 
-        // check format due date
-        boolean isDueDateWithTime = isDateWithTime(dueDateUnformatted);
-        boolean isDueDateWithoutTime = isDateWithoutTime(dueDateUnformatted);
-
-        // try to parse due date
-        if (isDueDateWithTime) {
-            try {
-                dueDate = Parsers.parseDateWithTime(dueDateUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidDueDateException();
-            }
-        } else if (isDueDateWithoutTime) {
-            try {
-                dueDate = Parsers.parseDateWithoutTime(dueDateUnformatted);
-            } catch (InvalidDateException e) {
-                throw new InvalidDueDateException();
-            }
-        } else {
+        try {
+            dueDate = Parsers.parseDateIfExists(dueDateUnformatted);
+        } catch (DateWronglyFormattedError e) {
             throw new DueDateWrongFormatException();
+        } catch (InvalidDateException e) {
+            throw new InvalidDueDateException();
         }
+
         if (dueDate == null) {
             throw new DueDateWrongFormatException();
         }
@@ -208,26 +184,6 @@ public class AddNewTasks {
     }
 
     /**
-     * /check if the date entered is correctly formatted with a date but no time
-     *
-     * @param timeUnformmated a string containing a date without the time included
-     * @return true if it matches the correct format
-     */
-    public static boolean isDateWithoutTime(String timeUnformmated) {
-        return timeUnformmated.matches(TootieRegex.DATE_WITHOUT_TIME_REGEX);
-    }
-
-    /**
-     * Check if the date entered is correctly formatted with a date and time
-     *
-     * @param timeUnformmated a string containing a date with the time included
-     * @return true if it matches the correct format
-     */
-    public static boolean isDateWithTime(String timeUnformmated) {
-        return timeUnformmated.matches(TootieRegex.DATE_WITH_TIME_REGEX);
-    }
-
-    /**
      * Adds a toto task to the allTasks list
      *
      * @param userInput raw user input
@@ -236,7 +192,8 @@ public class AddNewTasks {
      * @throws ToDoInputWrongFormatException the format of the todo command is incorrect
      * @throws TaskNameEmptyException        the task name field is empty
      */
-    public static void addToDo(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks) throws ToDoInputWrongFormatException, TaskNameEmptyException {
+    public static void addToDo(String userInput, ArrayList<Task> allTasks, AtomicInteger numTasks)
+            throws ToDoInputWrongFormatException, TaskNameEmptyException {
         // identify placements
         int taskNamePosition = userInput.indexOf(TootieInputMarkers.TASKNAME_MARKER);
         if (taskNamePosition == -1) {

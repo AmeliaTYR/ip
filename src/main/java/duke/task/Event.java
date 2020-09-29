@@ -8,24 +8,39 @@ public class Event extends Task {
     protected Date endTime;
     SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
 
+    /**
+     * Constructs Event task
+     */
     public Event(String taskName, Date startTime, Date endTime) {
         super(taskName, false);
         setStartTime(startTime);
         setEndTime(endTime);
     }
 
+    /**
+     * Getter for startTime
+     */
     public Date getStartTime() {
         return startTime;
     }
 
+    /**
+     * Getter for endTime
+     */
     public Date getEndTime() {
         return endTime;
     }
 
+    /**
+     * Setter for startTime
+     */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Setter for endTime
+     */
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
