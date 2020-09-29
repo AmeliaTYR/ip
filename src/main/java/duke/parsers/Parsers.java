@@ -158,8 +158,11 @@ public class Parsers {
         case 3:
             newDividerChoice = DividerChoice.SIMPLE;
             break;
-        default:
+        case 4:
             newDividerChoice = DividerChoice.DOUBLE;
+            break;
+        default:
+            throw new DividerNonexistantException();
         }
         return newDividerChoice;
     }

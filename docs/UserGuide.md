@@ -704,7 +704,7 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 
  Command | Purpose | Syntax
 ---------|---------|-------
-help|Bring up help guide|_help_
+help|Bring up help guide|_help \[COMMAND\]_
 filepath|Display file paths|_filepath_ or _filepaths_ 
 save|Save all tasks|_save_
 bye|Close the program|_bye_ 

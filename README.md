@@ -1,8 +1,27 @@
-# duke.Duke project template
+# Tootie - based on the Duke project
+Tootie is a task list manager program
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+## Setting up for use 
 
-## Setting up in Intellij
+1. Ensure that you have Java 11 or above installed.
+1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
+  1. The current version is v1.1-alpha
+
+Notes:
+* All comments starting with # will be ignored.
+* Change your console font to one which supports Unicode for the optimal user experience.
+  * For Windows, the instructions are as follows: 
+    * save the ip.jar file to your desired folder
+    * open the command line in the folder that the ip.jar is in 
+        * you may do this by typing `cmd` in the location bar of Windows Explorer and pressing the Enter key
+    * run `chcp 65001` to change to UTF-8
+    * right click the bar above your command line app to open properties
+    * change the font to NSimSun
+    * run `java -Dfile.encoding=UTF-8 -jar ip.jar`
+    
+Further instructions on using Tootie can be found at the user guide [here](https://ameliatyr.github.io/ip/)
+
+## Setting up in Intellij for editing
 
 Prerequisites: JDK 11, update Intellij to the most recent version.
 
@@ -26,7 +45,21 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
       _|_|_   \___/   \___/   _\__|   _|_|_   \___|  
     _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| 
     "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
+   
+   Tootie - Version 2.0
+   ==============================================
+   Loading tootieSettings.txt save file...
+   ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+   Loading allTasks.txt save file...
+   11 tasks expected from file.
+   11 tasks read successfully!
+   ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+   Hello Ames! I'm Tootie!
+   What can I do for you?
+   ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
    ```
+   
+   The logo itself will vary between runs at random
    
 ## Modifications
 

@@ -1,5 +1,5 @@
 INFORMATION
-Tootie - Version 1.5
+Tootie - Version 1.6
 
 ==============================
 FILE PATHS
