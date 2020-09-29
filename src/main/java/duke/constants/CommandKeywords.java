@@ -34,4 +34,9 @@ public class CommandKeywords {
     public static final String STARTTIME_TAG = "s";
     public static final String ENDTIME_TAG = "e";
     public static final String DUEDATE_TAG = "d";
+
+    /** Divider type keywords */
+    public static final String SPARKLY_KEYWORD = "sparkly";
+    public static final String SIMPLE_KEYWORD = "simple";
+    public static final String PLAIN_KEYWORD = "plain";
 }

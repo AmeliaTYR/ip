@@ -1,16 +1,40 @@
 package duke.parsers;
 
 import duke.constants.TaskType;
-import duke.exceptions.*;
 import duke.constants.DividerChoice;
+
+import duke.exceptions.CompletionStatusInvalidException;
+import duke.exceptions.DateWronglyFormattedError;
+import duke.exceptions.DividerNonexistantException;
+import duke.exceptions.InvalidDateException;
+import duke.exceptions.MissingParamsException;
+import duke.exceptions.SettingObjectWrongFormatException;
+import duke.exceptions.TotalTasksNumInvalidException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static duke.constants.CommandKeywords.*;
+import static duke.constants.CommandKeywords.DEADLINE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.DONE_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.EVENT_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.PLAIN_KEYWORD;
+import static duke.constants.CommandKeywords.SIMPLE_KEYWORD;
+import static duke.constants.CommandKeywords.SPARKLY_KEYWORD;
+import static duke.constants.CommandKeywords.TODO_COMMAND_KEYWORD;
+import static duke.constants.CommandKeywords.UNDONE_COMMAND_KEYWORD;
+
+import static duke.constants.DateFormats.DEFAULT_COMPLEX_DATE_FORMAT;
+import static duke.constants.DateFormats.OUTPUT_DATE_FORMAT;
+import static duke.constants.DateFormats.USER_INPUT_DATE_WITHOUT_TIME_FORMAT;
+import static duke.constants.DateFormats.USER_INPUT_DATE_WITH_TIME_FORMAT;
+
+import static duke.constants.Tags.TOTAL_TASKS_TAG_FORMAT;
+
 import static duke.parsers.Checks.isDateWithTime;
 import static duke.parsers.Checks.isDateWithoutTime;
 
@@ -18,6 +42,7 @@ import static duke.parsers.Checks.isDateWithoutTime;
  * Parse information from user inputs and file lines
  */
 public class Parsers {
+
     /**
      * Parse the dividerChoice enum from the string read from file
      *
@@ -25,11 +50,11 @@ public class Parsers {
      * @return return the DividerChoice enum from a given string
      */
     public static DividerChoice parseDividerChoice(String dividerChoiceString) {
-        if (dividerChoiceString.trim().toLowerCase().equals("sparkly")){
+        if (dividerChoiceString.trim().toLowerCase().equals(SPARKLY_KEYWORD)){
             return DividerChoice.SPARKLY;
-        } else if (dividerChoiceString.trim().toLowerCase().equals("simple")){
+        } else if (dividerChoiceString.trim().toLowerCase().equals(SIMPLE_KEYWORD)){
             return DividerChoice.SIMPLE;
-        } else if (dividerChoiceString.trim().toLowerCase().equals("plain")){
+        } else if (dividerChoiceString.trim().toLowerCase().equals(PLAIN_KEYWORD)){
             return DividerChoice.PLAIN;
         } else {
             return DividerChoice.DOUBLE;
@@ -44,7 +69,8 @@ public class Parsers {
      * @return returns the setting extracted from line in the settings file
      * @throws SettingObjectWrongFormatException the linel in the settings file was wrongly formatted
      */
-    public static String parseFileObject(String fileLine, String objectTitle) throws SettingObjectWrongFormatException {
+    public static String parseFileObject(String fileLine, String objectTitle)
+            throws SettingObjectWrongFormatException {
 
         int settingTitleLength = objectTitle.length();
         String fileObject;
@@ -73,7 +99,7 @@ public class Parsers {
      */
     public static Date parseComplexDate(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
-        SimpleDateFormat complexDateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        SimpleDateFormat complexDateFormat = new SimpleDateFormat(DEFAULT_COMPLEX_DATE_FORMAT);
         try {
             complexDateFormat.setLenient(false);
             formattedDate = complexDateFormat.parse(unformattedDate.trim());
@@ -92,7 +118,7 @@ public class Parsers {
      */
     public static Date parseSimpleDate(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(OUTPUT_DATE_FORMAT);
         try {
             simpleDateFormat.setLenient(false);
             formattedDate = simpleDateFormat.parse(unformattedDate.trim());
@@ -147,11 +173,11 @@ public class Parsers {
     public static DividerChoice parseLineDividerFromString(String fileLine) {
         DividerChoice newDividerChoice;
 
-        if (fileLine.trim().toLowerCase().equals("sparkly")){
+        if (fileLine.trim().toLowerCase().equals(SPARKLY_KEYWORD)){
             newDividerChoice = DividerChoice.SPARKLY;
-        } else if (fileLine.trim().toLowerCase().equals("simple")){
+        } else if (fileLine.trim().toLowerCase().equals(SIMPLE_KEYWORD)){
             newDividerChoice = DividerChoice.SIMPLE;
-        } else if (fileLine.trim().toLowerCase().equals("plain")){
+        } else if (fileLine.trim().toLowerCase().equals(PLAIN_KEYWORD)){
             newDividerChoice = DividerChoice.PLAIN;
         } else {
             newDividerChoice = DividerChoice.DOUBLE;
@@ -167,7 +193,7 @@ public class Parsers {
      */
     public static Date parseDateWithoutTime(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
-        SimpleDateFormat dateWithoutTime = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateWithoutTime = new SimpleDateFormat(USER_INPUT_DATE_WITHOUT_TIME_FORMAT);
         try {
             dateWithoutTime.setLenient(false);
             formattedDate = dateWithoutTime.parse(unformattedDate);
@@ -185,7 +211,7 @@ public class Parsers {
      */
     public static Date parseDateWithTime(String unformattedDate) throws InvalidDateException {
         Date formattedDate;
-        SimpleDateFormat dateWithTime = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat dateWithTime = new SimpleDateFormat(USER_INPUT_DATE_WITH_TIME_FORMAT);
         try {
             dateWithTime.setLenient(false);
             formattedDate = dateWithTime.parse(unformattedDate);
@@ -295,7 +321,7 @@ public class Parsers {
      * @throws TotalTasksNumInvalidException number of tasks cannot be parsed
      */
     public static int getNumTasks(String totalTasks) throws TotalTasksNumInvalidException {
-        Pattern pattern = Pattern.compile("Total tasks: (\\d+)");
+        Pattern pattern = Pattern.compile(TOTAL_TASKS_TAG_FORMAT);
         Matcher matcher = pattern.matcher(totalTasks);
         if (matcher.matches()) {
             try {
@@ -373,9 +399,9 @@ public class Parsers {
      */
     public static boolean parseCompletionStatusOption(String componentUserInput)
             throws CompletionStatusInvalidException {
-        if (componentUserInput.toLowerCase().trim().equals("done")){
+        if (componentUserInput.toLowerCase().trim().equals(DONE_COMMAND_KEYWORD)){
             return true;
-        } else if (componentUserInput.toLowerCase().trim().equals("undone")){
+        } else if (componentUserInput.toLowerCase().trim().equals(UNDONE_COMMAND_KEYWORD)){
             return false;
         }
         throw new CompletionStatusInvalidException();

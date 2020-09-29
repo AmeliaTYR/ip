@@ -1,6 +1,5 @@
 package duke.parsers;
 
-import duke.constants.*;
 import duke.exceptions.*;
 
 import java.util.*;
@@ -13,7 +12,7 @@ public class Checks {
      * @return true if it matches the correct format
      */
     public static boolean isDateWithoutTime(String timeUnformmated) {
-        return timeUnformmated.matches(TootieRegex.DATE_WITHOUT_TIME_REGEX);
+        return timeUnformmated.matches(duke.constants.DateFormats.DATE_WITHOUT_TIME_REGEX);
     }
 
     /**
@@ -23,7 +22,7 @@ public class Checks {
      * @return true if it matches the correct format
      */
     public static boolean isDateWithTime(String timeUnformmated) {
-        return timeUnformmated.matches(TootieRegex.DATE_WITH_TIME_REGEX);
+        return timeUnformmated.matches(duke.constants.DateFormats.DATE_WITH_TIME_REGEX);
     }
 
     /**

@@ -13,8 +13,8 @@ public class TootieNormalMsgs {
      * Help command descriptions
      */
     public static final String DEADLINE_COMMAND_DESCRIPTION =
-            "deadline: add a task with a deadline to the list" + NEWLINE + "  Parameters:  deadline t/TASKNAME " + "d"
-                    + "/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  "
+            "deadline: add a task with a deadline to the list" + NEWLINE + "  Parameters:  deadline t/TASKNAME "
+                    + "d/DUE_DATE" + NEWLINE + "  Example:  deadline t/write essay d/31-12-2020 04:55" + NEWLINE + "  "
                     + "Example:  deadline t/submit report d/30-10-2020" + NEWLINE;
     public static final String EVENT_COMMAND_DESCRIPTION =
             "event: add a scheduled event task to the list" + NEWLINE + "  Parameters:  event t/TASKNAME " + "s" +
@@ -230,4 +230,31 @@ public class TootieNormalMsgs {
             "previous settings loaded";
     public static final String SETTINGS_FILE_NOT_FOUND_MSG = "tootieSettings.txt save file not found" + NEWLINE +
             "Creating new file...";
+
+    /**
+     * All tasks loader messages
+     */
+    public static final String ERROR_READING_DUEDATE_FROM_FILE_MSG = "Error reading due date from line:" + NEWLINE +
+            "  %1$s";
+    public static final String ERROR_READING_ENDTIME_FROM_FILE_MSG = "Error reading end time from line:" + NEWLINE +
+            "  %1$s";
+    public static final String ERROR_READING_STARTTIME_FROM_FILE_MSG = "Error reading start time from line:" + NEWLINE + "  %1$s";
+    public static final String ERROR_READING_FILE_LINE_MSG = "Error reading file! Error on line:" + NEWLINE + "%1$s%n";
+    public static final String FILE_PATH_NO_FILE_ERROR_MSG = "File not found uwu" + NEWLINE +
+            "Failed to read from: %1$s";
+    public static final String ALL_TASKS_LOAD_OPTIONS_MSG = "Options:" + NEWLINE + "(1)Find existing file" + NEWLINE + "(2)Automatically " +
+            "create " + "directory and file" + NEWLINE + "(type \"1\" or \"2\")";
+    public static final String LOADING_ALL_TASKS_MSG = "Loading allTasks.txt save file...";
+    public static final String ALL_TASKS_FILE_NOT_FOUND_MSG = "Save file not found? " + duke.constants.TootieSymbols.CONFUSED_EMOTICON;
+    public static final String CANCEL_LOAD_ALL_TASKS_OPERATION_MSG = "Cancelled \"load save file\" operation";
+    public static final String SAVE_FILE_EMPTY_MSG = "Save file empty? " + duke.constants.TootieSymbols.CONFUSED_EMOTICON;
+    public static final String ENTER_THE_FULL_PATH_TO_EXISTING_FILE_MSG =
+            "Enter the full path to existing file (type \"cancel\" to cancel):";
+    public static final String AUTO_CREATE_DIRECTORY_AND_FILE_MSG = "Automatically creating directory and file";
+    public static final String RESPONSE_NOT_RECOGNISED_MSG = "Response not recognised? " + duke.constants.TootieSymbols.CONFUSED_EMOTICON;
+    public static final String TASKS_EXPECTED_SUMMARY_FORMAT = "%1$s task%2$s expected from file.";
+
+    public static final String TASKS_READ_SUCCESSFULLY_SUMMARY_FORMAT = "%1$d task%2$s read successfully!" + NEWLINE;
+    public static final String TOTAL_TASKS_LOADED_SUMMARY_FORMAT = "Total task%2$s in list: %1$d" + NEWLINE;
+    public static final String FILE_HEADER_INVALID_MSG = "File header invalid!";
 }
