@@ -104,7 +104,7 @@ public class fileFunctions {
             System.out.println(IO_ERROR_WHEN_MAKING_FILE_MSG);
         }
 
-        System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, filePath));
+        System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, newFile.getAbsolutePath()));
 
         return newFile.getAbsolutePath();
     }

@@ -26,7 +26,7 @@ public class SettingsSaver {
         File tootieSettingsFile = new File(tootieSettingsFilePath);
 
         if (tootieSettingsFile.createNewFile()){
-            System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, tootieSettingsFile.getName()));
+            System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, tootieSettingsFile.getAbsolutePath()));
         }
 
         // clear the file

@@ -38,7 +38,7 @@ public class AllTasksSaver {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy hh:mm aa");
 
         if (allTasksFile.createNewFile()){
-            System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, allTasksFile.getName()));
+            System.out.println(String.format(NEW_FILE_CREATED_MSG_FORMAT, allTasksFile.getAbsolutePath()));
         }
 
         // clear the file

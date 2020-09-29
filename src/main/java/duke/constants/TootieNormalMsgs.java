@@ -210,7 +210,7 @@ public class TootieNormalMsgs {
     /**
      * File creator msg
      */
-    public static final String NEW_FILE_CREATED_MSG_FORMAT = "New file created: %1$s";
+    public static final String NEW_FILE_CREATED_MSG_FORMAT = "New file created: %s";
     public static final String IO_ERROR_WHEN_MAKING_FILE_MSG = "IO error when making file!";
     public static final String FILE_ALREADY_EXISTS_MSG = "File already exists.";
     public static final String FILE_CREATED_PATH_MSG = "File created: ";
@@ -239,7 +239,7 @@ public class TootieNormalMsgs {
     public static final String ERROR_READING_ENDTIME_FROM_FILE_MSG = "Error reading end time from line:" + NEWLINE +
             "  %1$s";
     public static final String ERROR_READING_STARTTIME_FROM_FILE_MSG = "Error reading start time from line:" + NEWLINE + "  %1$s";
-    public static final String ERROR_READING_FILE_LINE_MSG = "Error reading file! Error on line:" + NEWLINE + "%1$s%n";
+    public static final String ERROR_READING_FILE_LINE_MSG = "Error reading file! Error on line:" + NEWLINE + "%1$s";
     public static final String FILE_PATH_NO_FILE_ERROR_MSG = "File not found uwu" + NEWLINE +
             "Failed to read from: %1$s";
     public static final String ALL_TASKS_LOAD_OPTIONS_MSG = "Options:" + NEWLINE + "(1)Find existing file" + NEWLINE + "(2)Automatically " +
