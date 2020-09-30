@@ -32,7 +32,7 @@ Notes:
     * right click the bar above your command line app to open properties
         * ![Open properties](https://github.com/AmeliaTYR/ip/blob/master/images/peropertise.png)
     * change the font to NSimSun
-        * ![Change font](images/fonttonimsun.png)
+        * ![Change font](https://github.com/AmeliaTYR/ip/blob/master/images/fonttonimsun.png)
     * run `java -Dfile.encoding=UTF-8 -jar ip.jar` to start the program
     
 ## Features 
