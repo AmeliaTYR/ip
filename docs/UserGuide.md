@@ -378,7 +378,23 @@ do project (by: Thu 30 Jan 2020 04:55 AM)
 
 **Formatting errors caught:**
 ```
+deadline t/submit report d/32-10-2020
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+Invalid due date
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
+```
+deadline t/
+==============================================
+Check deadline input formatting!
+
+deadline: add a task with a deadline to the list
+  Parameters:  deadline t/TASKNAME d/DUE_DATE
+  Example:  deadline t/write essay d/31-12-2020 04:55
+  Example:  deadline t/submit report d/30-10-2020
+
+==============================================
 ```
 
 ### Add an event: `event`
