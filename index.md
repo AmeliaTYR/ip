@@ -7,8 +7,8 @@ Tootie is a task list manager program
 ## Quick Start
 
 1. Ensure that you have Java 11 or above installed.
-1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
-  1. The current version is v1.1-alpha
+1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
+  1. The current version is **Tootie version 2.0**
 1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam
 1. You should be prompted to either load an existing save file or create a new file. 
   1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
@@ -30,8 +30,10 @@ Notes:
         * you may do this by typing `cmd` in the location bar of Windows Explorer and pressing the Enter key
     * run `chcp 65001` to change to UTF-8
     * right click the bar above your command line app to open properties
+        * ![Open properties](/images/peropertise.png)
     * change the font to NSimSun
-    * run `java -Dfile.encoding=UTF-8 -jar ip.jar`
+        * ![Change font](/images/fonttonimsun.png)
+    * run `java -Dfile.encoding=UTF-8 -jar ip.jar` to start the program
     
 ## Features 
 
@@ -395,7 +397,7 @@ load
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 Loading allTasks.txt save file...
 Enter the full path to existing file (type "cancel" to cancel):
-C:\Users\Sophie\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
+C:\Users\Sophia\Documents\GitHub\ip\text-ui-test\data\allTasks.txt
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 3 tasks expected from file.
 3 tasks read successfully!
