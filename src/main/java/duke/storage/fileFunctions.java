@@ -83,7 +83,7 @@ public class fileFunctions {
             boolean isFileCreated = file.mkdir();
             if(isFileCreated){
                 System.out.println(DIRECTORY_CREATED_SUCCESSFULLY_MSG);
-                filePath = filePath + "/" + txtFileName + ".txt";
+                filePath = directoryPath + "/" + txtFileName + ".txt";
             }else{
                 System.out.println(COULD_NOT_CREATE_DIRECTORY_MSG);
             }

@@ -46,7 +46,7 @@ public class SettingsLoader {
                     dividerChoice, username);
         } catch (FileNotFoundException e) {
             System.out.println(SETTINGS_FILE_NOT_FOUND_MSG);
-            tootieSettingsFilePath = fileFunctions.autoCreateNewFile(TootieFilePaths.DEFAULT_ALL_TASKS_FILE_PATH);
+            tootieSettingsFilePath = fileFunctions.autoCreateNewFile(duke.constants.TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH);
         } catch (FileEmptyException e) {
             System.out.println(SETTINGS_FILE_EMPTY_MSG);
         }
