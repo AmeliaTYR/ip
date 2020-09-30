@@ -5,7 +5,15 @@
 * [Introduction](#introduction)
 * [Quick Start](#quick-start)
 * [Features](#features)
-    * [Basic CLI commands](basic-cli-commands)
+    * [Basic CLI commands](#basic-cli-commands)
+    * [Add Task items](#add-task-items)
+    * [Modify task list](#modify-task-list)
+    * [List view](#list-view)
+    * [Customisation](#customisation)
+    * [Basic error handling](#basic-error-handling)    
+    * [Set up file paths](#set-up-file-paths)
+* [FAQ](#faq)
+* [Command Summary](#command-summary)
 
 ## Introduction
 
@@ -273,8 +281,10 @@ All tasks saved.
 All settings saved.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
+<h3 id="add-task-items">
+  2) Add Task items
+</h3>
 
-### 2) Add Task items
 Add a `todo`, `deadline` or`event` to the list of tasks.
 
 ### Add a todo: `todo`
@@ -463,7 +473,10 @@ Cancelled "load save file" operation
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-### 3) Modify task list
+<h3 id="modify-task-list">
+  3) Modify task list
+</h3>
+
 Mark a task as `done` or `undone`, or `delete` the task from the list.
 
 ### Mark a task done: `done`
@@ -557,8 +570,10 @@ delete 0
 No such task? (・∧‐)ゞ
 ==============================================
 ```
+<h3 id="list-view">
+  4) List view
+</h3>
 
-### 4) List view
 View all tasks in the list, or run a filtered search for specific tasks
 
 ### List all tasks: `list`
@@ -668,8 +683,10 @@ filter tt/deadline db/13-02-2000
 No tasks matching parameters found? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
+<h3 id="customisation">
+  5) Customisation
+</h3>
 
-### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
 
 ### Change username: `username`
@@ -753,7 +770,10 @@ Divider choice not found? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-### 6) Basic error handling
+<h3 id="basic-error-handling">
+  6) Basic error handling
+</h3>
+
 If an unrecognised command is used, Tootie will feedback to the user.
 
 ### Unrecognised commands
@@ -767,7 +787,10 @@ Type "help" for a list of commands!
 ==============================================
 ```
 
-### 7) Set up file paths
+<h3 id="set-up-file-paths">
+  7) Set up file paths
+</h3>
+
 Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt save locations
 
 **Ask user for allTasks.txt absolute path**
