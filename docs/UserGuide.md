@@ -1,5 +1,20 @@
 # Tootie User Guide
 
+## Contents page
+
+* [Introduction](#introduction)
+* [Quick Start](#quick-start)
+* [Features](#features)
+    * [Basic CLI commands](#basic-cli-commands)
+    * [Add Task items](#add-task-items)
+    * [Modify task list](#modify-task-list)
+    * [List view](#list-view)
+    * [Customisation](#customisation)
+    * [Basic error handling](#basic-error-handling)    
+    * [Set up file paths](#set-up-file-paths)
+* [FAQ](#faq)
+* [Command Summary](#command-summary)
+
 ## Introduction
 
 Tootie is a task list manager program
@@ -9,7 +24,7 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
     1. The current version is **Tootie version 2.0**
-1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See Notes below for Unicode support set-up)
+1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See **Notes** below for Unicode support set-up)
 1. You should be prompted to either load an existing save file or create a new file.
     1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
     1. If you see this segment, Tootie has successfully been set up.
@@ -40,7 +55,21 @@ Notes:
     
 ## Features 
 
-### 1) Basic CLI commands
+* The command keywords are not case-sensitive (eg list), and neither are the indicator tags (eg t/)
+* There are 5 different categories of commands for Tootie as follows:
+
+Basic CLI commands | Add Task items | Modify task list |  List view | Customisation
+------------ | ------------- | ------------- | ------------- | ------------- |
+`help` | `todo` | `done` | `list` | `username`
+`filepath` | `event` | `undone` | `filter` | `divider`
+`save` | `deadline` | `delete` |- |- |
+`bye` | `load`| - |- |- |
+
+
+<h3 id="basic-cli-commands">
+  1) Basic CLI commands
+</h3>
+
 Basic commands to use the program
 
 ### Bring up help guide: `help`
@@ -51,7 +80,7 @@ Displays a list of commands tootie understands, or search for a specific command
 * `COMMAND` is a command the user may specifically search for. If no command matching the search command is found an error message will be displayed.
 * The command can have no arguments, and will print the full list of commands
 
-**Example of usage: **
+**Example of usage:**
 
 `help`
 
@@ -263,8 +292,10 @@ All tasks saved.
 All settings saved.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
+<h3 id="add-task-items">
+  2) Add Task items
+</h3>
 
-### 2) Add Task items
 Add a `todo`, `deadline` or`event` to the list of tasks.
 
 ### Add a todo: `todo`
@@ -388,6 +419,20 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ```
 
 **Formatting errors caught:**
+Missing arguments: 
+
+```
+event t/
+==============================================
+Check event input formatting!
+
+event: add a scheduled event task to the list
+  Parameters:  event t/TASKNAME s/START_TIME e/END_TIME
+  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
+  Example:  event t/clean room s/31-12-2020 e/31-12-2020
+
+==============================================
+```
 Date is not a real calendar date:
 ```
 event t/clean house s/31-12-2020 e/31-02-2020
@@ -395,6 +440,7 @@ event t/clean house s/31-12-2020 e/31-02-2020
 Invalid end date
 ==============================================
 ```
+End date is before start time error:
 ```
 event t/clean cupboard e/31-12-2020 s/05-02-2021
 ==============================================
@@ -405,8 +451,8 @@ Error! End time cannot be before start time!
 ### Add tasks from existing file: `load`
 Load tasks from an existing allTasks.txt file and add them to the list of tasks in the current session.
 
-Format: `load`**
-**
+**Format: `load`**
+
 * The user will be prompted to indicate the full file path of the existing file. 
 * The user may cancel the operation by typing `cancel` instead of the file path when prompted.
 
@@ -438,7 +484,10 @@ Cancelled "load save file" operation
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-### 3) Modify task list
+<h3 id="modify-task-list">
+  3) Modify task list
+</h3>
+
 Mark a task as `done` or `undone`, or `delete` the task from the list.
 
 ### Mark a task done: `done`
@@ -532,8 +581,10 @@ delete 0
 No such task? (・∧‐)ゞ
 ==============================================
 ```
+<h3 id="list-view">
+  4) List view
+</h3>
 
-### 4) List view
 View all tasks in the list, or run a filtered search for specific tasks
 
 ### List all tasks: `list`
@@ -643,8 +694,10 @@ filter tt/deadline db/13-02-2000
 No tasks matching parameters found? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
+<h3 id="customisation">
+  5) Customisation
+</h3>
 
-### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
 
 ### Change username: `username`
@@ -728,7 +781,10 @@ Divider choice not found? (・∧‐)ゞ
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
 
-### 6) Basic error handling
+<h3 id="basic-error-handling">
+  6) Basic error handling
+</h3>
+
 If an unrecognised command is used, Tootie will feedback to the user.
 
 ### Unrecognised commands
@@ -742,11 +798,48 @@ Type "help" for a list of commands!
 ==============================================
 ```
 
-### 7) Set up file paths
+<h3 id="set-up-file-paths">
+  7) Set up file paths
+</h3>
+
 Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt save locations
 
 **Ask user for allTasks.txt absolute path**
 
+```
+Hello from
+ _____           _   _
+|_   _|         | | (_)
+  | | ___   ___ | |_ _  ___
+  | |/ _ \ / _ \| __| |/ _ \
+  | | (_) | (_) | |_| |  __/
+  \_/\___/ \___/ \__|_|\___|
+
+Tootie - Version 2.0
+==============================================
+Loading tootieSettings.txt save file...
+tootieSettings.txt save file not found
+Creating new file...
+Auto creating new file using path: C:\Users\Amelia\Downloads\data\tootieSettings.txt
+File does not exist.
+Directory created successfully （´・ω・ `）
+File created:
+New file created: C:\Users\Amelia\Downloads\data\tootieSettings.txt
+==============================================
+Loading allTasks.txt save file...
+Save file not found? (・∧‐)ゞ
+Options:
+(1)Find existing file
+(2)Automatically create directory and file
+(type "1" or "2")
+2
+Automatically creating directory and file
+Auto creating new file using path: C:\Users\Amelia\Downloads\data\allTasks.txt
+File does not exist.
+Sorry, could not create specified directory
+File created:
+New file created: C:\Users\Amelia\Downloads\data\allTasks.txt
+```
 
 ## FAQ
 
@@ -785,3 +878,5 @@ list |List all tasks|_list_
 filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
 username|Change username|_username Ames_
 divider|Mark a task done|_divider 1_
+
+[Jump to top](#tootie-user-guide)
