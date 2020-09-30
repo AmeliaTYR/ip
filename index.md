@@ -30,7 +30,7 @@ Notes:
         * you may do this by typing `cmd` in the location bar of Windows Explorer and pressing the Enter key
     * run `chcp 65001` to change to UTF-8
     * right click the bar above your command line app to open properties
-        * ![Open properties](https://github.com/AmeliaTYR/ip/blob/master/images/peropertise.png)
+        * ![Check 65001 UTF-8](https://github.com/AmeliaTYR/ip/blob/master/images/peropertise.png)
     * check that the `chcp 65001` command worked here:  
         * ![Open properties](https://github.com/AmeliaTYR/ip/blob/master/images/utf865001.png)
     * change the font to NSimSun
