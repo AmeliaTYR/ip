@@ -755,7 +755,7 @@ Select a divider from the list of dividers for customisation
   dividers avaliable:
 1. SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 1. PLAIN ----------------------------------------------
-1. SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
+1. SIMPLE \*---\*---\*---\*---\*---\*---\*---\*---\*---\*---\*---\*
 1. DOUBLE ==============================================
 
 **Format: `divider DIVIDER_INDEX`**
