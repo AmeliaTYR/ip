@@ -64,3 +64,4 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 ## Modifications
 
 Duke name changed to Tootie in honor of Tootie the terrapin
+![Tootie-pa-tootie](https://github.com/AmeliaTYR/ip/blob/master/images/tootie-pa-tootie.png)
