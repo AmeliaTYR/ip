@@ -4,8 +4,9 @@ Tootie is a task list manager program
 ## Setting up for use 
 
 1. Ensure that you have Java 11 or above installed.
-1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/v1.1-alpha).
+1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
     1. The current version is Tootie version 2.0
+1. Check out the user guide page [here](https://ameliatyr.github.io/ip/) for instructions on how to use Tootie. 
 
 Notes:
 * All comments starting with # will be ignored.
