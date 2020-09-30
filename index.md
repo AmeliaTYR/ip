@@ -60,7 +60,7 @@ Notes:
 
 Basic CLI commands | Add Task items | Modify task list |  List view | Customisation
 ------------ | ------------- | ------------- | ------------- | ------------- |
-`help` | `todo` | `done` | `list` | `username`
+[`help`](#bring-up-help-guide) | `todo` | `done` | `list` | `username`
 `filepath` | `event` | `undone`  | `filter` | `divider`
 `save` | `deadline` | `delete` |- |- |
 `bye` | `load`| - |- |- |
