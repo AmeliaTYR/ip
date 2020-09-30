@@ -388,6 +388,20 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ```
 
 **Formatting errors caught:**
+Missing arguments: 
+
+```
+event t/
+==============================================
+Check event input formatting!
+
+event: add a scheduled event task to the list
+  Parameters:  event t/TASKNAME s/START_TIME e/END_TIME
+  Example:  event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45
+  Example:  event t/clean room s/31-12-2020 e/31-12-2020
+
+==============================================
+```
 Date is not a real calendar date:
 ```
 event t/clean house s/31-12-2020 e/31-02-2020
@@ -395,6 +409,7 @@ event t/clean house s/31-12-2020 e/31-02-2020
 Invalid end date
 ==============================================
 ```
+End date is before start time error:
 ```
 event t/clean cupboard e/31-12-2020 s/05-02-2021
 ==============================================
