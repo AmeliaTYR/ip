@@ -31,9 +31,12 @@ Notes:
     * run `chcp 65001` to change to UTF-8
     * right click the bar above your command line app to open properties
         * ![Open properties](https://github.com/AmeliaTYR/ip/blob/master/images/peropertise.png)
+    * check that the `chcp 65001` command worked here:  
+        * ![Open properties](https://github.com/AmeliaTYR/ip/blob/master/images/utf865001.png)
     * change the font to NSimSun
         * ![Change font](https://github.com/AmeliaTYR/ip/blob/master/images/fonttonimsun.png)
     * run `java -Dfile.encoding=UTF-8 -jar ip.jar` to start the program
+    * Note that you need to set this up each time you re-open cmd 
     
 ## Features 
 
