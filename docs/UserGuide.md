@@ -8,18 +8,18 @@ Tootie is a task list manager program
 
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
-  1. The current version is **Tootie version 2.0**
-1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam
-1. You should be prompted to either load an existing save file or create a new file. 
-  1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
-  1. If you see this segment, Tootie has successfully been set up.
+    1. The current version is **Tootie version 2.0**
+1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See Notes below for Unicode support set-up)
+1. You should be prompted to either load an existing save file or create a new file.
+    1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
+    1. If you see this segment, Tootie has successfully been set up.
      ```
      Hello user! I'm Tootie!
      What can I do for you?
      ==============================================
      ```
-  1. You may then begin entering commands. 
-  1. Enjoy!
+    1. You may then begin entering commands. 
+    1. Enjoy!
 
 Notes:
 * All commands starting with # will be ignored.
@@ -30,10 +30,13 @@ Notes:
         * you may do this by typing `cmd` in the location bar of Windows Explorer and pressing the Enter key
     * run `chcp 65001` to change to UTF-8
     * right click the bar above your command line app to open properties
-        * ![Open properties](/images/peropertise.png)
+        * ![Open properties](images/peropertise.png)
+    * check that the `chcp 65001` command worked here:  
+        * ![Check 65001 UTF-8](images/utf865001.png)
     * change the font to NSimSun
-        * ![Change font](/images/fonttonimsun.png)
+        * ![Change font](images/fonttonimsun.png)
     * run `java -Dfile.encoding=UTF-8 -jar ip.jar` to start the program
+    * Note that you need to set this up each time you re-open cmd 
     
 ## Features 
 
@@ -43,12 +46,12 @@ Basic commands to use the program
 ### Bring up help guide: `help`
 Displays a list of commands tootie understands, or search for a specific command for the command description
 
-Format: `help [COMMAND]`
+**Format: `help [COMMAND]`**
 
 * `COMMAND` is a command the user may specifically search for. If no command matching the search command is found an error message will be displayed.
 * The command can have no arguments, and will print the full list of commands
 
-Example of usage: 
+**Example of usage: **
 
 `help`
 
@@ -56,7 +59,7 @@ Example of usage:
 
 `help list`
 
-Expected outcome:
+**Expected outcome:**
 
 for the full list of commands
 ```
@@ -188,17 +191,17 @@ divider: select a divider for customisation
 ### Display file paths: `filepath` or `filepaths`
 Display file paths of save files
 
-Format: `filepath` or `filepaths`
+**Format: `filepath` or `filepaths`**
 
 * The command can be spelled with or without the 's' at the end
 
-Example of usage: 
+**Example of usage:** 
 
 `filepath`
 
 `filepaths`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 filepath
@@ -223,15 +226,15 @@ C:/Users/Amelia/Documents/GitHub/ip/text-ui-test/data/tootieSettings.txt
 ### Manually save all tasks: `save`
 Allows user to manually save all tasks in the list to the save file
 
-Format: `save`
+**Format: `save`**
 
 * It is not necessary to use this function as the list is automatically saved at the end of the program, but the user may do so anyway in case the program was closed accidentally.
 
-Example of usage: 
+**Example of usage:** 
 
 `save`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 save
@@ -243,13 +246,13 @@ All tasks saved!
 ### Close the program: `bye`
 Signals the end of the program use and automatically saves settings and tasks in the task list
 
-Format: `bye`
+**Format: `bye`**
 
-Example of usage: 
+**Example of usage:** 
 
 `bye`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 bye
@@ -267,17 +270,17 @@ Add a `todo`, `deadline` or`event` to the list of tasks.
 ### Add a todo: `todo`
 Adds a new todo task to the list of tasks.
 
-Format: `todo n/TASKNAME`
+**Format: `todo n/TASKNAME`**
 
 * The `TODO_NAME` cannot contain slashes.  
 
-Example of usage: 
+**Example of usage:** 
 
 `todo n/Write the rest of the User Guide`
 
 `todo n/Refactor the User Guide to remove passive voice`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 todo t/clean turtle tank
@@ -285,7 +288,7 @@ todo t/clean turtle tank
 added todo: clean turtle tank
 =============================================
 ```
-Formatting errors caught:
+**Formatting errors caught:**
 ```
 todo
 ==============================================
@@ -308,14 +311,14 @@ todo taskname is empty? (・∧‐)ゞ
 ### Add a deadline: `deadline`
 Adds a new deadline task to the list of tasks.
 
-Format: `deadline t/TASKNAME d/DUE_DATE`
+**Format: `deadline t/TASKNAME d/DUE_DATE`**
 
 * The `TASKNAME` cannot contain slashes.  
 * The `DUE_DATE` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
 * The `DUE_DATE` must be a valid calendar date. 
 * The parameters can be in any order
 
-Example of usage: 
+**Example of usage:** 
 
 `deadline t/write essay d/31-12-2020 04:55`
 
@@ -323,7 +326,7 @@ Example of usage:
 
 `deadline d/30-10-2020 t/submit report `
 
-Expected outcome:
+**Expected outcome:**
 
 if no time is added the time defaults to 12:00AM
 ```
@@ -342,17 +345,22 @@ do project (by: Thu 30 Jan 2020 04:55 AM)
 ==============================================
 ```
 
+**Formatting errors caught:**
+```
+
+```
+
 ### Add an event: `event`
 Adds a new scheduled event task to the list of tasks.
 
-Format: `event t/TASKNAME s/START_TIME e/END_TIME`
+**Format: `event t/TASKNAME s/START_TIME e/END_TIME`**
 
 * The `TASKNAME` cannot contain slashes.  
 * The `START_TIME` and `END_TIME` can be of the format "dd-MM-yyyy HH:mm" with the time in 24-Hr format or "dd-MM-yyyy".
 * The `START_TIME` should be before the `END_TIME`.
 * The parameters can be in any order
 
-Example of usage: 
+**Example of usage:** 
 
 `event t/clean room s/31-12-2020 04:55 e/31-12-2020 05:45`
 
@@ -360,7 +368,7 @@ Example of usage:
 
 `event e/31-12-2020 t/clean room s/31-12-2020`
 
-Expected outcome:
+**Expected outcome:**
 
 if no time is added the time defaults to 12:00AM
 ```
@@ -379,19 +387,34 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ==============================================
 ```
 
+**Formatting errors caught:**
+Date is not a real calendar date:
+```
+event t/clean house s/31-12-2020 e/31-02-2020
+==============================================
+Invalid end date
+==============================================
+```
+```
+event t/clean cupboard e/31-12-2020 s/05-02-2021
+==============================================
+Error! End time cannot be before start time!
+==============================================
+```
+
 ### Add tasks from existing file: `load`
 Load tasks from an existing allTasks.txt file and add them to the list of tasks in the current session.
 
-Format: `load`
-
+Format: `load`**
+**
 * The user will be prompted to indicate the full file path of the existing file. 
 * The user may cancel the operation by typing `cancel` instead of the file path when prompted.
 
-Example of usage: 
+**Example of usage:** 
 
 `load`
 
-Expected outcome:
+**Expected outcome:**
 ```
 load
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
@@ -421,15 +444,15 @@ Mark a task as `done` or `undone`, or `delete` the task from the list.
 ### Mark a task done: `done`
 Marks an indicated task done by index
 
-Format: `done TASK_INDEX`
+**Format: `done TASK_INDEX`**
 
 * The `TASK_INDEX` should be within range of tasks in the list
 
-Example of usage: 
+**Example of usage:** 
 
 `done 1`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 done 3
@@ -451,15 +474,15 @@ No such task? (・∧‐)ゞ
 ### Mark a task undone: `undone`
 Marks an indicated task undone by index
 
-Format: `undone TASK_INDEX`
+**Format: `undone TASK_INDEX`**
 
 * The `TASK_INDEX` should be within range of tasks in the list
 
-Example of usage: 
+**Example of usage:** 
 
 `undone 1`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 undone 5
@@ -482,15 +505,15 @@ No such task? (・∧‐)ゞ
 ### Delete a task: `delete`
 Delete a task from the task list by index
 
-Format: `delete TASK_INDEX`
+**Format: `delete TASK_INDEX`**
 
 * The `TASK_INDEX` should be within range of tasks in the list
 
-Example of usage: 
+**Example of usage:** 
 
 `delete 1`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 delete 2
@@ -516,13 +539,13 @@ View all tasks in the list, or run a filtered search for specific tasks
 ### List all tasks: `list`
 Displays all the tasks in the list
 
-Format: `list`
+**Format: `list`**
 
-Example of usage: 
+**Example of usage:** 
 
 `list`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 list
@@ -544,7 +567,7 @@ You have 10 tasks, 9 not done
 ### Filtered search: `filter`
 Filters out tasks from the list according to the parameters
 
-Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES cs/COMPLETION_STATUS`
+**Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES cs/COMPLETION_STATUS`**
 
 * The parameters can be in any order.
 * The command should contain at least one search parameter.
@@ -563,7 +586,7 @@ Format: `filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/E
 * If the "before" dates are after the "after" dates, they will be automatically swapped.
 * For the `COMPLETION_STATUS`, passing the argument `done` filters for tasks that are done, while passing `undone` filters for arguments that are not done.
 
-Example of usage: 
+**Example of usage:** 
 
 `filter tt/event sb/13-01-2019 ea/31-01-2020`
 
@@ -575,7 +598,7 @@ Example of usage:
 
 `filter cs/done`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 filter tt/event,todo
@@ -590,6 +613,36 @@ filter tt/event,todo
 Filtered! 7 tasks found, 5 incomplete.
 ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
 ```
+Filter by end date before or after example:
+```
+filter tt/event eb/13-01-2021
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+8. [E][✗] clean socks (from: Sat 1 Feb 2020 04:55 AM to Thu 31 Dec 2020 05:45 AM)
+Filtered! 1 task found, 1 incomplete.
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+filter tt/event ea/13-01-2021
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+6. [E][✗] clean kitchen (from: Sat 12 Dec 2020 12:00 AM to Fri 31 Dec 2021 12:00 AM)
+7. [E][✗] clean shoes (from: Sat 1 Feb 2020 12:00 AM to Fri 31 Dec 2021 05:45 AM)
+Filtered! 2 tasks found, 2 incomplete.
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+Filter out only completed tasks:
+```
+filter cs/done
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+2. [D][✓] do project (by: Thu 30 Jan 2020 04:55 PM)
+3. [T][✓] clean turtle tank
+Filtered! 2 tasks found, all complete!
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
+If tasks matching parameters selected are found:
+```
+filter tt/deadline db/13-02-2000
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+No tasks matching parameters found? (・∧‐)ゞ
+─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+```
 
 ### 5) Customisation
 Customise Tootie by changing your username, and the style of line divider used.
@@ -597,15 +650,15 @@ Customise Tootie by changing your username, and the style of line divider used.
 ### Change username: `username`
 Change username stored in system
 
-Format: `username USERNAME`
+**Format: `username USERNAME`**
 
 * The `USERNAME` may have spaces
 
-Example of usage: 
+**Example of usage:** 
 
 `username Tootie`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 username Sophia
@@ -636,15 +689,15 @@ Select a divider from the list of dividers for customisation
 1. SIMPLE *---*---*---*---*---*---*---*---*---*---*---*
 1. DOUBLE ==============================================
 
-Format: `divider DIVIDER_INDEX`
+**Format: `divider DIVIDER_INDEX`**
 
 * The `DIVIDER_INDEX` should be a number from 1 to 4
 
-Example of usage: 
+**Example of usage:** 
 
 `divider 1`
 
-Expected outcome:
+**Expected outcome:**
 
 ```
 ==============================================
@@ -679,7 +732,7 @@ Divider choice not found? (・∧‐)ゞ
 If an unrecognised command is used, Tootie will feedback to the user.
 
 ### Unrecognised commands
-Expected outcome:
+**Expected outcome:**
 
 ```
 blah
@@ -692,7 +745,8 @@ Type "help" for a list of commands!
 ### 7) Set up file paths
 Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt save locations
 
-### Ask user for allTasks.txt absolute path
+**Ask user for allTasks.txt absolute path**
+
 
 ## FAQ
 
