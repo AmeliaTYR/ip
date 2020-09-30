@@ -80,7 +80,7 @@ Displays a list of commands tootie understands, or search for a specific command
 * `COMMAND` is a command the user may specifically search for. If no command matching the search command is found an error message will be displayed.
 * The command can have no arguments, and will print the full list of commands
 
-**Example of usage: **
+**Example of usage:**
 
 `help`
 
@@ -451,8 +451,8 @@ Error! End time cannot be before start time!
 ### Add tasks from existing file: `load`
 Load tasks from an existing allTasks.txt file and add them to the list of tasks in the current session.
 
-Format: `load`**
-**
+**Format: `load`**
+
 * The user will be prompted to indicate the full file path of the existing file. 
 * The user may cancel the operation by typing `cancel` instead of the file path when prompted.
 
