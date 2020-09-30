@@ -12,6 +12,7 @@
     * [Customisation](#customisation)
     * [Basic error handling](#basic-error-handling)    
     * [Set up file paths](#set-up-file-paths)
+    * [Edit files directly](#edit-files-directly)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
@@ -856,6 +857,31 @@ Sorry, could not create specified directory
 File created:
 New file created: C:\Users\Amelia\Downloads\data\allTasks.txt
 ```
+<h3 id="edit-files-directly">
+  8) Edit files directly
+</h3>
+
+**Editing tootieSettings.txt file:**
+
+You may change your username, or change the divider to any of the 4 options dividers avaliable (by typing the word itself, not case sensitive):
+
+1. SPARKLY ─────── ✱*.｡:｡✱*.:｡✧*.｡✰*.:｡✧*.｡:｡*.｡✱ ───────
+1. PLAIN ----------------------------------------------
+1. SIMPLE \*---\*---\*---\*---\*---\*---\*---\*---\*---\*---\*---\*
+1. DOUBLE ==============================================
+
+![Sample View of tootieSettings.txt file](images/settingssampel.png)
+
+**Editing allTasks.txt file:**
+The first part of the file indicates the number of tasks and number of tasks completed.
+![task list task counts](images/numtassks.png)
+
+The second part is the instructions on the format of the tasks below. This is automatically printed by the program.
+![task list instructions](images/instruction.png)
+
+You may edit the task list directly following the instructions above. Only edit the tasks below the line "Tasks:".
+![task list](images/alltaskstasks.png)
+
 
 ## FAQ
 
@@ -865,7 +891,7 @@ New file created: C:\Users\Amelia\Downloads\data\allTasks.txt
 
 **Q**: How do I find the save files for allTasks.txt and tootieSettings.txt?
 
-**A**: Use the `filepath` command in the program to retrieve the absolute file paths for both files. \(Note: they may not be in the same location\)
+**A**: Use the `filepath` command in the program to retrieve the absolute file paths for both files. 
 
 **Q**: Can I change the Tootie logo at the start of the program?
 
