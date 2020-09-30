@@ -24,7 +24,7 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
     1. The current version is **Tootie version 2.0**
-1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See Notes below for Unicode support set-up)
+1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See **Notes** below for Unicode support set-up)
 1. You should be prompted to either load an existing save file or create a new file.
     1. If this is your first time using Tootie, just enter `2` to automatically create the file. 
     1. If you see this segment, Tootie has successfully been set up.
@@ -806,6 +806,40 @@ Initial interaction with Tootie to set up allTasks.txt and tootieSettings.txt sa
 
 **Ask user for allTasks.txt absolute path**
 
+```
+Hello from
+ _____           _   _
+|_   _|         | | (_)
+  | | ___   ___ | |_ _  ___
+  | |/ _ \ / _ \| __| |/ _ \
+  | | (_) | (_) | |_| |  __/
+  \_/\___/ \___/ \__|_|\___|
+
+Tootie - Version 2.0
+==============================================
+Loading tootieSettings.txt save file...
+tootieSettings.txt save file not found
+Creating new file...
+Auto creating new file using path: C:\Users\Amelia\Downloads\data\tootieSettings.txt
+File does not exist.
+Directory created successfully （´・ω・ `）
+File created:
+New file created: C:\Users\Amelia\Downloads\data\tootieSettings.txt
+==============================================
+Loading allTasks.txt save file...
+Save file not found? (・∧‐)ゞ
+Options:
+(1)Find existing file
+(2)Automatically create directory and file
+(type "1" or "2")
+2
+Automatically creating directory and file
+Auto creating new file using path: C:\Users\Amelia\Downloads\data\allTasks.txt
+File does not exist.
+Sorry, could not create specified directory
+File created:
+New file created: C:\Users\Amelia\Downloads\data\allTasks.txt
+```
 
 ## FAQ
 
