@@ -6,7 +6,6 @@ Tootie is a task list manager program
 1. Ensure that you have Java 11 or above installed.
 1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
     1. The current version is Tootie version 2.0
-1. Check out the user guide page [here](https://ameliatyr.github.io/ip/) for instructions on how to use Tootie. 
 
 Notes:
 * All comments starting with # will be ignored.
@@ -20,7 +19,7 @@ Notes:
     * change the font to NSimSun
     * run `java -Dfile.encoding=UTF-8 -jar ip.jar`
     
-Further instructions on using Tootie can be found at the user guide [here](https://ameliatyr.github.io/ip/)
+Further instructions on using Tootie can be found at the **user guide** [here](https://ameliatyr.github.io/ip/)
 
 ## Setting up in Intellij for editing
 
