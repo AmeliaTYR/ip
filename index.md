@@ -844,3 +844,5 @@ list |List all tasks|_list_
 filter|Filtered search|_filter st/SEARCH_TERM sb/START_BEFORE sa/START_AFTER eb/END_BEFORE ea/END_AFTER db/DUE_BEFORE da/DUE_AFTER tt/TASK_TYPES_
 username|Change username|_username Ames_
 divider|Mark a task done|_divider 1_
+
+[Jump to top](#tootie-user-guide)
