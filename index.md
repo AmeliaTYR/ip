@@ -55,6 +55,17 @@ Notes:
     
 ## Features 
 
+* The command keywords are not case-sensitive (eg list), and neither are the indicator tags (eg t/)
+* There are 5 different categories of commands for Tootie as follows:
+
+Basic CLI commands | Add Task items | Modify task list |  List view | Customisation
+------------ | ------------- | ------------- | ------------- | ------------- |
+`help` | `todo` | `done` | `list` | `username`
+`filepath` | `event` | `undone`  | `filter` | `divider`
+`save` | `deadline` | `delete` |- |- |
+`bye` | `load`| - |- |- |
+
+
 <h3 id="basic-cli-commands">
   1) Basic CLI commands
 </h3>
