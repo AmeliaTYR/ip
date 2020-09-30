@@ -3,8 +3,8 @@ package duke.storage;
 import duke.exceptions.FileEmptyException;
 import duke.exceptions.SettingObjectWrongFormatException;
 import duke.constants.DividerChoice;
-import duke.constants.TootieFilePaths;
-import duke.parsers.*;
+import duke.parsers.Checks;
+import duke.parsers.Parsers;
 
 import java.io.File;
 import java.io.FileNotFoundException;

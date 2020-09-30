@@ -9,7 +9,9 @@ import duke.exceptions.TasklistEmptyException;
 
 import duke.task.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import static duke.constants.TootieNormalMsgs.ALL_FILTERED_TASKS_COMPLETE_MSG_FORMAT;
 import static duke.constants.TootieNormalMsgs.FILEPATH_PRINTER_FORMAT;

@@ -1,6 +1,8 @@
 package duke.tootieFunctions;
 
-import duke.constants.*;
+import duke.constants.CommandType;
+import duke.constants.DividerChoice;
+import duke.constants.TootieErrorMsgs;
 import duke.exceptions.DeadlineInputWrongFormatException;
 import duke.exceptions.DividerNonexistantException;
 import duke.exceptions.DueDateWrongFormatException;
@@ -19,6 +21,7 @@ import duke.exceptions.TasklistEmptyException;
 import duke.exceptions.ToDoInputWrongFormatException;
 import duke.exceptions.UsernameCommandInvalidException;
 import duke.exceptions.UsernameEmptyException;
+
 import duke.parsers.Parsers;
 import duke.storage.AllTasksSaver;
 import duke.task.Task;

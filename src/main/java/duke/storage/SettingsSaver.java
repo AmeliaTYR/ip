@@ -2,7 +2,7 @@ package duke.storage;
 
 import duke.constants.DividerChoice;
 import duke.constants.TootieFileMsgs;
-import duke.parsers.*;
+import duke.parsers.Parsers;
 
 import java.io.File;
 import java.io.FileWriter;
