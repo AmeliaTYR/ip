@@ -61,7 +61,8 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    
    The logo itself will vary between runs at random
    
-## Modifications
+## Name change rationale
 
 Duke name changed to Tootie in honor of Tootie the terrapin
+
 ![Tootie-pa-tootie](https://github.com/AmeliaTYR/ip/blob/master/images/tootie-pa-tootie.png)
