@@ -1,5 +1,12 @@
 # Tootie User Guide
 
+## Contents page
+
+* [Introduction](#introduction)
+* [Quick Start](#quick-start)
+* [Features](#features)
+    * [Basic CLI commands](basic-cli-commands)
+
 ## Introduction
 
 Tootie is a task list manager program
@@ -40,7 +47,10 @@ Notes:
     
 ## Features 
 
-### 1) Basic CLI commands
+<h3 id="basic-cli-commands">
+  1) Basic CLI commands
+</h3>
+
 Basic commands to use the program
 
 ### Bring up help guide: `help`
