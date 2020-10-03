@@ -79,7 +79,8 @@ Displays a list of commands tootie understands, or search for a specific command
 **Format: `help [COMMAND]`**
 
 * `COMMAND` is a command the user may specifically search for. If no command matching the search command is found an error message will be displayed.
-* The command can have no arguments, and will print the full list of commands
+* The command can have no arguments, and will print the simplified list of commands.
+* Typing `full` as the argument prints the full list of commands.
 
 **Example of usage:**
 
