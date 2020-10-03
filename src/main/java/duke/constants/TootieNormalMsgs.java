@@ -245,6 +245,7 @@ public class TootieNormalMsgs {
     public static final String ALL_TASKS_LOAD_OPTIONS_MSG = "Options:" + NEWLINE + "(1)Find existing file" + NEWLINE + "(2)Automatically " +
             "create " + "directory and file" + NEWLINE + "(type \"1\" or \"2\")";
     public static final String LOADING_ALL_TASKS_MSG = "Loading allTasks.txt save file...";
+    public static final String LOADING_SETTINGS_MSG = "Loading tootieSettings.txt save file...";
     public static final String ALL_TASKS_FILE_NOT_FOUND_MSG = "Save file not found? " + duke.constants.TootieSymbols.CONFUSED_EMOTICON;
     public static final String CANCEL_LOAD_ALL_TASKS_OPERATION_MSG = "Cancelled \"load save file\" operation";
     public static final String SAVE_FILE_EMPTY_MSG = "Save file empty? " + duke.constants.TootieSymbols.CONFUSED_EMOTICON;

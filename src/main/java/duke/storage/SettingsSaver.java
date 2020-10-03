@@ -32,14 +32,14 @@ public class SettingsSaver {
         // clear the file
         new FileWriter(tootieSettingsFilePath, false).close();
 
-        fileFunctions.appendsStringToFile(TootieFileMsgs.TOOTIE_SETTINGS_FILE_INSTRUCTIONS_HEADER, tootieSettingsFilePath);
-        fileFunctions.appendsStringToFile(NEWLINE, tootieSettingsFilePath);
-        fileFunctions.appendsStringToFile(String.format(TootieFileMsgs.TOOTIE_SETTINGS_FILE_PATHS_FORMAT,
+        FileFunctions.appendsStringToFile(TootieFileMsgs.TOOTIE_SETTINGS_FILE_INSTRUCTIONS_HEADER, tootieSettingsFilePath);
+        FileFunctions.appendsStringToFile(NEWLINE, tootieSettingsFilePath);
+        FileFunctions.appendsStringToFile(String.format(TootieFileMsgs.TOOTIE_SETTINGS_FILE_PATHS_FORMAT,
                 tootieSettingsFile.getAbsolutePath(),
                 allTasksFilePath), tootieSettingsFilePath);
-        fileFunctions.appendsStringToFile(NEWLINE, tootieSettingsFilePath);
+        FileFunctions.appendsStringToFile(NEWLINE, tootieSettingsFilePath);
         String dividerChoiceString = Parsers.dividerChoiceToString(dividerChoice);
-        fileFunctions.appendsStringToFile(String.format(TootieFileMsgs.TOOTIE_SETTINGS_USER_PREFERENCES_FORMAT, dividerChoiceString,
+        FileFunctions.appendsStringToFile(String.format(TootieFileMsgs.TOOTIE_SETTINGS_USER_PREFERENCES_FORMAT, dividerChoiceString,
                 username), tootieSettingsFilePath);
     }
 

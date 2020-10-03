@@ -64,7 +64,7 @@ import static duke.constants.TootieNormalMsgs.TOTAL_TASKS_LOADED_SUMMARY_FORMAT;
 import static duke.constants.TootieRegex.DEADLINE_FROM_FILE_REGEX;
 import static duke.constants.TootieRegex.EVENT_FROM_FILE_REGEX;
 import static duke.constants.TootieRegex.TODO_FROM_FILE_REGEX;
-import static duke.storage.fileFunctions.autoCreateNewFile;
+import static duke.storage.FileFunctions.autoCreateNewFile;
 
 /**
  * Contains functions to find, check and process the allTasks.txt file
@@ -95,8 +95,8 @@ public class AllTasksLoader {
         while (isFileNotRead) {
             try {
                 if (isNewFilePathObtained) {
-                    File allTasksFile = fileFunctions.getFileFromFilePath(allTasksFilePath);
-                    fileFunctions.checkFileExists(allTasksFile);
+                    File allTasksFile = FileFunctions.getFileFromFilePath(allTasksFilePath);
+                    FileFunctions.checkFileExists(allTasksFile);
                     allTasksFileScanner = new Scanner(allTasksFile);
                     readAllTasksFile(inLoadMoreMode, allTasks, allTasksFileScanner, numTasks, numTasksCompleted);
                     isFileNotRead = false;
@@ -161,9 +161,9 @@ public class AllTasksLoader {
         allTasksFilePathReturn.add(0, path);
 
         // check if the file path is valid
-        File allTasksFile = fileFunctions.getFileFromFilePath(path);
+        File allTasksFile = FileFunctions.getFileFromFilePath(path);
         try {
-            fileFunctions.checkFileExists(allTasksFile);
+            FileFunctions.checkFileExists(allTasksFile);
         } catch (FileNotFoundException e) {
             System.out.println(String.format(FILE_PATH_NO_FILE_ERROR_MSG, path));
             return false;

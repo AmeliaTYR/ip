@@ -45,12 +45,12 @@ public class AllTasksSaver {
         new FileWriter(allTasksFilePath, false).close();
 
         // write file header
-        fileFunctions.appendsStringToFile(String.format(TOTAL_TASKS_FILE_LINE, numTasks.get()), allTasksFilePath);
-        fileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);
-        fileFunctions.appendsStringToFile(String.format(TASKS_COMPLETED_FILE_LINE,
+        FileFunctions.appendsStringToFile(String.format(TOTAL_TASKS_FILE_LINE, numTasks.get()), allTasksFilePath);
+        FileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);
+        FileFunctions.appendsStringToFile(String.format(TASKS_COMPLETED_FILE_LINE,
                 numTasksCompleted.get()), allTasksFilePath);
-        fileFunctions.writeDoubleNewlineToFile(allTasksFilePath);
-        fileFunctions.appendsStringToFile(TootieFileMsgs.ALL_TASKS_FILE_INSTRUCTIONS_HEADER, allTasksFilePath);
+        FileFunctions.writeDoubleNewlineToFile(allTasksFilePath);
+        FileFunctions.appendsStringToFile(TootieFileMsgs.ALL_TASKS_FILE_INSTRUCTIONS_HEADER, allTasksFilePath);
 
         String printOut = "";
         for (int i = 0; i < numTasks.get(); i++){
@@ -66,8 +66,8 @@ public class AllTasksSaver {
                         " (from: " + dateFormat.format(((Event) allTasks.get(i)).getStartTime()) + " to " +
                         dateFormat.format(((Event) allTasks.get(i)).getEndTime()) + ")";
             }
-            fileFunctions.appendsStringToFile(printOut,allTasksFilePath);
-            fileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);
+            FileFunctions.appendsStringToFile(printOut,allTasksFilePath);
+            FileFunctions.appendsStringToFile(NEWLINE, allTasksFilePath);
         }
 
         return allTasksFile.getAbsolutePath();

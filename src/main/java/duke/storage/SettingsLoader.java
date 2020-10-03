@@ -13,13 +13,14 @@ import java.util.Scanner;
 
 import static duke.constants.Tags.ALL_TASKS_FILEPATH_TAG;
 import static duke.constants.Tags.DIVIDER_CHOICE_TAG;
-import static duke.constants.Tags.LOADING_SETTINGS_MSG;
 import static duke.constants.Tags.TOOTIE_SETTINGS_FILEPATH_TAG;
 import static duke.constants.Tags.USERNAME_TAG;
 
 import static duke.constants.TootieNormalMsgs.ERROR_READING_FILE_ON_LINE_MSG_FORMAT;
+import static duke.constants.TootieNormalMsgs.LOADING_SETTINGS_MSG;
 import static duke.constants.TootieNormalMsgs.SETTINGS_FILE_EMPTY_MSG;
 import static duke.constants.TootieNormalMsgs.SETTINGS_FILE_NOT_FOUND_MSG;
+
 import static duke.storage.AllTasksLoader.getFileNextLine;
 import static duke.ui.Printers.changeDivider;
 
@@ -40,13 +41,13 @@ public class SettingsLoader {
         System.out.println(LOADING_SETTINGS_MSG);
 
         try {
-            File tootieSettingsFile = fileFunctions.getFileFromFilePath(tootieSettingsFilePath);
-            fileFunctions.checkFileExists(tootieSettingsFile);
+            File tootieSettingsFile = FileFunctions.getFileFromFilePath(tootieSettingsFilePath);
+            FileFunctions.checkFileExists(tootieSettingsFile);
             readTootieSettingsFile(savedSettings, tootieSettingsFile, tootieSettingsFilePath, allTasksFilePath,
                     dividerChoice, username);
         } catch (FileNotFoundException e) {
             System.out.println(SETTINGS_FILE_NOT_FOUND_MSG);
-            tootieSettingsFilePath = fileFunctions.autoCreateNewFile(duke.constants.TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH);
+            tootieSettingsFilePath = FileFunctions.autoCreateNewFile(duke.constants.TootieFilePaths.DEFAULT_TOOTIE_SETTINGS_FILE_PATH);
         } catch (FileEmptyException e) {
             System.out.println(SETTINGS_FILE_EMPTY_MSG);
         }

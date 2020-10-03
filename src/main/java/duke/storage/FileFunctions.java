@@ -22,7 +22,7 @@ import static duke.parsers.Checks.pathReplaceIllegalCharacters;
 /**
  * Functions to modify and create files to write to
  */
-public class fileFunctions {
+public class FileFunctions {
 
     public static final String NEWLINE = System.lineSeparator();
 
@@ -39,7 +39,7 @@ public class fileFunctions {
     }
 
     /**
-     * create a new file at the specified file path
+     * Create a new file at the specified file path.
      *
      * @param filePath specified file path
      * @return absolute path of the new path
