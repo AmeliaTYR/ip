@@ -23,7 +23,7 @@ Tootie is a task list manager program
 ## Quick Start
 
 1. Ensure that you have Java 11 or above installed.
-1. Down the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
+1. Download the latest version of `Tootie` from [here](https://github.com/AmeliaTYR/ip/releases/tag/A-Release).
     1. The current version is **Tootie version 2.0**
 1. Run `java -Dfile.encoding=UTF-8 -jar ip.jar` in the folder where the ip.jar file is stored to start the progam. (See **Notes** below for Unicode support set-up)
 1. You should be prompted to either load an existing save file or create a new file.
