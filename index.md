@@ -436,6 +436,7 @@ clean shoes (from: Sat 1 Feb 2020 12:00 AM to Thu 31 Dec 2020 05:45 AM)
 ```
 
 **Formatting errors caught:**
+
 Missing arguments: 
 
 ```
@@ -873,6 +874,7 @@ You may change your username, or change the divider to any of the 4 options divi
 ![Sample View of tootieSettings.txt file](images/settingssampel.png)
 
 **Editing allTasks.txt file:**
+
 The first part of the file indicates the number of tasks and number of tasks completed.
 ![task list task counts](images/numtassks.png)
 
